@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思写作Task 1：柱状图专题</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800">雅思写作Task 1：柱状图专题</h1>
+            <p class="mt-2 text-lg text-gray-600">掌握描述柱状图的必备句式和技巧。</p>
+        </header>
+
+        <main>
+            
+            <!-- Overall Features Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">1. 描述整体特征 (Describe the Overall Features)</h2>
+                <p class="text-gray-700 mb-4">这部分用于在文章开头概述图表的总体特征或最显著的特点。</p>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">Overall, it is clear that <span class="text-gray-500">the largest number of students were enrolled in Arts</span>.</li>
+                    <li class="text-blue-600">A striking feature of the chart is that the most popular subject <span class="text-gray-500">for male students</span> is <span class="text-gray-500">Science</span>.</li>
+                    <li class="text-blue-600">In general, the data shows that <span class="text-gray-500">the number of online users saw a dramatic increase over the period</span>.</li>
+                    <li class="text-blue-600">The most noticeable feature of the chart is that <span class="text-gray-500">the sales figures for product A were consistently higher than all others</span>.</li>
+                    <li class="text-blue-600">Generally, <span class="text-gray-500">mobile phone sales</span> accounted for the largest proportion of total sales in all years.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的柱状图整体特征</h3>
+                    <div class="chart-container">
+                        <canvas id="overallBarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Data Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">2. 描述详细数据 (Describe the Detailed Data)</h2>
+                <p class="text-gray-700 mb-4">这些句式可以帮助你精确地描述图表中的具体数据点。</p>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-gray-800">2.1 描述具体数值</h3>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The number of <span class="text-gray-500">cars produced in Japan</span> stood at <span class="text-gray-500">12 million</span>.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">150 tonnes</span> of <span class="text-gray-500">waste were recycled</span> in the first quarter.</li>
+                    <li class="text-blue-600">The figure for <span class="text-gray-500">oil consumption</span> was <span class="text-gray-500">approximately 30 million barrels</span>.</li>
+                    <li class="text-blue-600">Exactly <span class="text-gray-500">500,000 tourists</span> visited the country in <span class="text-gray-500">August</span>.</li>
+                    <li class="text-blue-600">Sales of <span class="text-gray-500">digital cameras</span> reached a peak of <span class="text-gray-500">2.5 million units</span>.</li>
+                </ul>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-gray-800">2.2 描述最大值、排名及最小值</h3>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The highest number of <span class="text-gray-500">participants</span> was recorded in <span class="text-gray-500">2015</span>, at <span class="text-gray-500">800,000</span>.</li>
+                    <li class="text-blue-600">The second most popular category was <span class="text-gray-500">leisure activities</span>, with <span class="text-gray-500">30% of respondents</span>.</li>
+                    <li class="text-blue-600">The lowest figures were seen in <span class="text-gray-500">January</span>, with only <span class="text-gray-500">200 sales</span>.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">Rent</span> made up the majority of the monthly expenses.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">Football</span> was the most preferred sport, followed by <span class="text-gray-500">basketball</span>.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的柱状图详细数据</h3>
+                    <div class="chart-container">
+                        <canvas id="detailedBarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trend Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">3. 描述趋势 (Describe the Trend)</h2>
+                <p class="text-gray-700 mb-4">这些句式可以帮助你描述数据随时间的变化。</p>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The number of <span class="text-gray-500">subscribers</span> showed a gradual increase from <span class="text-gray-500">100,000 in 2010 to 300,000 in 2020</span>.</li>
+                    <li class="text-blue-600">There was a sharp decline in the percentage of <span class="text-gray-500">landline usage</span>, <span class="text-gray-500">falling from 60% to 15% over the decade</span>.</li>
+                    <li class="text-blue-600">The number of <span class="text-gray-500">car rentals</span> fluctuated, but it ended the period at a higher figure.</li>
+                    <li class="text-blue-600">The figure for <span class="text-gray-500">mobile phone sales</span> saw a significant rise from <span class="text-gray-500">20 million units in 2005 to 50 million in 2015</span>.</li>
+                    <li class="text-blue-600">The percentage of <span class="text-gray-500">people using public transport</span> decreased steadily from <span class="text-gray-500">45% to just 25% over the five-year period</span>.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的柱状图趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="trendBarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">4. 进行比较 (Make Comparison)</h2>
+                <p class="text-gray-700 mb-4">这些句式可以帮助你对比图表中的不同数据点。</p>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The number of <span class="text-gray-500">tourists in Country A</span> was <span class="text-gray-500">twice as high as</span> the number in <span class="text-gray-500">Country B</span>.</li>
+                    <li class="text-blue-600">A similar pattern can be seen in the sales of <span class="text-gray-500">product X and product Y</span>, with both showing similar growth.</li>
+                    <li class="text-blue-600">The gap between the sales figures for <span class="text-gray-500">Product A and Product B</span> was considerable.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">The UK</span> was a far more popular destination than <span class="text-gray-500">Spain</span>.</li>
+                    <li class="text-blue-600">The figures for <span class="text-gray-500">online advertising and newspaper advertising</span> were roughly similar.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的柱状图比较</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonBarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Register the datalabels plugin globally
+        Chart.register(ChartDataLabels);
+
+        // Bar Chart Data
+        const overallBarData = {
+            labels: ['Arts', 'Science', 'Business', 'Engineering'],
+            datasets: [{
+                label: 'Student Enrollment',
+                data: [3500, 2800, 4200, 2000],
+                backgroundColor: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+            }]
+        };
+
+        const detailedBarData = {
+            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+            datasets: [{
+                label: 'Product A Sales',
+                data: [150, 250, 200, 350],
+                backgroundColor: '#4299e1'
+            }]
+        };
+
+        const trendBarData = {
+            labels: ['Internet Use', 'Social Media Use'],
+            datasets: [
+                {
+                    label: '2010',
+                    data: [40, 25],
+                    backgroundColor: '#4299e1'
+                },
+                {
+                    label: '2020',
+                    data: [75, 60],
+                    backgroundColor: '#f6ad55'
+                }
+            ]
+        };
+
+        const comparisonBarData = {
+            labels: ['Energy A', 'Energy B', 'Energy C'],
+            datasets: [
+                {
+                    label: 'Country X',
+                    data: [80, 50, 30],
+                    backgroundColor: '#4299e1'
+                },
+                {
+                    label: 'Country Y',
+                    data: [65, 40, 25],
+                    backgroundColor: '#48bb78'
+                }
+            ]
+        };
+
+        function createBarChart(id, data) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        datalabels: {
+                            formatter: (value) => {
+                                return value;
+                            },
+                            color: '#000',
+                            anchor: 'end',
+                            align: 'end',
+                            offset: 5,
+                            font: {
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createBarChart('overallBarChart', overallBarData);
+            createBarChart('detailedBarChart', detailedBarData);
+            createBarChart('trendBarChart', trendBarData);
+            createBarChart('comparisonBarChart', comparisonBarData);
+        });
+    </script>
+</body>
+</html>
