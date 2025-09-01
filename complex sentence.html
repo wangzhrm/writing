@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Complex Sentences</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4361ee',
+                        secondary: '#3a0ca3',
+                        accent: '#4cc9f0',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444',
+                        light: '#f8f9fa',
+                        dark: '#212529',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .star {
+            color: #facc15;
+            display: inline-block;
+            margin-right: 0.25rem;
+        }
+        .practice-box {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .practice-box:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .example-box {
+            background: linear-gradient(135deg, #eef7ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #4361ee;
+        }
+        .decoration {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.03;
+        }
+        .decoration-1 {
+            top: 5%;
+            right: 5%;
+            font-size: 15rem;
+            color: #4361ee;
+        }
+        .decoration-2 {
+            bottom: 5%;
+            left: 5%;
+            font-size: 12rem;
+            color: #3a0ca3;
+        }
+        .highlight {
+            background: linear-gradient(120deg, rgba(67, 97, 238, 0.2) 0%, rgba(67, 97, 238, 0) 100%);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+        .question-number {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 py-10">
+    <!-- Decorative elements -->
+    <div class="decoration decoration-1">
+        <i class="fas fa-pen-fancy"></i>
+    </div>
+    <div class="decoration decoration-2">
+        <i class="fas fa-book"></i>
+    </div>
+
+    <div class="container mx-auto p-6 max-w-4xl bg-white rounded-2xl shadow-xl relative z-10">
+        <header class="text-center mb-12 py-8 px-6 rounded-2xl header-gradient text-white">
+            <h1 class="text-4xl font-bold mb-4">IELTS Writing Task 1</h1>
+            <p class="text-xl opacity-90">Mastering Complex Sentences for a Higher Score</p>
+            <div class="w-24 h-2 bg-white opacity-50 mx-auto mt-6 rounded-full"></div>
+        </header>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Key Complex Sentence Structures</h2>
+            
+            <!-- Type 1: Contrast (5 stars) -->
+            <div class="card p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="star text-2xl">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <h3 class="text-2xl font-bold text-gray-800 ml-2">Contrast Sentences (Using 'While' or 'Whereas')</h3>
+                </div>
+                <p class="text-gray-600 mb-6 text-lg">These are essential for comparing and contrasting data trends. They show a clear relationship between two different pieces of information.</p>
+                <div class="example-box p-6 rounded-lg">
+                    <p class="font-semibold text-blue-800 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Example 1:</p>
+                    <p class="text-gray-700 mt-2"><span class="highlight">While</span> the number of cars sold in Europe experienced a sharp decline, sales in Asia rose steadily over the same period.</p>
+                    <p class="font-semibold text-blue-800 mt-6 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Example 2:</p>
+                    <p class="text-gray-700 mt-2">The total expenditure on education increased, <span class="highlight">whereas</span> the budget for healthcare saw a significant reduction.</p>
+                </div>
+            </div>
+
+            <!-- Type 2: Time and Condition (4 stars) -->
+            <div class="card p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="star text-2xl">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                    <h3 class="text-2xl font-bold text-gray-800 ml-2">Time and Condition Sentences</h3>
+                </div>
+                <p class="text-gray-600 mb-6 text-lg">These sentences are useful for describing a sequence of events or a cause-and-effect relationship based on time.</p>
+                <div class="example-box p-6 rounded-lg">
+                    <p class="font-semibold text-blue-800 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Example 1 (Time):</p>
+                    <p class="text-gray-700 mt-2">The population of the city grew substantially <span class="highlight">after</span> the new university was built.</p>
+                    <p class="font-semibold text-blue-800 mt-6 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Example 2 (Condition):</p>
+                    <p class="text-gray-700 mt-2">The consumption of plastic bottles would likely decrease <span class="highlight">if</span> the government introduced a recycling incentive.</p>
+                </div>
+            </div>
+
+            <!-- Type 3: Relative Clauses (3 stars) -->
+            <div class="card p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="star text-2xl">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+                    <h3 class="text-2xl font-bold text-gray-800 ml-2">Relative Clauses (Using 'which' or 'who')</h3>
+                </div>
+                <p class="text-gray-600 mb-6 text-lg">Use these to add extra information about a noun (e.g., a city, a company, a person) without starting a new sentence.</p>
+                <div class="example-box p-6 rounded-lg">
+                    <p class="font-semibold text-blue-800 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Example 1:</p>
+                    <p class="text-gray-700 mt-2">The report, <span class="highlight">which</span> was published in 2020, outlines a clear trend in global temperatures.</p>
+                    <p class="font-semibold text-blue-800 mt-6 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Example 2:</p>
+                    <p class="text-gray-700 mt-2">The average consumer, <span class="highlight">who</span> is becoming more environmentally conscious, prefers products with minimal packaging.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section with 10 Questions -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Practice Exercises</h2>
+            <p class="text-gray-600 mb-8 text-lg text-center">Transform the simple sentences below into a single complex sentence. Use the provided words or your own conjunctions.</p>
+
+            <!-- Question 1 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">1</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Contrast Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The price of coffee remained high. The price of tea fell steadily.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">whereas</span></p>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">2</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Time Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The company's profits increased. The company expanded into new markets.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">after</span></p>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">3</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Relative Clause Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The new shopping center opened last month. It has become a popular destination for tourists.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">which</span></p>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">4</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Contrast Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: Sales of electric vehicles rose dramatically. Sales of petrol vehicles declined.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">while</span></p>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">5</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Time Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The population decreased significantly. The factory closed down.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">when</span></p>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">6</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Condition Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The pollution levels will decrease. The government implements stricter regulations.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">if</span></p>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">7</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Relative Clause Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The research paper was published in 2022. It received widespread acclaim.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">which</span></p>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">8</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Contrast Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: Unemployment rates fell in urban areas. They rose in rural regions.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">whereas</span></p>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">9</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Time Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The tourism industry flourished. The airport was expanded.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">after</span></p>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="practice-box p-8 mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="question-number">10</div>
+                    <h4 class="font-semibold text-xl text-gray-800">Relative Clause Exercise:</h4>
+                </div>
+                <p class="text-gray-700 mb-4 text-lg">
+                    Simple Sentences: The CEO announced her retirement. She had led the company for 20 years.
+                </p>
+                <p class="text-gray-500 mb-2 flex items-center"><i class="fas fa-lightbulb mr-2 text-yellow-500"></i> Combine with: <span class="font-semibold ml-1">who</span></p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
