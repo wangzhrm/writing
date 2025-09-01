@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思饼图范例分析 (教师版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .explanation-box {
+            display: none;
+        }
+        .show-btn {
+            background-color: #4299e1;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal p-4 md:p-8">
+    <div class="container mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800">雅思饼图范例分析 (教师版)</h1>
+            <p class="mt-2 text-lg text-gray-600">以下范例包含详细的教师点评，旨在帮助学生理解数据描述的优劣。</p>
+        </header>
+        
+        <main>
+            <!-- Good Examples Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-green-600">优秀范例 (Good Examples)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Example 1: 旅游目的 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">旅游目的 (Purpose of Travel)</h3>
+                        <div class="chart-container">
+                            <canvas id="goodChart1"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">The main reason for travel was to go on holiday, accounting for almost half of the total trips at 48%. This was followed by visiting family and friends, which made up a quarter of the total. In contrast, travel for business and education purposes constituted just 15% and 12% respectively, highlighting their minor role.</p>
+                        </div>
+                    </div>
+                    <!-- Example 2: 2005 互联网使用 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">2005年互联网使用 (Internet Use in 2005)</h3>
+                        <div class="chart-container">
+                            <canvas id="goodChart2"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">In 2005, 'Social Media' was the most popular internet activity, accounting for 40% of the total. Following this was 'Online Gaming', which represented 30% of internet usage. The remaining 15% was for 'Online Shopping', making it the least popular activity among the three.</p>
+                        </div>
+                    </div>
+                    <!-- Example 3: 2015 互联网使用 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">2015年互联网使用 (Internet Use in 2015)</h3>
+                        <div class="chart-container">
+                            <canvas id="goodChart3"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">By 2015, the percentage of people using 'Social Media' for internet activities had risen dramatically to 65%. In stark contrast, 'Online Gaming' saw a sharp decline, falling to just 10% of total use. 'Online Shopping' also experienced significant growth, jumping from 15% to 25% over the decade.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Bad Examples Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-red-600">不良范例 (Bad Examples)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Example 1: 家庭开支 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">家庭开支 (Household Expenses)</h3>
+                        <div class="chart-container">
+                            <canvas id="badChart1"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">The chart shows some data. The biggest part is food, which is 35%. Rent is 25%. Utilities is 15%. Transport is 15%. Other is 10%. Food is the biggest category. Other is the smallest.</p>
+                        </div>
+                        <button class="show-btn mt-4 w-full" onclick="toggleExplanation('explanation1')">显示分析</button>
+                        <div id="explanation1" class="explanation-box mt-4 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-500">
+                            <p class="font-bold text-gray-800 mb-2">教师点评：</p>
+                            <ul class="list-disc list-inside text-gray-800 space-y-2">
+                                <li><strong>过于口语化：</strong> 语言过于简单，如 "The chart shows some data." 和 "The biggest part is food." 不符合学术写作要求。</li>
+                                <li><strong>数据罗列：</strong> 仅仅列出了所有数据点，缺乏分析和归纳，没有将数据与观点结合。</li>
+                                <li><strong>重复信息：</strong> 多次提及 "biggest" 和 "smallest"，表达方式单一且重复。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Example 2: 年轻人购物方式 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">年轻人购物方式 (Young Adults' Shopping)</h3>
+                        <div class="chart-container">
+                            <canvas id="badChart2"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">Young people do a lot of online shopping. The percentage is 60%. It is very interesting.</p>
+                        </div>
+                        <button class="show-btn mt-4 w-full" onclick="toggleExplanation('explanation2')">显示分析</button>
+                        <div id="explanation2" class="explanation-box mt-4 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-500">
+                            <p class="font-bold text-gray-800 mb-2">教师点评：</p>
+                            <ul class="list-disc list-inside text-gray-800 space-y-2">
+                                <li><strong>主观判断：</strong> 句子结尾使用 "It is very interesting." 这种主观评价，在雅思写作中是不恰当的。</li>
+                                <li><strong>语言不精确：</strong> 使用 "a lot of" 和 "young people" 等口语化表达，应使用更正式的词汇，如 "the majority of..." 或 "the younger age group"。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Example 3: 老年人购物方式 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">老年人购物方式 (Older Adults' Shopping)</h3>
+                        <div class="chart-container">
+                            <canvas id="badChart3"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">Old people also do online shopping, 30%. Old people like to go to stores, 70%. So old people shop more in stores. It is a good thing to shop in stores.</p>
+                        </div>
+                        <button class="show-btn mt-4 w-full" onclick="toggleExplanation('explanation3')">显示分析</button>
+                        <div id="explanation3" class="explanation-box mt-4 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-500">
+                            <p class="font-bold text-gray-800 mb-2">教师点评：</p>
+                            <ul class="list-disc list-inside text-gray-800 space-y-2">
+                                <li><strong>语言不精确：</strong> 使用 "Old people" 和 "shop more in stores" 这种口语化表达，应使用更正式的词汇，如 "the older age group" 或 "prefer to shop in stores"。</li>
+                                <li><strong>缺乏逻辑衔接：</strong> 句子之间缺乏有效的连接词，如 "in contrast" 或 "whereas"，使得描述显得生硬且零散。</li>
+                                <li><strong>主观判断：</strong> 句子结尾使用 "It is a good thing to shop in stores." 这种主观评价，在雅思写作中是不恰当的。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        Chart.register(ChartDataLabels);
+
+        const goodChart1Data = {
+            labels: ['Holiday', 'Visiting Family/Friends', 'Business', 'Education'],
+            data: [48, 25, 15, 12],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+        };
+        const goodChart2Data = {
+            labels: ['Social Media', 'Online Gaming', 'Online Shopping'],
+            data: [40, 30, 15],
+            colors: ['#4299e1', '#f6ad55', '#48bb78']
+        };
+        const goodChart3Data = {
+            labels: ['Social Media', 'Online Gaming', 'Online Shopping'],
+            data: [65, 10, 25],
+            colors: ['#4299e1', '#f6ad55', '#48bb78']
+        };
+        const badChart1Data = {
+            labels: ['Food', 'Rent', 'Utilities', 'Transport', 'Other'],
+            data: [35, 25, 15, 15, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0', '#90cdf4']
+        };
+        const badChart2Data = {
+            labels: ['Online Shopping', 'In-store Shopping'],
+            data: [60, 40],
+            colors: ['#4299e1', '#f6ad55']
+        };
+        const badChart3Data = {
+            labels: ['Online Shopping', 'In-store Shopping'],
+            data: [30, 70],
+            colors: ['#4299e1', '#f6ad55']
+        };
+
+        function createPieChart(id, data) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: data.colors,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        datalabels: {
+                            formatter: (value) => {
+                                return value + '%';
+                            },
+                            color: '#000',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(id);
+            if (explanation.style.display === 'none' || explanation.style.display === '') {
+                explanation.style.display = 'block';
+            } else {
+                explanation.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createPieChart('goodChart1', goodChart1Data);
+            createPieChart('goodChart2', goodChart2Data);
+            createPieChart('goodChart3', goodChart3Data);
+            createPieChart('badChart1', badChart1Data);
+            createPieChart('badChart2', badChart2Data);
+            createPieChart('badChart3', badChart3Data);
+        });
+    </script>
+</body>
+</html>
