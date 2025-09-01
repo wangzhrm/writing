@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思柱状图范例分析 (教师版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .explanation-box {
+            display: none;
+        }
+        .show-btn {
+            background-color: #4299e1;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal p-4 md:p-8">
+    <div class="container mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800">雅思柱状图范例分析 (教师版)</h1>
+            <p class="mt-2 text-lg text-gray-600">通过分析优秀和不良范例，掌握柱状图数据描述的技巧。</p>
+        </header>
+        
+        <main>
+            <!-- Good Examples Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-green-600">优秀范例 (Good Examples)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <!-- Example 1: 毕业生就业情况 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">毕业生就业情况 (Graduate Employment)</h3>
+                        <div class="chart-container">
+                            <canvas id="goodChart1"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">The bar chart illustrates the employment status of university graduates five years after their graduation. It is clear that the vast majority of graduates were employed full-time, at 60%, with a further 15% engaged in part-time work. In contrast, those who were unemployed or in further study represented a much smaller proportion, at 10% and 15% respectively.</p>
+                        </div>
+                    </div>
+                    <!-- Example 2: 能源消费 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">2000年各国能源消费 (Energy Consumption in 2000)</h3>
+                        <div class="chart-container">
+                            <canvas id="goodChart2"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">The chart compares energy consumption in five different countries in the year 2000. It is evident that the USA had the highest consumption, at approximately 100 billion kilowatt hours, which was double that of the next highest country, China. In contrast, Japan, Australia, and Canada consumed significantly less energy, with figures standing at 30, 25, and 20 billion kilowatt hours respectively. The consumption of the USA alone exceeded the combined total of the other four countries shown.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Bad Examples Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-red-600">不良范例 (Bad Examples)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <!-- Example 1: 毕业生就业情况 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">毕业生就业情况 (Graduate Employment)</h3>
+                        <div class="chart-container">
+                            <canvas id="badChart1"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">The chart shows graduate employment. 60% are working full time. 15% are part time. 10% are not working. 15% are in further study. Working is the biggest group. The two smallest groups are not working and further study.</p>
+                        </div>
+                        <button class="show-btn mt-4 w-full" onclick="toggleExplanation('explanation1')">显示分析</button>
+                        <div id="explanation1" class="explanation-box mt-4 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-500">
+                            <p class="font-bold text-gray-800 mb-2">教师点评：</p>
+                            <ul class="list-disc list-inside text-gray-800 space-y-2">
+                                <li><strong>过于口语化：</strong> 语言过于简单，如 "The chart shows..." 和 "Working is the biggest group."，缺乏学术严谨性。</li>
+                                <li><strong>简单罗列数据：</strong> 仅仅列出所有数据点，缺乏对数据的有效概括和分析。</li>
+                                <li><strong>缺乏同义替换：</strong> 反复使用 "working" 和 "biggest" 等词汇，表达方式单一。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Example 2: 能源消费 -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <h3 class="text-xl font-medium mb-4 text-center">2000年各国能源消费 (Energy Consumption in 2000)</h3>
+                        <div class="chart-container">
+                            <canvas id="badChart2"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                            <p class="text-gray-700 font-semibold mb-2">描述：</p>
+                            <p class="text-gray-800 italic">The chart is about how much energy some countries used. The US used 100. China used 50. Japan used 30. Australia used 25. Canada used 20. The US used the most. Canada used the least. It is crazy how much the US used.</p>
+                        </div>
+                        <button class="show-btn mt-4 w-full" onclick="toggleExplanation('explanation2')">显示分析</button>
+                        <div id="explanation2" class="explanation-box mt-4 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-500">
+                            <p class="font-bold text-gray-800 mb-2">教师点评：</p>
+                            <ul class="list-disc list-inside text-gray-800 space-y-2">
+                                <li><strong>主观判断：</strong> 句子结尾使用 "It is crazy how much..." 这种主观评价，在雅思写作中是不恰当的。</li>
+                                <li><strong>缺乏单位和精确度：</strong> 没有提及单位 (billion kilowatt hours)，只用数字，不够精确和正式。</li>
+                                <li><strong>语言过于简单：</strong> 使用 "used" 等简单动词，缺乏 "consumed" 或 "accounted for" 等更高级的词汇。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function createBarChart(id, data) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Percentage (%)',
+                        data: data.data,
+                        backgroundColor: '#4299e1',
+                        borderColor: '#4299e1',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Make it a horizontal bar chart
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Percentage (%)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        const goodChart1Data = {
+            labels: ['Full-time Employment', 'Part-time Employment', 'Further Study', 'Unemployed'],
+            data: [60, 15, 15, 10]
+        };
+        const goodChart2Data = {
+            labels: ['USA', 'China', 'Japan', 'Australia', 'Canada'],
+            data: [100, 50, 30, 25, 20]
+        };
+        const badChart1Data = {
+            labels: ['Full-time Employment', 'Part-time Employment', 'Further Study', 'Unemployed'],
+            data: [60, 15, 15, 10]
+        };
+        const badChart2Data = {
+            labels: ['USA', 'China', 'Japan', 'Australia', 'Canada'],
+            data: [100, 50, 30, 25, 20]
+        };
+
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(id);
+            if (explanation.style.display === 'none' || explanation.style.display === '') {
+                explanation.style.display = 'block';
+            } else {
+                explanation.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createBarChart('goodChart1', goodChart1Data);
+            createBarChart('goodChart2', goodChart2Data);
+            createBarChart('badChart1', badChart1Data);
+            createBarChart('badChart2', badChart2Data);
+        });
+    </script>
+</body>
+</html>
