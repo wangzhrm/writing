@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思写作语篇标记词指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent1: #4cc9f0;
+            --accent2: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e9ecef;
+            background-color: #f8f9fa;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        h2 {
+            font-size: 1.875rem;
+            color: var(--primary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        h4 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-top: 1.5rem;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .marker-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+        
+        .marker-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e9ecef;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .marker-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .marker-list .example {
+            font-style: italic;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 150px;
+            border-bottom: 2px dashed var(--accent2);
+            margin: 0 0.25rem;
+            position: relative;
+            text-align: center;
+        }
+        
+        .blank-number {
+            position: absolute;
+            top: -15px;
+            left: 5px;
+            font-size: 0.7rem;
+            color: var(--accent2);
+            font-weight: bold;
+        }
+        
+        .suggestions-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .suggestions-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .suggestions-container {
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #fcd34d;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .answer-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .answer-list li {
+            padding: 0.75rem;
+            border-bottom: 1px solid #fcd34d;
+        }
+        
+        .answer-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .answer-number {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background: var(--accent2);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            margin-right: 0.75rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .tag-primary {
+            background-color: #eef7ff;
+            color: var(--primary);
+        }
+        
+        .tag-success {
+            background-color: #f0fdf4;
+            color: #166534;
+        }
+        
+        .decoration {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        
+        .decoration-1 {
+            top: 10%;
+            right: 5%;
+            font-size: 10rem;
+            color: var(--primary);
+        }
+        
+        .decoration-2 {
+            bottom: 10%;
+            left: 5%;
+            font-size: 8rem;
+            color: var(--secondary);
+        }
+        
+        .tip {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--accent1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .tip-icon {
+            color: var(--accent1);
+            font-size: 1.5rem;
+        }
+        
+        .sample-text {
+            line-height: 2;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <!-- Decorative elements -->
+        <div class="decoration decoration-1">
+            <i class="fas fa-pen-fancy"></i>
+        </div>
+        <div class="decoration decoration-2">
+            <i class="fas fa-book"></i>
+        </div>
+        
+        <!-- Header Section -->
+        <header class="card text-center mb-12">
+            <div class="header-gradient py-8 px-6 text-white">
+                <h1 class="text-white mb-4">雅思写作语篇标记词指南</h1>
+                <p class="text-xl opacity-90">掌握这些标记词，让你的写作更连贯、更有逻辑性</p>
+            </div>
+            <div class="card-body">
+                <p class="text-gray-600 text-lg">语篇标记词(Discourse Markers)是雅思写作中非常重要的元素，它们可以帮助读者理解不同观点、句子和段落之间的关系。</p>
+            </div>
+        </header>
+
+        <!-- Discourse Markers Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-map-signs mr-3 text-blue-500"></i>语篇标记词分类</h2>
+            </div>
+            <div class="card-body">
+                <div class="category-grid">
+                    <!-- 标示文章阶段 -->
+                    <div class="category-card">
+                        <h4><i class="fas fa-list-ol mr-2"></i>标示文章阶段</h4>
+                        <ul class="marker-list">
+                            <li>
+                                <div>
+                                    <strong>引言/开头</strong>
+                                    <div class="example">Firstly, we need to consider the economic impact.</div>
+                                    <div class="example">To begin with, let's examine the historical context.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>段落展开/转折</strong>
+                                    <div class="example">Next, we should analyze the social consequences.</div>
+                                    <div class="example">However, there are alternative perspectives to consider.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>总结/结论</strong>
+                                    <div class="example">In conclusion, the evidence strongly supports this view.</div>
+                                    <div class="example">Overall, the trend shows a significant increase.</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 因果关系 -->
+                    <div class="category-card">
+                        <h4><i class="fas fa-project-diagram mr-2"></i>因果关系</h4>
+                        <ul class="marker-list">
+                            <li>
+                                <div>
+                                    <strong>As a result</strong>
+                                    <div class="example">He studied hard; as a result, he passed the exam.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Therefore</strong>
+                                    <div class="example">The data is inconsistent; therefore, we need further research.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Consequently</strong>
+                                    <div class="example">The company lost market share; consequently, profits declined.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Thus</strong>
+                                    <div class="example">The experiment failed; thus, the hypothesis was rejected.</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 对比/反转 -->
+                    <div class="category-card">
+                        <h4><i class="fas fa-not-equal mr-2"></i>对比/反转</h4>
+                        <ul class="marker-list">
+                            <li>
+                                <div>
+                                    <strong>However</strong>
+                                    <div class="example">The plan seemed perfect; however, it failed in practice.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>On the other hand</strong>
+                                    <div class="example">Some support this policy; on the other hand, many oppose it.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>In contrast</strong>
+                                    <div class="example">Summer is hot and dry; in contrast, winter is cold and wet.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Whereas</strong>
+                                    <div class="example">The north is industrial, whereas the south is agricultural.</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 相似/类比 -->
+                    <div class="category-card">
+                        <h4><i class="fas fa-balance-scale mr-2"></i>相似/类比</h4>
+                        <ul class="marker-list">
+                            <li>
+                                <div>
+                                    <strong>Similarly</strong>
+                                    <div class="example">The company expanded into Asia; similarly, it entered European markets.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Likewise</strong>
+                                    <div class="example">Students must submit assignments on time; likewise, punctuality is expected in exams.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>In the same way</strong>
+                                    <div class="example">Technology has transformed communication; in the same way, it has changed education.</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 递进/添加信息 -->
+                    <div class="category-card">
+                        <h4><i class="fas fa-plus-circle mr-2"></i>递进/添加信息</h4>
+                        <ul class="marker-list">
+                            <li>
+                                <div>
+                                    <strong>Moreover</strong>
+                                    <div class="example">The plan is cost-effective; moreover, it is environmentally friendly.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Furthermore</strong>
+                                    <div class="example">The research is thorough; furthermore, it offers practical applications.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>In addition</strong>
+                                    <div class="example">The hotel has spacious rooms; in addition, it offers complimentary breakfast.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Not only... but also</strong>
+                                    <div class="example">The policy not only reduces pollution but also creates jobs.</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 举例 -->
+                    <div class="category-card">
+                        <h4><i class="fas fa-list-ul mr-2"></i>举例</h4>
+                        <ul class="marker-list">
+                            <li>
+                                <div>
+                                    <strong>For example</strong>
+                                    <div class="example">Many countries, for example, Sweden and Canada, have high living standards.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>For instance</strong>
+                                    <div class="example">Some sports, for instance, football and basketball, are popular worldwide.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Such as</strong>
+                                    <div class="example">Renewable energy sources, such as solar and wind power, are expanding rapidly.</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>In particular</strong>
+                                    <div class="example">The conference discussed many issues, in particular, climate change.</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-pencil-alt mr-3 text-teal-500"></i>练习：填空</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-gray-700 mb-6">阅读下面的雅思写作Task 1范文，并选择合适的语篇标记词填入空白处。每个空白可能有多个正确答案。</p>
+                
+                <div class="sample-text">
+                    <p>The chart illustrates changes in energy production in a country between 1995 and 2005. <span class="blank"><span class="blank-number">1</span></span>, it is clear that the overall energy production increased significantly during this period.</p>
+
+                    <p><span class="blank"><span class="blank-number">2</span></span>, coal was the main energy source in 1995, accounting for 50% of total production. Natural gas and hydroelectric power each represented 20%, <span class="blank"><span class="blank-number">3</span></span> nuclear power contributed the remaining 10%.</p>
+
+                    <p>Over the following decade, significant changes occurred. Coal production increased to 60% by 2005, <span class="blank"><span class="blank-number">4</span></span> maintaining its dominant position. <span class="blank"><span class="blank-number">5</span></span>, natural gas saw a considerable decline, dropping to just 10%. <span class="blank"><span class="blank-number">6</span></span>, hydroelectric power remained stable at 20%, <span class="blank"><span class="blank-number">7</span></span> nuclear power doubled its share to 20%.</p>
+
+                    <p><span class="blank"><span class="blank-number">8</span></span>, the most notable change was the growth in coal and nuclear power, <span class="blank"><span class="blank-number">9</span></span> the reduction in natural gas. <span class="blank"><span class="blank-number">10</span></span>, the country became more reliant on coal as its primary energy source.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
