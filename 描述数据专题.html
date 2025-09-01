@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思写作Task 1：描述数据专题</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800">雅思写作Task 1：描述数据专题</h1>
+            <p class="mt-2 text-lg text-gray-600">掌握描述饼图的必备句式和技巧。</p>
+        </header>
+
+        <main>
+            
+            <!-- Overall Features Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">1. 描述整体特征 (Describe the Overall Features)</h2>
+                <p class="text-gray-700 mb-4">这部分用于在文章开头概述图表的总体特征或最显著的特点。</p>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">Overall, it is clear that <span class="text-gray-500">there are significant differences between the two cities in terms of daily travel habits</span>.</li>
+                    <li class="text-blue-600">A striking feature of the chart is that the most popular form of travel <span class="text-gray-500">in both cities</span> is <span class="text-gray-500">driving</span>.</li>
+                    <li class="text-blue-600">In general, the data shows that the <span class="text-gray-500">majority of commuters rely on private transport</span>.</li>
+                    <li class="text-blue-600">The most noticeable feature of the chart is that <span class="text-gray-500">more than half of the respondents prefer online shopping</span>.</li>
+                    <li class="text-blue-600">Generally, <span class="text-gray-500">sales of electronic devices</span> accounted for the largest proportion.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的饼图整体特征</h3>
+                    <div class="chart-container">
+                        <canvas id="overallChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Data Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">2. 描述详细数据 (Describe the Detailed Data)</h2>
+                <p class="text-gray-700 mb-4">这些句式可以帮助你精确地描述图表中的具体数据点。</p>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-gray-800">2.1 描述具体占比</h3>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The proportion of <span class="text-gray-500">students who chose History</span> stood at <span class="text-gray-500">25%</span>.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">55%</span> of the population <span class="text-gray-500">travelled by public transport</span>.</li>
+                    <li class="text-blue-600">A third of the total budget was allocated to <span class="text-gray-500">education</span>.</li>
+                    <li class="text-blue-600">The figure for <span class="text-gray-500">online shopping</span> was <span class="text-gray-500">approximately 30%</span>.</li>
+                    <li class="text-blue-600">Exactly <span class="text-gray-500">a quarter of the total sales</span> came from <span class="text-gray-500">the European market</span>.</li>
+                </ul>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-gray-800">2.2 描述最大占比、排名及最小占比</h3>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The largest proportion of <span class="text-gray-500">sales</span> was accounted for by <span class="text-gray-500">the technology sector</span>, at <span class="text-gray-500">45%</span>.</li>
+                    <li class="text-blue-600">The second largest category was <span class="text-gray-500">leisure activities</span>, which constituted <span class="text-gray-500">20% of the total</span>.</li>
+                    <li class="text-blue-600">The smallest share was from <span class="text-gray-500">healthcare</span>, which only made up <span class="text-gray-500">5% of the total expenditure</span>.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">Farming</span> made up the majority of the land use, at <span class="text-gray-500">60%</span>.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">Rent</span> constituted the largest proportion of monthly expenses, followed by <span class="text-gray-500">food and entertainment</span>.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的饼图详细数据</h3>
+                    <div class="chart-container">
+                        <canvas id="detailedChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trend Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">3. 描述趋势 (Describe the Trend)</h2>
+                <p class="text-gray-700 mb-4">当饼图呈现不同年份或时期的数据时，可以描述趋势。</p>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The proportion of <span class="text-gray-500">online shoppers</span> showed a gradual increase from <span class="text-gray-500">10% in 2000 to 30% in 2010</span>.</li>
+                    <li class="text-blue-600">There was a sharp decline in the percentage of people using private cars, <span class="text-gray-500">falling from 60% to 40% over the decade</span>.</li>
+                    <li class="text-blue-600">The proportion of <span class="text-gray-500">rent expenditure</span> fluctuated, but <span class="text-gray-500">it ended the period at a higher percentage</span>.</li>
+                    <li class="text-blue-600">The proportion of <span class="text-gray-500">online advertising</span> saw a significant rise from <span class="text-gray-500">30% in 2010 to 65% in 2020</span>.</li>
+                    <li class="text-blue-600">The percentage of <span class="text-gray-500">people relying on public transport</span> decreased steadily from <span class="text-gray-500">40% in 2005 to just 20% in 2015</span>.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的饼图趋势</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-medium text-center mb-2">2010</h4>
+                            <div class="chart-container">
+                                <canvas id="trendChart2010"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-center mb-2">2020</h4>
+                            <div class="chart-container">
+                                <canvas id="trendChart2020"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-semibold mb-4">4. 进行比较 (Make Comparison)</h2>
+                <p class="text-gray-700 mb-4">这些句式可以帮助你对比图表中的不同数据点。</p>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-gray-800">4.1 饼图内部比较</h3>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">The expenditure on <span class="text-gray-500">food</span> was <span class="text-gray-500">twice as high as</span> the amount spent on <span class="text-gray-500">transport</span>.</li>
+                    <li class="text-blue-600">A similar pattern can be seen in the expenditure on <span class="text-gray-500">entertainment and utilities</span>, with both accounting for a small proportion of the total.</li>
+                    <li class="text-blue-600">The gap between the proportion of <span class="text-gray-500">online shopping and in-store shopping</span> was considerable.</li>
+                    <li class="text-blue-600"><span class="text-gray-500">Reading</span> was a far more popular choice than <span class="text-gray-500">gaming</span>.</li>
+                    <li class="text-blue-600">The figures for <span class="text-gray-500">cycling and walking</span> were roughly similar.</li>
+                </ul>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-gray-800">4.2 两个饼图之间比较</h3>
+                <ul class="list-disc list-inside space-y-3">
+                    <li class="text-blue-600">In contrast to <span class="text-gray-500">the year 2000</span>, the proportion of <span class="text-gray-500">public transport usage increased significantly in 2020</span>.</li>
+                    <li class="text-blue-600">The percentage of <span class="text-gray-500">car ownership</span> in <span class="text-gray-500">City A</span> was marginally lower than that in <span class="text-gray-500">City B</span>.</li>
+                    <li class="text-blue-600">While the proportion of people who chose cycling was the highest in 2000, it was significantly lower in 2020.</li>
+                    <li class="text-blue-600">The share of <span class="text-gray-500">online marketing</span> in <span class="text-gray-500">2023</span> was almost double that of <span class="text-gray-500">2020</span>.</li>
+                    <li class="text-blue-600">The figure for <span class="text-gray-500">printed media advertising</span> dropped sharply, from <span class="text-gray-500">30% to just 5%</span>.</li>
+                </ul>
+                <div class="mt-8">
+                    <h3 class="text-xl font-medium text-center mb-4">练习：描述下面的饼图比较</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-medium text-center mb-2">City A: Daily Travel Habits</h4>
+                            <div class="chart-container">
+                                <canvas id="comparisonChartA"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-center mb-2">City B: Daily Travel Habits</h4>
+                            <div class="chart-container">
+                                <canvas id="comparisonChartB"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Register the datalabels plugin globally
+        Chart.register(ChartDataLabels);
+
+        const pieDataOverall = {
+            labels: ['Driving', 'Public Transport', 'Walking', 'Cycling'],
+            data: [45, 30, 15, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+        };
+        const pieDataDetailed = {
+            labels: ['Rent', 'Food', 'Transport', 'Entertainment', 'Others'],
+            data: [45, 20, 15, 10, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0', '#90cdf4']
+        };
+        const pieDataTrend2010 = {
+            labels: ['Online Shopping', 'In-store Shopping'],
+            data: [15, 85],
+            colors: ['#4299e1', '#f6ad55']
+        };
+        const pieDataTrend2020 = {
+            labels: ['Online Shopping', 'In-store Shopping'],
+            data: [40, 60],
+            colors: ['#4299e1', '#f6ad55']
+        };
+        const pieDataComparisonA = {
+            labels: ['Driving', 'Public Transport', 'Walking', 'Cycling'],
+            data: [40, 35, 15, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+        };
+        const pieDataComparisonB = {
+            labels: ['Driving', 'Public Transport', 'Walking', 'Cycling'],
+            data: [50, 25, 15, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+        };
+
+        function createPieChart(id, data) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: data.colors,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            enabled: false // Disable tooltips since we are using datalabels
+                        },
+                        datalabels: {
+                            formatter: (value) => {
+                                return value + '%';
+                            },
+                            color: '#000',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createPieChart('overallChart', pieDataOverall);
+            createPieChart('detailedChart', pieDataDetailed);
+            createPieChart('trendChart2010', pieDataTrend2010);
+            createPieChart('trendChart2020', pieDataTrend2020);
+            createPieChart('comparisonChartA', pieDataComparisonA);
+            createPieChart('comparisonChartB', pieDataComparisonB);
+        });
+    </script>
+</body>
+</html>
