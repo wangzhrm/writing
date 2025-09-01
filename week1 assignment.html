@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Bar Charts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal p-4 md:p-8">
+    <div class="container mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800">IELTS Writing Task 1: Bar Charts</h1>
+            <p class="mt-2 text-lg text-gray-600">The bar charts below show the reasons for migration to/from the UK in 2007.</p>
+        </header>
+
+        <main class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="task-description mb-6">
+                <p class="text-gray-700 text-lg mb-4"><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
+                <p class="text-gray-600 text-base">Write at least 150 words.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Bar Chart 1: Immigration -->
+                <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                    <h3 class="text-xl font-medium mb-4 text-center">Reasons for Immigration to the UK, 2007</h3>
+                    <div class="chart-container">
+                        <canvas id="immigrationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Bar Chart 2: Emigration -->
+                <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                    <h3 class="text-xl font-medium mb-4 text-center">Reasons for Emigration from the UK, 2007</h3>
+                    <div class="chart-container">
+                        <canvas id="emigrationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const immigrationData = {
+            labels: ['Work', 'Formal Study', 'Accompany/Join', 'Other', 'No Reason Given'],
+            data: [180000, 100000, 70000, 30000, 20000]
+        };
+
+        const emigrationData = {
+            labels: ['Work', 'Formal Study', 'Accompany/Join', 'Other', 'No Reason Given'],
+            data: [200000, 50000, 80000, 25000, 10000]
+        };
+
+        function createBarChart(id, chartData) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Number of people',
+                        data: chartData.data,
+                        backgroundColor: '#4299e1',
+                        borderColor: '#4299e1',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of people'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createBarChart('immigrationChart', immigrationData);
+            createBarChart('emigrationChart', emigrationData);
+        });
+    </script>
+</body>
+</html>

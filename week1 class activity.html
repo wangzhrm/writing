@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Pie Charts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal p-4 md:p-8">
+    <div class="container mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-800">IELTS Writing Task 1: Pie Charts</h1>
+            <p class="mt-2 text-lg text-gray-600">The charts below show the main reasons why people choose to travel to a particular region in 1990 and 2010.</p>
+        </header>
+
+        <main class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="task-description mb-6">
+                <p class="text-gray-700 text-lg mb-4"><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
+                <p class="text-gray-600 text-base">Write at least 150 words.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Pie Chart 1 -->
+                <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                    <h3 class="text-xl font-medium mb-4 text-center">Reasons for Travel in 1990</h3>
+                    <div class="chart-container">
+                        <canvas id="chart1990"></canvas>
+                    </div>
+                </div>
+
+                <!-- Pie Chart 2 -->
+                <div class="bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                    <h3 class="text-xl font-medium mb-4 text-center">Reasons for Travel in 2010</h3>
+                    <div class="chart-container">
+                        <canvas id="chart2010"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        Chart.register(ChartDataLabels);
+
+        const data1990 = {
+            labels: ['Holiday', 'Visiting Family/Friends', 'Business', 'Education'],
+            data: [45, 30, 15, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+        };
+
+        const data2010 = {
+            labels: ['Holiday', 'Visiting Family/Friends', 'Business', 'Education'],
+            data: [60, 20, 10, 10],
+            colors: ['#4299e1', '#f6ad55', '#48bb78', '#a0aec0']
+        };
+
+        function createPieChart(id, chartData) {
+            const ctx = document.getElementById(id).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        data: chartData.data,
+                        backgroundColor: chartData.colors,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        datalabels: {
+                            formatter: (value) => {
+                                return value + '%';
+                            },
+                            color: '#000',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createPieChart('chart1990', data1990);
+            createPieChart('chart2010', data2010);
+        });
+    </script>
+</body>
+</html>
