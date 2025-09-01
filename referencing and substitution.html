@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Referencing and Substitution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent1: #4cc9f0;
+            --accent2: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 4xl;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e9ecef;
+            background-color: #f8f9fa;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        h2 {
+            font-size: 1.875rem;
+            color: var(--primary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .rule {
+            background-color: #eef7ff;
+            color: #0a58ca;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .example-block {
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .good-example {
+            background-color: #f0fdf4;
+            color: #166534;
+            border-left: 4px solid #22c55e;
+        }
+        
+        .bad-example {
+            background-color: #fef2f2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .example-icon {
+            position: absolute;
+            top: -12px;
+            right: 15px;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .practice-list {
+            counter-reset: practice-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .practice-list li {
+            margin-bottom: 1.25rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+            border-left: 4px solid var(--accent1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .practice-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .practice-list li::before {
+            counter-increment: practice-counter;
+            content: counter(practice-counter);
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+        }
+        
+        .suggestions-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .suggestions-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .suggestions-container {
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #fcd34d;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .suggestions-container ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .suggestions-container li {
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        
+        .tag-primary {
+            background-color: #eef7ff;
+            color: var(--primary);
+        }
+        
+        .tag-success {
+            background-color: #f0fdf4;
+            color: #166534;
+        }
+        
+        .decoration {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        
+        .decoration-1 {
+            top: 10%;
+            right: 5%;
+            font-size: 10rem;
+            color: var(--primary);
+        }
+        
+        .decoration-2 {
+            bottom: 10%;
+            left: 5%;
+            font-size: 8rem;
+            color: var(--secondary);
+        }
+        
+        .tip {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--accent1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .tip-icon {
+            color: var(--accent1);
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Decorative elements -->
+        <div class="decoration decoration-1">
+            <i class="fas fa-pen-fancy"></i>
+        </div>
+        <div class="decoration decoration-2">
+            <i class="fas fa-book"></i>
+        </div>
+        
+        <!-- Header Section -->
+        <header class="card text-center mb-12">
+            <div class="header-gradient py-8 px-6 text-white">
+                <h1 class="text-white mb-4">雅思写作：指代与替换技巧</h1>
+                <p class="text-xl opacity-90">如何通过指代和替换让你的文章更连贯、更高级</p>
+            </div>
+            <div class="card-body">
+                <p class="text-gray-600 text-lg">掌握这些技巧可以帮助你在雅思写作中获得更高的分数，使你的文章更加流畅和专业。</p>
+            </div>
+        </header>
+
+        <!-- Referencing Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-exchange-alt mr-3 text-blue-500"></i>指代 (Referencing)</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-gray-700 mb-6">指代即通过代词或替代性词语来指代前文已提及的名词或概念，避免不必要的重复。</p>
+                
+                <div class="rule">
+                    <strong><i class="fas fa-lightbulb mr-2 text-yellow-500"></i>常用技巧：</strong> 使用 `it`, `they`, `them`, `this`, `that`, `these`, `those` 等代词。其中 `this`, `that` 还可以指代整个句子或观点。
+                </div>
+
+                <h3><i class="fas fa-check-circle mr-2 text-green-500"></i>正面例子</h3>
+                <div class="example-block good-example">
+                    <div class="example-icon text-green-500">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <p>The <strong>government</strong> has a responsibility to protect public health. <strong>It</strong> should therefore implement stricter regulations on pollution. <strong>This</strong> would lead to a significant improvement in air quality.</p>
+                    <div class="tip mt-4">
+                        <div class="tip-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <p class="text-sm"><strong>分析：</strong> 第二句用 <strong class="tag tag-primary">It</strong> 指代了 <strong class="tag tag-primary">the government</strong>；第三句用 <strong class="tag tag-primary">This</strong> 指代了"实施更严格的污染法规"这一整个想法。</p>
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-times-circle mr-2 text-red-500"></i>反面例子</h3>
+                <div class="example-block bad-example">
+                    <div class="example-icon text-red-500">
+                        <i class="fas fa-thumbs-down"></i>
+                    </div>
+                    <p>The <strong>government</strong> has a responsibility to protect public health. The <strong>government</strong> should therefore implement stricter regulations on pollution. The implementation of stricter regulations would lead to a significant improvement in air quality.</p>
+                    <div class="tip mt-4">
+                        <div class="tip-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <p class="text-sm"><strong>分析：</strong> 反复重复 <strong class="tag tag-primary">the government</strong> 和 <strong class="tag tag-primary">the implementation of stricter regulations</strong>，显得语言非常生硬和冗余。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Substitution Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-sync-alt mr-3 text-purple-500"></i>替换 (Substitution)</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-gray-700 mb-6">替换指的是使用同义词、近义词组或更概括性的词语来代替重复出现的词语，展示丰富的词汇量。</p>
+                
+                <div class="rule">
+                    <strong><i class="fas fa-lightbulb mr-2 text-yellow-500"></i>常用技巧：</strong>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>同义词：</strong> `important` → `crucial`, `vital`</li>
+                        <li><strong>同义词组：</strong> `pollution` → `environmental degradation`</li>
+                        <li><strong>概括性名词：</strong> `cars, buses, trains` → `vehicles`</li>
+                    </ul>
+                </div>
+
+                <h3><i class="fas fa-check-circle mr-2 text-green-500"></i>正面例子</h3>
+                <div class="example-block good-example">
+                    <div class="example-icon text-green-500">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <p>Many <strong>youngsters</strong> are addicted to social media. This is a pressing <strong>issue</strong> that needs to be addressed. As a result, parents are increasingly worried about their children's excessive screen time. This phenomenon, if not properly managed, could have long-term negative effects on these <strong>individuals</strong>.</p>
+                    <div class="tip mt-4">
+                        <div class="tip-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <p class="text-sm"><strong>分析：</strong> 用 <strong class="tag tag-primary">youngsters</strong>, <strong class="tag tag-primary">children</strong> 和 <strong class="tag tag-primary">individuals</strong> 来替换，展示了词汇的多样性。用 <strong class="tag tag-primary">issue</strong> 指代 <strong class="tag tag-primary">addiction</strong>，使句子更简洁。</p>
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-times-circle mr-2 text-red-500"></i>反面例子</h3>
+                <div class="example-block bad-example">
+                    <div class="example-icon text-red-500">
+                        <i class="fas fa-thumbs-down"></i>
+                    </div>
+                    <p>Many <strong>students</strong> are addicted to social media. This is a pressing <strong>problem</strong> that needs to be addressed. As a result, parents are increasingly worried about their children's excessive screen time. This <strong>addiction</strong>, if not properly managed, could have long-term negative effects on these <strong>students</strong>.</p>
+                    <div class="tip mt-4">
+                        <div class="tip-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <p class="text-sm"><strong>分析：</strong> 重复使用了 <strong class="tag tag-primary">students</strong> 和 <strong class="tag tag-primary">addiction</strong>，缺乏词汇变化，让文章显得单调。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-pencil-alt mr-3 text-teal-500"></i>练习与纠正</h2>
+            </div>
+            <div class="card-body">
+                <p class="text-gray-700 mb-6">以下句子因没有使用指代或替换而显得不佳。请尝试纠正它们。</p>
+                
+                <ol class="practice-list">
+                    <li>Education is very important. Education provides people with knowledge.</li>
+                    <li>Online shopping is becoming popular. Online shopping is more convenient than traditional shopping.</li>
+                    <li>The government has introduced new taxes. The new taxes are designed to curb consumption.</li>
+                    <li>Mobile phones are a problem. Mobile phones distract students in class.</li>
+                    <li>Reading books is a good habit. Reading books can improve vocabulary.</li>
+                    <li>The construction of new roads will help reduce traffic congestion. The new roads will benefit commuters.</li>
+                    <li>The company's profits increased. The company's profits increased by 10%.</li>
+                    <li>Renewable energy sources are the future. Renewable energy sources can combat climate change.</li>
+                    <li>Many people are concerned about air pollution. Air pollution is a major health risk.</li>
+                    <li>The internet has made information widely accessible. The internet has changed how we live.</li>
+                </ol>
+
+                <button id="suggestions-button" class="suggestions-button" onclick="toggleSuggestions()">
+                    <i class="fas fa-lightbulb"></i> 点击查看参考答案
+                </button>
+            </div>
+        </div>
+
+        <!-- Suggestions Section (Hidden by default) -->
+        <div id="suggestions-container" class="suggestions-container">
+            <h3 class="text-2xl font-bold text-amber-800 mb-4"><i class="fas fa-star mr-2"></i>参考答案与建议</h3>
+            <p class="text-amber-700 mb-6">注意这些只是参考答案，您的改写可能有更多种方法！</p>
+            
+            <ol class="space-y-4">
+                <li>
+                    <p><strong>原句：</strong>Education is very important. Education provides people with knowledge.</p>
+                    <p><strong>建议：</strong>Education is very important as <strong class="tag tag-success">it</strong> provides people with knowledge. (使用 <strong class="tag tag-success">it</strong> 指代)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>Online shopping is becoming popular. Online shopping is more convenient than traditional shopping.</p>
+                    <p><strong>建议：</strong>Online shopping is becoming popular because <strong class="tag tag-success">this method</strong> is more convenient than traditional shopping. (使用 <strong class="tag tag-success">this method</strong> 替换)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>The government has introduced new taxes. The new taxes are designed to curb consumption.</p>
+                    <p><strong>建议：</strong>The government has introduced new taxes, <strong class="tag tag-success">which</strong> are designed to curb consumption. (使用 <strong class="tag tag-success">which</strong> 指代)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>Mobile phones are a problem. Mobile phones distract students in class.</p>
+                    <p><strong>建议：</strong>Mobile phones are a problem because <strong class="tag tag-success">these devices</strong> distract students in class. (使用 <strong class="tag tag-success">these devices</strong> 替换)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>Reading books is a good habit. Reading books can improve vocabulary.</p>
+                    <p><strong>建议：</strong>Reading books is a good habit as <strong class="tag tag-success">this activity</strong> can improve vocabulary. (使用 <strong class="tag tag-success">this activity</strong> 替换)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>The construction of new roads will help reduce traffic congestion. The new roads will benefit commuters.</p>
+                    <p><strong>建议：</strong>The construction of new roads will help reduce traffic congestion, and <strong class="tag tag-success">this infrastructure</strong> will also benefit commuters. (使用 <strong class="tag tag-success">this infrastructure</strong> 替换)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>The company's profits increased. The company's profits increased by 10%.</p>
+                    <p><strong>建议：</strong>The company's profits increased by 10% from the previous year. (避免重复，并提供更详细信息)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>Renewable energy sources are the future. Renewable energy sources can combat climate change.</p>
+                    <p><strong>建议：</strong>Renewable energy sources are the future, as <strong class="tag tag-success">they</strong> have the potential to combat climate change. (使用 <strong class="tag tag-success">they</strong> 指代)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>Many people are concerned about air pollution. Air pollution is a major health risk.</p>
+                    <p><strong>建议：</strong>Many people are concerned about air pollution because <strong class="tag tag-success">this phenomenon</strong> is a major health risk. (使用 <strong class="tag tag-success">this phenomenon</strong> 替换)</p>
+                </li>
+                <li>
+                    <p><strong>原句：</strong>The internet has made information widely accessible. The internet has changed how we live.</p>
+                    <p><strong>建议：</strong>The internet has made information widely accessible, and <strong class="tag tag-success">this technological development</strong> has profoundly changed how we live. (使用 <strong class="tag tag-success">this technological development</strong> 替换)</p>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function toggleSuggestions() {
+            const suggestionsDiv = document.getElementById('suggestions-container');
+            const button = document.getElementById('suggestions-button');
+            
+            if (suggestionsDiv.style.display === 'none' || !suggestionsDiv.style.display) {
+                suggestionsDiv.style.display = 'block';
+                button.innerHTML = '<i class="fas fa-eye-slash"></i> 隐藏参考答案';
+                setTimeout(() => {
+                    suggestionsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 10);
+            } else {
+                suggestionsDiv.style.display = 'none';
+                button.innerHTML = '<i class="fas fa-lightbulb"></i> 点击查看参考答案';
+            }
+        }
+    </script>
+</body>
+</html>
