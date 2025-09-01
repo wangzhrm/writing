@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Prepositions of Time</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --danger: #e63946;
+            --warning: #fca311;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .preposition-card {
+            border-left: 4px solid var(--primary);
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .preposition-card h3 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .preposition-card h3 i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+        
+        .rule-box {
+            background: rgba(67, 97, 238, 0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .example-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .example-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .example-list li:before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .summary-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .summary-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-table tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eaeaea;
+        }
+        
+        .option-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0.5rem;
+        }
+        
+        .option-button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        
+        .incorrect {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+        
+        .disabled-option {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .explanation {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .explanation.correct-exp {
+            background: rgba(76, 201, 240, 0.15);
+            border-left: 4px solid var(--success);
+        }
+        
+        .explanation.incorrect-exp {
+            background: rgba(230, 57, 70, 0.15);
+            border-left: 4px solid var(--danger);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .floating-nav {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+        
+        .floating-nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s ease;
+        }
+        
+        .floating-nav a:hover {
+            color: var(--primary);
+        }
+        
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 10px;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-nav {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                justify-content: space-around;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Floating Navigation -->
+    <div class="floating-nav">
+        <a href="#theory"><i class="fas fa-book"></i> 理论</a>
+        <a href="#quiz"><i class="fas fa-pen"></i> 练习</a>
+        <a href="#top"><i class="fas fa-arrow-up"></i> 顶部</a>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <!-- Header Section -->
+        <header class="card text-center mb-8 overflow-hidden">
+            <div class="header-gradient py-12 px-6 text-white">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">IELTS时间介词全攻略</h1>
+                <p class="text-xl opacity-90">掌握时间介词 in, on, at 及其他重要介词，提升雅思写作和口语成绩</p>
+            </div>
+            <div class="p-6 bg-white">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%" id="global-progress"></div>
+                </div>
+                <p class="text-gray-600">完成以下内容以提高你的介词使用技能</p>
+            </div>
+        </header>
+
+        <!-- Theory Section -->
+        <div class="card p-6 md:p-8 mb-8" id="theory">
+            <h2 class="text-3xl font-bold mb-6 flex items-center">
+                <span class="section-icon"><i class="fas fa-lightbulb"></i></span>
+                核心三剑客: In, On, At
+            </h2>
+            <p class="text-gray-700 mb-6">正确使用介词对于雅思写作和口语的高分至关重要。最常用的时间介词是 <strong class="text-blue-600">in</strong>, <strong class="text-blue-600">on</strong> 和 <strong class="text-blue-600">at</strong>。可以把它们想象成一个金字塔，从大范围到具体时间。</p>
+            
+            <!-- In -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-calendar-alt"></i>
+                    使用 IN 表达较长的时间段
+                </h3>
+                <div class="rule-box">
+                    <strong>in</strong> 用于世纪、年代、年份、季节和月份等较长的时间段。
+                </div>
+                <ul class="example-list">
+                    <li><span class="font-semibold text-blue-600">In</span> the 21st century, technology has transformed our lives. (在21世纪，科技改变了我们的生活。)</li>
+                    <li>The company was founded <span class="font-semibold text-blue-600">in</span> 1999. (这家公司创立于1999年。)</li>
+                    <li>Many people prefer to travel <span class="font-semibold text-blue-600">in</span> the summer. (很多人喜欢在夏天旅行。)</li>
+                </ul>
+            </div>
+
+            <!-- On -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-calendar-day"></i>
+                    使用 ON 表达具体的日期和天
+                </h3>
+                <div class="rule-box">
+                    <strong>on</strong> 用于具体的星期几和准确的日期。
+                </div>
+                <ul class="example-list">
+                    <li>The meeting is scheduled for <span class="font-semibold text-blue-600">on</span> Monday. (会议安排在星期一。)</li>
+                    <li>The school will close <span class="font-semibold text-blue-600">on</span> December 25th. (学校将在12月25日关闭。)</li>
+                    <li>They held a celebration <span class="font-semibold text-blue-600">on</span> his birthday. (他们在他的生日当天举行了庆祝活动。)</li>
+                </ul>
+            </div>
+
+            <!-- At -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-clock"></i>
+                    使用 AT 表达精确的时间
+                </h3>
+                <div class="rule-box">
+                    <strong>at</strong> 用于一天中非常精确的时间点，以及一些固定搭配，例如 at night (在夜晚), at noon (在中午) 和 at the moment (此刻)。
+                </div>
+                <ul class="example-list">
+                    <li>The train departs <span class="font-semibold text-blue-600">at</span> 8:30 AM. (火车在上午8:30发车。)</li>
+                    <li>I usually eat dinner <span class="font-semibold text-blue-600">at</span> night. (我通常在晚上吃晚饭。)</li>
+                    <li>We must address this issue <span class="font-semibold text-blue-600">at</span> the moment. (我们必须此刻解决这个问题。)</li>
+                </ul>
+            </div>
+
+            <h2 class="text-3xl font-bold my-8 flex items-center">
+                <span class="section-icon"><i class="fas fa-star"></i></span>
+                其他重要介词
+            </h2>
+
+            <!-- During -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-hourglass-half"></i>
+                    DURING (在...期间)
+                </h3>
+                <div class="rule-box">
+                    <strong>during</strong> 用于表示在某个已知时间段的某个不确定时间点，强调动作的持续性。
+                </div>
+                <ul class="example-list">
+                    <li>He fell asleep <span class="font-semibold text-blue-600">during</span> the movie. (他在电影期间睡着了。)</li>
+                    <li>Traffic is always heavy <span class="font-semibold text-blue-600">during</span> rush hour. (在高峰时段交通总是很拥挤。)</li>
+                </ul>
+            </div>
+
+            <!-- Between...and... -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-arrows-left-right"></i>
+                    BETWEEN...AND... (在...和...之间)
+                </h3>
+                <div class="rule-box">
+                    <strong>between...and...</strong> 用于表示一个明确的时间段，有两个确定的时间点。
+                </div>
+                <ul class="example-list">
+                    <li>The population increased <span class="font-semibold text-blue-600">between</span> 2000 <span class="font-semibold text-blue-600">and</span> 2010. (人口在2000年到2010年之间有所增长。)</li>
+                </ul>
+            </div>
+
+            <!-- From...to... -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-arrow-right-arrow-left"></i>
+                    FROM...TO... (从...到...)
+                </h3>
+                <div class="rule-box">
+                    <strong>from...to...</strong> 用于表示一个确定的时间段，通常描述一个过程或状态的起始和结束。
+                </div>
+                <ul class="example-list">
+                    <li>The exhibition will run <span class="font-semibold text-blue-600">from</span> May 1st <span class="font-semibold text-blue-600">to</span> May 31st. (展览将从5月1日持续到5月31日。)</li>
+                </ul>
+            </div>
+
+            <!-- Other Prepositions -->
+            <div class="preposition-card">
+                <h3 class="text-2xl font-semibold mb-4">
+                    <i class="fas fa-plus-circle"></i>
+                    其他常用介词
+                </h3>
+                <ul class="example-list">
+                    <li><strong>For</strong>: 用于表示动作持续了多长时间。 (e.g., They studied <span class="font-semibold text-blue-600">for</span> two hours.)</li>
+                    <li><strong>Since</strong>: 用于表示动作从过去某个时间点开始，一直持续到现在。 (e.g., She has lived here <span class="font-semibold text-blue-600">since</span> 2015.)</li>
+                    <li><strong>Until / By</strong>: until 表示动作持续到某个时间点，by 表示在某个时间点之前完成。 (e.g., The store is open <span class="font-semibold text-blue-600">until</span> 9 PM. / Please submit your work <span class="font-semibold text-blue-600">by</span> Friday.)</li>
+                </ul>
+            </div>
+
+            <!-- Summary Table -->
+            <h3 class="text-2xl font-semibold my-6 flex items-center">
+                <span class="section-icon"><i class="fas fa-table"></i></span>
+                介词用法总结表
+            </h3>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>介词</th>
+                        <th>用法</th>
+                        <th>例子</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>IN</strong></td><td>世纪、年代、年份、季节、月份</td><td>In 2023, in the summer</td></tr>
+                    <tr><td><strong>ON</strong></td><td>具体的日期和天</td><td>On Friday, on June 5th</td></tr>
+                    <tr><td><strong>AT</strong></td><td>精确的时间点、固定搭配</td><td>At 5 PM, at night, at noon</td></tr>
+                    <tr><td><strong>DURING</strong></td><td>在某段时间内</td><td>During the movie, during the meeting</td></tr>
+                    <tr><td><strong>BETWEEN...AND...</strong></td><td>在两个时间点之间</td><td>Between 2000 and 2010</td></tr>
+                    <tr><td><strong>FROM...TO...</strong></td><td>从一个时间点到另一个时间点</td><td>From May to June</td></tr>
+                    <tr><td><strong>FOR</strong></td><td>表示动作持续多长时间</td><td>For two hours</td></tr>
+                    <tr><td><strong>SINCE</strong></td><td>从过去某时开始至今</td><td>Since 2015</td></tr>
+                    <tr><td><strong>BY</strong></td><td>不晚于某个时间点</td><td>By Friday</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card p-6 md:p-8 mb-8" id="quiz">
+            <h2 class="text-3xl font-bold mb-6 flex items-center">
+                <span class="section-icon"><i class="fas fa-pen-fancy"></i></span>
+                练习题
+            </h2>
+            <p class="text-gray-600 mb-6">选择正确的介词来完成句子，您将获得即时反馈。</p>
+
+            <div class="bg-gray-50 p-4 rounded-xl mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-medium">完成进度</span>
+                    <span id="progress-text">0/31</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%" id="quiz-progress"></div>
+                </div>
+            </div>
+
+            <div id="quiz-container">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "The first industrial revolution occurred ___ the 18th century.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于世纪，因为它们是较长、一般性的时间段。"
+            },
+            {
+                question: "I have a meeting scheduled ___ 9:00 AM sharp.",
+                options: ["in", "on", "at"],
+                answer: "at",
+                explanation: "`At` 用于精确、具体的一天中的时间。"
+            },
+            {
+                question: "Many schools are closed ___ Christmas Day.",
+                options: ["in", "on", "at"],
+                answer: "on",
+                explanation: "当假期包含 'Day' 一词时，使用 `on`，因为你指的是具体的一天。"
+            },
+            {
+                question: "The government will implement the new policy ___ the coming year.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于年份，这是一段一般性的时间。"
+            },
+            {
+                question: "The data shows a clear trend ___ the last decade.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于年代，这是一段一般性的时间。"
+            },
+            {
+                question: "The conference will be held ___ October 15th.",
+                options: ["in", "on", "at"],
+                answer: "on",
+                explanation: "`On` 用于具体的日期。"
+            },
+            {
+                question: "The museum is open ___ weekdays only.",
+                options: ["in", "on", "at"],
+                answer: "on",
+                explanation: "`On` 用于星期几。'weekdays' 是指一组天，所以也用 `on`。"
+            },
+            {
+                question: "Students should arrive ___ 8 AM for the test.",
+                options: ["in", "on", "at"],
+                answer: "at",
+                explanation: "`At` 用于精确的时间。"
+            },
+            {
+                question: "The crime rate usually increases ___ night.",
+                options: ["in", "on", "at"],
+                answer: "at",
+                explanation: "`At night` 是一个固定的短语。"
+            },
+            {
+                question: "He completed the project ___ just three weeks.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于表示一段时间的持续或期限。"
+            },
+            {
+                question: "The company's profits peaked ___ the second quarter.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于季度，它们是一年中的时间段。"
+            },
+            {
+                question: "The new report will be released ___ Friday.",
+                options: ["in", "on", "at"],
+                answer: "on",
+                explanation: "`On` 用于星期几。"
+            },
+            {
+                question: "The event is scheduled to begin ___ noon.",
+                options: ["in", "on", "at"],
+                answer: "at",
+                explanation: "`At noon` 是一个表示精确时间的固定短语。"
+            },
+            {
+                question: "The building was constructed ___ the late 19th century.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于世纪和其他较长的时间段。"
+            },
+            {
+                question: "Many species migrate ___ the winter.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于季节。"
+            },
+            {
+                question: "The research findings will be presented ___ March 10th.",
+                options: ["in", "on", "at"],
+                answer: "on",
+                explanation: "`On` 用于具体的日期。"
+            },
+            {
+                question: "I prefer to study ___ the morning.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于一天中的时段，如 'the morning', 'the afternoon' 和 'the evening'。(注意: 'at night' 是一个例外。)"
+            },
+            {
+                question: "The new factory started operations ___ July 2022.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于月份和年份。"
+            },
+            {
+                question: "The first human landed on the moon ___ 1969.",
+                options: ["in", "on", "at"],
+                answer: "in",
+                explanation: "`In` 用于年份。"
+            },
+            {
+                question: "We should meet for a coffee break ___ 3:30 PM.",
+                options: ["in", "on", "at"],
+                answer: "at",
+                explanation: "`At` 用于具体的时间。"
+            },
+            {
+                question: "The report was written ___ the period of the last three months.",
+                options: ["during", "for", "since"],
+                answer: "during",
+                explanation: "`During` 用于表示在一个时间段内发生了某个动作。"
+            },
+            {
+                question: "The population remained stable ___ 2005 and 2015.",
+                options: ["during", "between", "from"],
+                answer: "between",
+                explanation: "`Between...and...` 用于表示一个明确的起始和结束时间。"
+            },
+            {
+                question: "He has been working on his thesis ___ last September.",
+                options: ["since", "for", "until"],
+                answer: "since",
+                explanation: "`Since` 用于表示动作从过去某个时间点开始，并持续到说话时。"
+            },
+            {
+                question: "The company's profits increased significantly ___ 2008 ___ 2012.",
+                options: ["During / and", "Between / to", "From / to"],
+                answer: "From / to",
+                explanation: "`From...to...` 用于表示一个时间段，描述一个过程的起始和结束。"
+            },
+            {
+                question: "The research project will continue ___ the end of the year.",
+                options: ["for", "until", "by"],
+                answer: "until",
+                explanation: "`Until` 表示动作将持续到某个时间点。与 `by` 相比，它强调持续性而不是完成性。"
+            },
+            {
+                question: "The construction was completed ___ two years.",
+                options: ["in", "during", "for"],
+                answer: "in",
+                explanation: "`In` 用于表示在某个时间段内完成某事。这与 'for' 不同，`for` 强调持续时间。"
+            },
+            {
+                question: "Please finish your essay ___ Friday.",
+                options: ["until", "by", "for"],
+                answer: "by",
+                explanation: "`By` 用于表示在某个时间点或之前完成某事。"
+            },
+            {
+                question: "She has been a doctor ___ ten years.",
+                options: ["since", "for", "during"],
+                answer: "for",
+                explanation: "`For` 用于表示动作持续了多久。"
+            },
+            {
+                question: "He studied hard ___ the whole semester.",
+                options: ["at", "during", "in"],
+                answer: "during",
+                explanation: "`During` 用于表示在整个时间段内某个动作的持续性。"
+            },
+            {
+                question: "The train will arrive ___ 5:00 PM.",
+                options: ["until", "at", "by"],
+                answer: "at",
+                explanation: "`At` 用于精确的时间点。"
+            }
+        ];
+
+        let answeredCount = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizContainer = document.getElementById('quiz-container');
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text font-medium text-lg mb-4';
+                questionText.innerHTML = `${index + 1}. ${q.question.replace('___', '<span class="text-blue-500 underline decoration-dashed">___</span>')}`;
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'flex flex-wrap';
+
+                q.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'option-button';
+                    button.textContent = option;
+                    button.onclick = () => handleAnswer(button, option, q, index);
+                    optionsContainer.appendChild(button);
+                });
+
+                const explanationContainer = document.createElement('div');
+                explanationContainer.id = `explanation-${index}`;
+                explanationContainer.className = 'explanation hidden';
+
+                questionCard.appendChild(questionText);
+                questionCard.appendChild(optionsContainer);
+                questionCard.appendChild(explanationContainer);
+                quizContainer.appendChild(questionCard);
+            });
+
+            updateProgress();
+        });
+
+        function handleAnswer(button, selectedOption, question, index) {
+            const options = document.querySelectorAll(`#question-${index} .option-button`);
+            const explanationDiv = document.getElementById(`explanation-${index}`);
+
+            // Disable all buttons for this question
+            options.forEach(btn => {
+                btn.classList.add('disabled-option');
+                btn.disabled = true;
+            });
+
+            const isCorrect = selectedOption === question.answer;
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                explanationDiv.classList.add('correct-exp');
+                explanationDiv.innerHTML = `<i class="fas fa-check-circle mt-1"></i> <div><strong>正确！</strong> ${question.explanation}</div>`;
+                answeredCount++;
+            } else {
+                button.classList.add('incorrect');
+                const correctButton = Array.from(options).find(btn => btn.textContent === question.answer);
+                if (correctButton) {
+                    correctButton.classList.add('correct');
+                }
+                explanationDiv.classList.add('incorrect-exp');
+                explanationDiv.innerHTML = `<i class="fas fa-times-circle mt-1"></i> <div><strong>错误。</strong> 正确答案是 <strong>${question.answer}</strong>。 ${question.explanation}</div>`;
+            }
+
+            explanationDiv.classList.remove('hidden');
+            updateProgress();
+
+            // Scroll to the next question if available
+            if (index < questions.length - 1) {
+                setTimeout(() => {
+                    document.getElementById(`question-${index+1}`).scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start'
+                    });
+                }, 1000);
+            }
+        }
+
+        function updateProgress() {
+            const progressPercent = (answeredCount / questions.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progressPercent}%`;
+            document.getElementById('global-progress').style.width = `${progressPercent}%`;
+            document.getElementById('progress-text').textContent = `${answeredCount}/${questions.length}`;
+        }
+    </script>
+
+</body>
+</html>
