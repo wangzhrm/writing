@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh" class="bg-gray-100 dark:bg-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>比较级和最高级规则</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: #1f2937;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark body {
+            color: #f3f4f6;
+        }
+        .dark .card {
+            background-color: #1f2937;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .syntax-block {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+        .dark .syntax-block {
+            background-color: #374151;
+            color: #d1d5db;
+        }
+        .rule-heading {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 lg:p-20 flex justify-center">
+
+    <div class="card bg-white dark:bg-gray-800 p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl max-w-4xl w-full">
+        <!-- Main Header -->
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6 md:mb-8 text-indigo-600 dark:text-indigo-400">
+            比较级和最高级规则
+        </h1>
+        <p class="text-center text-gray-600 dark:text-gray-400 mb-8 md:mb-12">
+            英语中形容词和副词比较级和最高级的构成指南。
+        </p>
+
+        <!-- Rule Section: One-Syllable Words -->
+        <div class="mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left text-gray-800 dark:text-gray-200">
+                1. 单音节形容词和副词
+            </h2>
+            <p class="mb-3 text-gray-600 dark:text-gray-400">
+                对于大多数单音节词，在词尾加上 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">-er</code> 构成比较级，加上 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">-est</code> 构成最高级。
+            </p>
+            <div class="syntax-block p-4 rounded-lg font-mono text-sm sm:text-base mb-4">
+                <p>Adjective/Adverb → Adjective/Adverb<span class="text-red-500">er</span> → Adjective/Adverb<span class="text-green-600">est</span></p>
+            </div>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 ml-4">
+                <li><strong class="text-blue-600 dark:text-blue-400">tall</strong> (高的) → taller → tallest</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">fast</strong> (快的) → faster → fastest</li>
+            </ul>
+            <p class="mt-4 text-gray-600 dark:text-gray-400">
+                <span class="font-bold">拼写规则:</span> 如果词以“辅音 + 单元音 + 辅音”结尾，双写最后一个辅音字母，再加词尾。
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 ml-4">
+                <li><strong class="text-blue-600 dark:text-blue-400">big</strong> (大的) → bi<strong class="text-red-500">gg</strong>er → bi<strong class="text-green-600">gg</strong>est</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">hot</strong> (热的) → ho<strong class="text-red-500">tt</strong>er → ho<strong class="text-green-600">tt</strong>est</li>
+            </ul>
+        </div>
+        
+        <!-- Rule Section: Two-Syllable Words -->
+        <div class="mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left text-gray-800 dark:text-gray-200">
+                2. 两音节形容词
+            </h2>
+            <p class="mb-3 text-gray-600 dark:text-gray-400">
+                两音节形容词的规则有所不同。
+            </p>
+            <div class="mb-4">
+                <p class="rule-heading text-gray-700 dark:text-gray-300">词尾是 -y:</p>
+                <p class="mb-3 text-gray-600 dark:text-gray-400">
+                    将 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">-y</code> 改为 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">-i</code>，然后加上 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">-er</code> 或 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">-est</code>。
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 ml-4">
+                    <li><strong class="text-blue-600 dark:text-blue-400">happy</strong> (开心的) → happ<strong class="text-red-500">ier</strong> → happ<strong class="text-green-600">iest</strong></li>
+                    <li><strong class="text-blue-600 dark:text-blue-400">funny</strong> (有趣的) → funn<strong class="text-red-500">ier</strong> → funn<strong class="text-green-600">iest</strong></li>
+                </ul>
+            </div>
+            <div>
+                <p class="rule-heading text-gray-700 dark:text-gray-300">其他大部分情况:</p>
+                <p class="mb-3 text-gray-600 dark:text-gray-400">
+                    在形容词前面加上 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">more</code> 或 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">most</code>。
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 ml-4">
+                    <li><strong class="text-blue-600 dark:text-blue-400">famous</strong> (著名的) → <strong class="text-red-500">more</strong> famous → <strong class="text-green-600">most</strong> famous</li>
+                    <li><strong class="text-blue-600 dark:text-blue-400">boring</strong> (无聊的) → <strong class="text-red-500">more</strong> boring → <strong class="text-green-600">most</strong> boring</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Rule Section: Three or More Syllables -->
+        <div class="mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left text-gray-800 dark:text-gray-200">
+                3. 三个或更多音节的词
+            </h2>
+            <p class="mb-3 text-gray-600 dark:text-gray-400">
+                对于所有三个或更多音节的词，总是使用 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">more</code> 和 <code class="bg-gray-200 dark:bg-gray-700 rounded-md p-1">most</code>。
+            </p>
+            <div class="syntax-block p-4 rounded-lg font-mono text-sm sm:text-base mb-4">
+                <p><span class="text-red-500">more</span> + Adjective/Adverb → <span class="text-green-600">most</span> + Adjective/Adverb</p>
+            </div>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 ml-4">
+                <li><strong class="text-blue-600 dark:text-blue-400">beautiful</strong> (美丽的) → <strong class="text-red-500">more</strong> beautiful → <strong class="text-green-600">most</strong> beautiful</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">importantly</strong> (重要地) → <strong class="text-red-500">more</strong> importantly → <strong class="text-green-600">most</strong> importantly</li>
+            </ul>
+        </div>
+        
+        <!-- Rule Section: Irregular Words -->
+        <div class="mb-8">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-4 text-center sm:text-left text-gray-800 dark:text-gray-200">
+                4. 不规则词
+            </h2>
+            <p class="mb-3 text-gray-600 dark:text-gray-400">
+                一些常见的词不遵循上述规则，有自己独特的比较级和最高级形式。
+            </p>
+            <div class="syntax-block p-4 rounded-lg font-mono text-sm sm:text-base mb-4">
+                <p>原形 → 比较级 → 最高级</p>
+            </div>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 ml-4">
+                <li><strong class="text-blue-600 dark:text-blue-400">good/well</strong> (好) → better → best</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">bad/badly</strong> (坏/糟糕) → worse → worst</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">little</strong> (少) → less → least</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">much/many</strong> (多) → more → most</li>
+                <li><strong class="text-blue-600 dark:text-blue-400">far</strong> (远) → farther/further → farthest/furthest</li>
+            </ul>
+        </div>
+        
+    </div>
+</body>
+</html>

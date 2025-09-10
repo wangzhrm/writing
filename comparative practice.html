@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Vocabulary Practice</title>
+    <!-- Use Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 sm:p-10 rounded-3xl shadow-2xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-5xl font-bold text-slate-800 mb-2">IELTS Vocabulary Practice</h1>
+            <p class="text-lg sm:text-xl text-slate-500">
+                Click the <span class="font-bold text-slate-900">+</span> symbol next to each word to reveal its comparative and superlative forms.
+            </p>
+        </header>
+
+        <main>
+            <!-- Grid container for the vocabulary list -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div id="word_1" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_1')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">1. large</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_1">+</span>
+                    </div>
+                    <div id="answer_1" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> larger</p>
+                        <p><strong>Superlative:</strong> largest</p>
+                    </div>
+                </div>
+                <div id="word_2" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_2')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">2. small</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_2">+</span>
+                    </div>
+                    <div id="answer_2" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> smaller</p>
+                        <p><strong>Superlative:</strong> smallest</p>
+                    </div>
+                </div>
+                <div id="word_3" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_3')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">3. high</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_3">+</span>
+                    </div>
+                    <div id="answer_3" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> higher</p>
+                        <p><strong>Superlative:</strong> highest</p>
+                    </div>
+                </div>
+                <div id="word_4" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_4')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">4. low</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_4">+</span>
+                    </div>
+                    <div id="answer_4" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> lower</p>
+                        <p><strong>Superlative:</strong> lowest</p>
+                    </div>
+                </div>
+                <div id="word_5" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_5')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">5. fast</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_5">+</span>
+                    </div>
+                    <div id="answer_5" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> faster</p>
+                        <p><strong>Superlative:</strong> fastest</p>
+                    </div>
+                </div>
+                <div id="word_6" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_6')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">6. slow</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_6">+</span>
+                    </div>
+                    <div id="answer_6" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> slower</p>
+                        <p><strong>Superlative:</strong> slowest</p>
+                    </div>
+                </div>
+                <div id="word_7" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_7')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">7. hot</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_7">+</span>
+                    </div>
+                    <div id="answer_7" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> hotter</p>
+                        <p><strong>Superlative:</strong> hottest</p>
+                    </div>
+                </div>
+                <div id="word_8" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_8')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">8. cold</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_8">+</span>
+                    </div>
+                    <div id="answer_8" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> colder</p>
+                        <p><strong>Superlative:</strong> coldest</p>
+                    </div>
+                </div>
+                <div id="word_9" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_9')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">9. big</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_9">+</span>
+                    </div>
+                    <div id="answer_9" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> bigger</p>
+                        <p><strong>Superlative:</strong> biggest</p>
+                    </div>
+                </div>
+                <div id="word_10" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_10')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">10. long</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_10">+</span>
+                    </div>
+                    <div id="answer_10" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> longer</p>
+                        <p><strong>Superlative:</strong> longest</p>
+                    </div>
+                </div>
+                <div id="word_11" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_11')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">11. short</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_11">+</span>
+                    </div>
+                    <div id="answer_11" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> shorter</p>
+                        <p><strong>Superlative:</strong> shortest</p>
+                    </div>
+                </div>
+                <div id="word_12" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_12')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">12. strong</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_12">+</span>
+                    </div>
+                    <div id="answer_12" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> stronger</p>
+                        <p><strong>Superlative:</strong> strongest</p>
+                    </div>
+                </div>
+                <div id="word_13" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_13')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">13. cheap</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_13">+</span>
+                    </div>
+                    <div id="answer_13" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> cheaper</p>
+                        <p><strong>Superlative:</strong> cheapest</p>
+                    </div>
+                </div>
+                <div id="word_14" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_14')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">14. dear</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_14">+</span>
+                    </div>
+                    <div id="answer_14" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> dearer</p>
+                        <p><strong>Superlative:</strong> dearest</p>
+                    </div>
+                </div>
+                <div id="word_15" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_15')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">15. wide</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_15">+</span>
+                    </div>
+                    <div id="answer_15" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> wider</p>
+                        <p><strong>Superlative:</strong> widest</p>
+                    </div>
+                </div>
+                <div id="word_16" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_16')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">16. deep</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_16">+</span>
+                    </div>
+                    <div id="answer_16" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> deeper</p>
+                        <p><strong>Superlative:</strong> deepest</p>
+                    </div>
+                </div>
+                <div id="word_17" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_17')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">17. shallow</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_17">+</span>
+                    </div>
+                    <div id="answer_17" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> shallower</p>
+                        <p><strong>Superlative:</strong> shallowest</p>
+                    </div>
+                </div>
+                <div id="word_18" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_18')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">18. happy</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_18">+</span>
+                    </div>
+                    <div id="answer_18" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> happier</p>
+                        <p><strong>Superlative:</strong> happiest</p>
+                    </div>
+                </div>
+                <div id="word_19" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_19')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">19. easy</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_19">+</span>
+                    </div>
+                    <div id="answer_19" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> easier</p>
+                        <p><strong>Superlative:</strong> easiest</p>
+                    </div>
+                </div>
+                <div id="word_20" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_20')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">20. busy</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_20">+</span>
+                    </div>
+                    <div id="answer_20" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> busier</p>
+                        <p><strong>Superlative:</strong> busiest</p>
+                    </div>
+                </div>
+                <div id="word_21" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_21')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">21. heavy</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_21">+</span>
+                    </div>
+                    <div id="answer_21" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> heavier</p>
+                        <p><strong>Superlative:</strong> heaviest</p>
+                    </div>
+                </div>
+                <div id="word_22" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_22')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">22. healthy</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_22">+</span>
+                    </div>
+                    <div id="answer_22" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> healthier</p>
+                        <p><strong>Superlative:</strong> healthiest</p>
+                    </div>
+                </div>
+                <div id="word_23" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_23')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">23. pretty</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_23">+</span>
+                    </div>
+                    <div id="answer_23" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> prettier</p>
+                        <p><strong>Superlative:</strong> prettiest</p>
+                    </div>
+                </div>
+                <div id="word_24" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_24')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">24. early</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_24">+</span>
+                    </div>
+                    <div id="answer_24" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> earlier</p>
+                        <p><strong>Superlative:</strong> earliest</p>
+                    </div>
+                </div>
+                <div id="word_25" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_25')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">25. famous</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_25">+</span>
+                    </div>
+                    <div id="answer_25" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more famous</p>
+                        <p><strong>Superlative:</strong> most famous</p>
+                    </div>
+                </div>
+                <div id="word_26" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_26')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">26. polite</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_26">+</span>
+                    </div>
+                    <div id="answer_26" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more polite</p>
+                        <p><strong>Superlative:</strong> most polite</p>
+                    </div>
+                </div>
+                <div id="word_27" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_27')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">27. careful</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_27">+</span>
+                    </div>
+                    <div id="answer_27" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more careful</p>
+                        <p><strong>Superlative:</strong> most careful</p>
+                    </div>
+                </div>
+                <div id="word_28" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_28')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">28. modern</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_28">+</span>
+                    </div>
+                    <div id="answer_28" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more modern</p>
+                        <p><strong>Superlative:</strong> most modern</p>
+                    </div>
+                </div>
+                <div id="word_29" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_29')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">29. useful</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_29">+</span>
+                    </div>
+                    <div id="answer_29" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more useful</p>
+                        <p><strong>Superlative:</strong> most useful</p>
+                    </div>
+                </div>
+                <div id="word_30" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_30')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">30. boring</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_30">+</span>
+                    </div>
+                    <div id="answer_30" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more boring</p>
+                        <p><strong>Superlative:</strong> most boring</p>
+                    </div>
+                </div>
+                <div id="word_31" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_31')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">31. common</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_31">+</span>
+                    </div>
+                    <div id="answer_31" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more common</p>
+                        <p><strong>Superlative:</strong> most common</p>
+                    </div>
+                </div>
+                <div id="word_32" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_32')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">32. important</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_32">+</span>
+                    </div>
+                    <div id="answer_32" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more important</p>
+                        <p><strong>Superlative:</strong> most important</p>
+                    </div>
+                </div>
+                <div id="word_33" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_33')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">33. beautiful</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_33">+</span>
+                    </div>
+                    <div id="answer_33" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more beautiful</p>
+                        <p><strong>Superlative:</strong> most beautiful</p>
+                    </div>
+                </div>
+                <div id="word_34" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_34')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">34. expensive</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_34">+</span>
+                    </div>
+                    <div id="answer_34" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more expensive</p>
+                        <p><strong>Superlative:</strong> most expensive</p>
+                    </div>
+                </div>
+                <div id="word_35" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_35')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">35. significant</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_35">+</span>
+                    </div>
+                    <div id="answer_35" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more significant</p>
+                        <p><strong>Superlative:</strong> most significant</p>
+                    </div>
+                </div>
+                <div id="word_36" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_36')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">36. intelligent</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_36">+</span>
+                    </div>
+                    <div id="answer_36" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more intelligent</p>
+                        <p><strong>Superlative:</strong> most intelligent</p>
+                    </div>
+                </div>
+                <div id="word_37" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_37')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">37. necessary</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_37">+</span>
+                    </div>
+                    <div id="answer_37" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more necessary</p>
+                        <p><strong>Superlative:</strong> most necessary</p>
+                    </div>
+                </div>
+                <div id="word_38" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_38')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">38. complicated</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_38">+</span>
+                    </div>
+                    <div id="answer_38" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more complicated</p>
+                        <p><strong>Superlative:</strong> most complicated</p>
+                    </div>
+                </div>
+                <div id="word_39" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_39')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">39. comprehensive</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_39">+</span>
+                    </div>
+                    <div id="answer_39" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more comprehensive</p>
+                        <p><strong>Superlative:</strong> most comprehensive</p>
+                    </div>
+                </div>
+                <div id="word_40" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_40')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">40. productive</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_40">+</span>
+                    </div>
+                    <div id="answer_40" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more productive</p>
+                        <p><strong>Superlative:</strong> most productive</p>
+                    </div>
+                </div>
+                <div id="word_41" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_41')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">41. efficient</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_41">+</span>
+                    </div>
+                    <div id="answer_41" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more efficient</p>
+                        <p><strong>Superlative:</strong> most efficient</p>
+                    </div>
+                </div>
+                <div id="word_42" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_42')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">42. advantageous</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_42">+</span>
+                    </div>
+                    <div id="answer_42" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more advantageous</p>
+                        <p><strong>Superlative:</strong> most advantageous</p>
+                    </div>
+                </div>
+                <div id="word_43" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_43')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">43. disastrous</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_43">+</span>
+                    </div>
+                    <div id="answer_43" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more disastrous</p>
+                        <p><strong>Superlative:</strong> most disastrous</p>
+                    </div>
+                </div>
+                <div id="word_44" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_44')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">44. controversial</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_44">+</span>
+                    </div>
+                    <div id="answer_44" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more controversial</p>
+                        <p><strong>Superlative:</strong> most controversial</p>
+                    </div>
+                </div>
+                <div id="word_45" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_45')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">45. good</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_45">+</span>
+                    </div>
+                    <div id="answer_45" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> better</p>
+                        <p><strong>Superlative:</strong> best</p>
+                    </div>
+                </div>
+                <div id="word_46" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_46')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">46. bad</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_46">+</span>
+                    </div>
+                    <div id="answer_46" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> worse</p>
+                        <p><strong>Superlative:</strong> worst</p>
+                    </div>
+                </div>
+                <div id="word_47" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_47')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">47. far</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_47">+</span>
+                    </div>
+                    <div id="answer_47" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> farther / further</p>
+                        <p><strong>Superlative:</strong> farthest / furthest</p>
+                    </div>
+                </div>
+                <div id="word_48" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_48')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">48. little</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_48">+</span>
+                    </div>
+                    <div id="answer_48" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> less</p>
+                        <p><strong>Superlative:</strong> least</p>
+                    </div>
+                </div>
+                <div id="word_49" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_49')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">49. much / many</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_49">+</span>
+                    </div>
+                    <div id="answer_49" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> more</p>
+                        <p><strong>Superlative:</strong> most</p>
+                    </div>
+                </div>
+                <div id="word_50" class="bg-gray-100 p-4 rounded-xl shadow-md cursor-pointer transition-transform duration-300 hover:scale-105" onclick="toggleAnswer('word_50')">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xl font-semibold">50. well</span>
+                        <span class="text-2xl font-bold text-gray-500 transition-transform duration-300 transform-gpu" id="icon_50">+</span>
+                    </div>
+                    <div id="answer_50" class="hidden text-slate-600">
+                        <p><strong>Comparative:</strong> better</p>
+                        <p><strong>Superlative:</strong> best</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JavaScript function to toggle the visibility of the answer and change the icon
+        function toggleAnswer(wordId) {
+            const answerDiv = document.getElementById(`answer_${wordId.split('_')[1]}`);
+            const iconSpan = document.getElementById(`icon_${wordId.split('_')[1]}`);
+            
+            if (answerDiv.classList.contains('hidden')) {
+                answerDiv.classList.remove('hidden');
+                iconSpan.textContent = '−';
+            } else {
+                answerDiv.classList.add('hidden');
+                iconSpan.textContent = '+';
+            }
+        }
+    </script>
+</body>
+</html>
