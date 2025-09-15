@@ -22,6 +22,19 @@
             font-style: italic;
             margin-bottom: 20px;
         }
+        /* Container for the table and chart */
+        .content-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+        }
+        /* Table styling */
+        .table-container {
+            flex: 1;
+            min-width: 400px; /* Ensures table is not too small */
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -35,6 +48,12 @@
         th {
             background-color: #f2f2f2;
         }
+        /* Bar chart styling */
+        .bar-chart-section {
+            flex: 1;
+            min-width: 400px; /* Ensures chart is not too small */
+            margin-bottom: 40px;
+        }
         .bar-chart-container {
             display: flex;
             align-items: flex-end;
@@ -44,6 +63,7 @@
             border-bottom: 2px solid #333;
             padding-bottom: 10px;
             padding-left: 10px;
+            position: relative;
         }
         .bar {
             background-color: #3498db;
@@ -52,9 +72,10 @@
             position: relative;
             transition: height 0.5s ease-in-out;
         }
+        /* Fixed the position of the bar labels */
         .bar-label {
             position: absolute;
-            bottom: -25px;
+            bottom: -30px; /* Increased distance from the axis */
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
@@ -85,75 +106,78 @@
 
     <p>The table and bar chart below provide information about the average travel speeds for different modes of transportation before and after city renovations, as well as the average cost per kilometer for each mode. Summarize the information by selecting and reporting the main features, and make comparisons where relevant.</p>
 
-    <h2>Table: Average travel speed</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Form of transport</th>
-                <th>Average travel speed (km/h) before renovation</th>
-                <th>Average travel speed (km/h) after the renovation</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Underground</td>
-                <td>33</td>
-                <td>38</td>
-            </tr>
-            <tr>
-                <td>Bus</td>
-                <td>12</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Taxi</td>
-                <td>20</td>
-                <td>22</td>
-            </tr>
-            <tr>
-                <td>Car</td>
-                <td>25</td>
-                <td>18</td>
-            </tr>
-            <tr>
-                <td>Bicycle</td>
-                <td>15</td>
-                <td>17</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>Bar Chart: Average cost per km (£)</h2>
-
-    <div style="display: flex;">
-        <div style="position: relative; height: 300px; margin-right: 10px; display: flex; flex-direction: column-reverse; justify-content: space-between; font-size: 14px;">
-            <span>£2.00</span>
-            <span>£1.50</span>
-            <span>£1.00</span>
-            <span>£0.50</span>
-            <span>£0.00</span>
+    <div class="content-container">
+        <div class="table-container">
+            <h2>Table: Average travel speed</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Form of transport</th>
+                        <th>Average travel speed (km/h) before renovation</th>
+                        <th>Average travel speed (km/h) after the renovation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Underground</td>
+                        <td>33</td>
+                        <td>38</td>
+                    </tr>
+                    <tr>
+                        <td>Bus</td>
+                        <td>12</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Taxi</td>
+                        <td>20</td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        <td>Car</td>
+                        <td>25</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>Bicycle</td>
+                        <td>15</td>
+                        <td>17</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div style="display: flex; align-items: flex-end; height: 300px; max-width: 600px; border-left: 2px solid #333; border-bottom: 2px solid #333; padding-bottom: 10px; padding-left: 10px;">
-            <div style="background-color: #3498db; width: 60px; margin: 0 10px; position: relative; transition: height 0.5s ease-in-out; height: calc(0.20 / 2.00 * 100%);">
-                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold;">£0.20</span>
-                <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 14px;">Underground</span>
-            </div>
-            <div style="background-color: #3498db; width: 60px; margin: 0 10px; position: relative; transition: height 0.5s ease-in-out; height: calc(0.15 / 2.00 * 100%);">
-                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold;">£0.15</span>
-                <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 14px;">Bus</span>
-            </div>
-            <div style="background-color: #3498db; width: 60px; margin: 0 10px; position: relative; transition: height 0.5s ease-in-out; height: calc(1.80 / 2.00 * 100%);">
-                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold;">£1.80</span>
-                <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 14px;">Taxi</span>
-            </div>
-            <div style="background-color: #3498db; width: 60px; margin: 0 10px; position: relative; transition: height 0.5s ease-in-out; height: calc(1.20 / 2.00 * 100%);">
-                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold;">£1.20</span>
-                <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 14px;">Car</span>
-            </div>
-            <div style="background-color: #3498db; width: 60px; margin: 0 10px; position: relative; transition: height 0.5s ease-in-out; height: calc(0.05 / 2.00 * 100%);">
-                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: bold;">£0.05</span>
-                <span style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 14px;">Bicycle</span>
+        <div class="bar-chart-section">
+            <h2>Bar Chart: Average cost per km (£)</h2>
+            <div style="display: flex;">
+                <div style="position: relative; height: 300px; margin-right: 10px; display: flex; flex-direction: column-reverse; justify-content: space-between; font-size: 14px;">
+                    <span>£2.00</span>
+                    <span>£1.50</span>
+                    <span>£1.00</span>
+                    <span>£0.50</span>
+                    <span>£0.00</span>
+                </div>
+                <div class="bar-chart-container">
+                    <div class="bar" style="height: calc(0.20 / 2.00 * 100%);">
+                        <span class="bar-value">£0.20</span>
+                        <span class="bar-label">Underground</span>
+                    </div>
+                    <div class="bar" style="height: calc(0.15 / 2.00 * 100%);">
+                        <span class="bar-value">£0.15</span>
+                        <span class="bar-label">Bus</span>
+                    </div>
+                    <div class="bar" style="height: calc(1.80 / 2.00 * 100%);">
+                        <span class="bar-value">£1.80</span>
+                        <span class="bar-label">Taxi</span>
+                    </div>
+                    <div class="bar" style="height: calc(1.20 / 2.00 * 100%);">
+                        <span class="bar-value">£1.20</span>
+                        <span class="bar-label">Car</span>
+                    </div>
+                    <div class="bar" style="height: calc(0.05 / 2.00 * 100%);">
+                        <span class="bar-value">£0.05</span>
+                        <span class="bar-label">Bicycle</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
