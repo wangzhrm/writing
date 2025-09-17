@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countable and Uncountable Nouns Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2em;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #5a5a5a;
+        }
+        .summary p {
+            background: #e9e9e9;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 1em;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+        .explanation {
+            font-style: italic;
+            color: #666;
+            margin-top: 5px;
+            display: none;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Countable and Uncountable Nouns</h1>
+    <p>This page summarizes the usage of different words and expressions with countable and uncountable nouns, followed by a quiz to test your understanding.</p>
+
+    <h2>Summary of Usage</h2>
+    
+    <h3>For Countable Nouns</h3>
+    <div class="summary">
+        <p><strong>The number of:</strong> Used to refer to a specific, quantifiable quantity of people or things. <br><em>Example: **The number of** students in the class is 25.</em></p>
+        <p><strong>Many:</strong> Refers to a large quantity. <br><em>Example: **Many** books were sold at the fair.</em></p>
+        <p><strong>Few:</strong> Refers to a small, inadequate quantity. <br><em>Example: **Few** people attended the meeting.</em></p>
+        <p><strong>Several:</strong> Refers to a small but indefinite number, more than two but not many. <br><em>Example: I bought **several** new shirts.</em></p>
+        <p><strong>Each:</strong> Refers to every one of two or more people or things, regarded individually. <br><em>Example: **Each** participant received a certificate.</em></p>
+        <p><strong>Numerous:</strong> Refers to a large number. <br><em>Example: The website has **numerous** positive reviews.</em></p>
+        <p><strong>A great many:</strong> Emphasizes a very large number. <br><em>Example: **A great many** species of birds migrate in the winter.</em></p>
+    </div>
+
+    <h3>For Uncountable Nouns</h3>
+    <div class="summary">
+        <p><strong>The amount of:</strong> Used to refer to a quantity of a substance or concept that cannot be counted. <br><em>Example: **The amount of** water needed for the recipe is 1 liter.</em></p>
+        <p><strong>Much:</strong> Refers to a large quantity or amount. <br><em>Example: There isn't **much** information on the topic.</em></p>
+        <p><strong>Little:</strong> Refers to a small, inadequate quantity or amount. <br><em>Example: There is **little** hope for a quick solution.</em></p>
+    </div>
+
+    <h3>For Both Countable and Uncountable Nouns</h3>
+    <div class="summary">
+        <p><strong>Some:</strong> Refers to an unspecified number or amount. <br><em>Examples: There are **some** apples in the bowl. / I need **some** advice.</em></p>
+        <p><strong>A lot of / Lots of:</strong> Refers to a large quantity or number. <br><em>Examples: **A lot of** cars were on the road. / We had **lots of** fun.</em></p>
+        <p><strong>Plenty of:</strong> Refers to a sufficient or more than sufficient quantity or number. <br><em>Examples: We have **plenty of** chairs for everyone. / There's **plenty of** time.</em></p>
+    </div>
+
+    <h2>Quiz</h2>
+    <form id="quizForm">
+        <div class="question">
+            <p>1. There were ______ of people at the concert.</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. much</label>
+                <label><input type="radio" name="q1" value="B"> B. a large amount of</label>
+                <label><input type="radio" name="q1" value="C"> C. a great many</label>
+            </div>
+            <div class="result" id="result1"></div>
+            <div class="explanation" id="explanation1">
+                <span class="correct-answer">Correct Answer: C. a great many</span><br>
+                Explanation: 'People' is a plural countable noun, and 'a great many' is used to emphasize a large number of countable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. We need to find a house with ______ of space.</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. many</label>
+                <label><input type="radio" name="q2" value="B"> B. a great deal of</label>
+                <label><input type="radio" name="q2" value="C"> C. several</label>
+            </div>
+            <div class="result" id="result2"></div>
+            <div class="explanation" id="explanation2">
+                <span class="correct-answer">Correct Answer: B. a great deal of</span><br>
+                Explanation: 'Space' is an uncountable noun, and 'a great deal of' is used to refer to a large quantity of something uncountable.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. I have ______ new ideas for the project.</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. much</label>
+                <label><input type="radio" name="q3" value="B"> B. a lot of</label>
+                <label><input type="radio" name="q3" value="C"> C. a little</label>
+            </div>
+            <div class="result" id="result3"></div>
+            <div class="explanation" id="explanation3">
+                <span class="correct-answer">Correct Answer: B. a lot of</span><br>
+                Explanation: 'A lot of' can be used with both countable ('ideas') and uncountable nouns. The other options are only for uncountable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. There is ______ water left in the bottle.</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. a few</label>
+                <label><input type="radio" name="q4" value="B"> B. little</label>
+                <label><input type="radio" name="q4" value="C"> C. many</label>
+            </div>
+            <div class="result" id="result4"></div>
+            <div class="explanation" id="explanation4">
+                <span class="correct-answer">Correct Answer: B. little</span><br>
+                Explanation: 'Water' is an uncountable noun. 'Little' is used for a small amount of an uncountable noun.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. He has ______ friends in the city.</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. a little</label>
+                <label><input type="radio" name="q5" value="B"> B. few</label>
+                <label><input type="radio" name="q5" value="C"> C. much</label>
+            </div>
+            <div class="result" id="result5"></div>
+            <div class="explanation" id="explanation5">
+                <span class="correct-answer">Correct Answer: B. few</span><br>
+                Explanation: 'Friends' is a plural countable noun. 'Few' is used for a small number of countable nouns.
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>6. The company faced ______ problems during the transition.</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. numerous</label>
+                <label><input type="radio" name="q6" value="B"> B. a great deal of</label>
+                <label><input type="radio" name="q6" value="C"> C. much</label>
+            </div>
+            <div class="result" id="result6"></div>
+            <div class="explanation" id="explanation6">
+                <span class="correct-answer">Correct Answer: A. numerous</span><br>
+                Explanation: 'Problems' is a plural countable noun. 'Numerous' is used for a large number of countable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. The project requires a significant ______ of effort.</p>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. number</label>
+                <label><input type="radio" name="q7" value="B"> B. amount</label>
+                <label><input type="radio" name="q7" value="C"> C. lot</label>
+            </div>
+            <div class="result" id="result7"></div>
+            <div class="explanation" id="explanation7">
+                <span class="correct-answer">Correct Answer: B. amount</span><br>
+                Explanation: 'Effort' is an uncountable noun, so 'amount' is the correct choice.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. How ______ money do you need for the trip?</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. many</label>
+                <label><input type="radio" name="q8" value="B"> B. several</label>
+                <label><input type="radio" name="q8" value="C"> C. much</label>
+            </div>
+            <div class="result" id="result8"></div>
+            <div class="explanation" id="explanation8">
+                <span class="correct-answer">Correct Answer: C. much</span><br>
+                Explanation: 'Money' is an uncountable noun. 'Much' is used in questions and negative sentences with uncountable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. There are only ______ chairs left in the room.</p>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. a little</label>
+                <label><input type="radio" name="q9" value="B"> B. little</label>
+                <label><input type="radio" name="q9" value="C"> C. a few</label>
+            </div>
+            <div class="result" id="result9"></div>
+            <div class="explanation" id="explanation9">
+                <span class="correct-answer">Correct Answer: C. a few</span><br>
+                Explanation: 'Chairs' is a plural countable noun. 'A few' is used for a small, but positive number of countable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. ______ of the information was outdated.</p>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A"> A. Many</label>
+                <label><input type="radio" name="q10" value="B"> B. A lot</label>
+                <label><input type="radio" name="q10" value="C"> C. Several</label>
+            </div>
+            <div class="result" id="result10"></div>
+            <div class="explanation" id="explanation10">
+                <span class="correct-answer">Correct Answer: B. A lot</span><br>
+                Explanation: 'Information' is an uncountable noun. 'A lot' (or 'lots') can be used with both countable and uncountable nouns.
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>11. There has been very ______ progress on the new project.</p>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. a few</label>
+                <label><input type="radio" name="q11" value="B"> B. little</label>
+                <label><input type="radio" name="q11" value="C"> C. many</label>
+            </div>
+            <div class="result" id="result11"></div>
+            <div class="explanation" id="explanation11">
+                <span class="correct-answer">Correct Answer: B. little</span><br>
+                Explanation: 'Progress' is an uncountable noun. 'Little' is used for a small amount of an uncountable noun.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. ______ of the students passed the exam.</p>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. Many</label>
+                <label><input type="radio" name="q12" value="B"> B. A great amount of</label>
+                <label><input type="radio" name="q12" value="C"> C. Much</label>
+            </div>
+            <div class="result" id="result12"></div>
+            <div class="explanation" id="explanation12">
+                <span class="correct-answer">Correct Answer: A. Many</span><br>
+                Explanation: 'Students' is a plural countable noun. 'Many' is used for a large number of countable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. We need to save ______ time to finish this task.</p>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A"> A. a lot of</label>
+                <label><input type="radio" name="q13" value="B"> B. numerous</label>
+                <label><input type="radio" name="q13" value="C"> C. a few</label>
+            </div>
+            <div class="result" id="result13"></div>
+            <div class="explanation" id="explanation13">
+                <span class="correct-answer">Correct Answer: A. a lot of</span><br>
+                Explanation: 'Time' is an uncountable noun. 'A lot of' can be used with both countable and uncountable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. The police received ______ new leads on the case.</p>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A"> A. a little</label>
+                <label><input type="radio" name="q14" value="B"> B. much</label>
+                <label><input type="radio" name="q14" value="C"> C. several</label>
+            </div>
+            <div class="result" id="result14"></div>
+            <div class="explanation" id="explanation14">
+                <span class="correct-answer">Correct Answer: C. several</span><br>
+                Explanation: 'Leads' is a plural countable noun. 'Several' is used for a small but indefinite number of countable nouns.
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>15. There is ______ traffic on the roads today.</p>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. fewer</label>
+                <label><input type="radio" name="q15" value="B"> B. less</label>
+                <label><input type="radio" name="q15" value="C"> C. many</label>
+            </div>
+            <div class="result" id="result15"></div>
+            <div class="explanation" id="explanation15">
+                <span class="correct-answer">Correct Answer: B. less</span><br>
+                Explanation: 'Traffic' is an uncountable noun. 'Less' is used for a smaller amount of an uncountable noun.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. ______ people know the answer to this difficult question.</p>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> A. Few</label>
+                <label><input type="radio" name="q16" value="B"> B. Little</label>
+                <label><input type="radio" name="q16" value="C"> C. Much</label>
+            </div>
+            <div class="result" id="result16"></div>
+            <div class="explanation" id="explanation16">
+                <span class="correct-answer">Correct Answer: A. Few</span><br>
+                Explanation: 'People' is a plural countable noun. 'Few' is used for a small, inadequate number of countable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. We have ______ fresh fruit left in the kitchen.</p>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> A. plenty of</label>
+                <label><input type="radio" name="q17" value="B"> B. a great many</label>
+                <label><input type="radio" name="q17" value="C"> C. each</label>
+            </div>
+            <div class="result" id="result17"></div>
+            <div class="explanation" id="explanation17">
+                <span class="correct-answer">Correct Answer: A. plenty of</span><br>
+                Explanation: 'Fruit' can be used as an uncountable noun in this context (referring to the category). 'Plenty of' can be used with both countable and uncountable nouns.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. A lot of energy ______ wasted every day.</p>
+            <div class="options">
+                <label><input type="radio" name="q18" value="A"> A. are</label>
+                <label><input type="radio" name="q18" value="B"> B. is</label>
+                <label><input type="radio" name="q18" value="C"> C. were</label>
+            </div>
+            <div class="result" id="result18"></div>
+            <div class="explanation" id="explanation18">
+                <span class="correct-answer">Correct Answer: B. is</span><br>
+                Explanation: 'Energy' is an uncountable noun, which always takes a singular verb.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. The project involved a great ______ of research.</p>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> A. number</label>
+                <label><input type="radio" name="q19" value="B"> B. deal</label>
+                <label><input type="radio" name="q19" value="C"> C. many</label>
+            </div>
+            <div class="result" id="result19"></div>
+            <div class="explanation" id="explanation19">
+                <span class="correct-answer">Correct Answer: B. deal</span><br>
+                Explanation: 'Research' is an uncountable noun. The correct expression is 'a great deal of'.
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. The factory produces ______ cars per year.</p>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A"> A. a large amount of</label>
+                <label><input type="radio" name="q20" value="B"> B. a great deal of</label>
+                <label><input type="radio" name="q20" value="C"> C. a large number of</label>
+            </div>
+            <div class="result" id="result20"></div>
+            <div class="explanation" id="explanation20">
+                <span class="correct-answer">Correct Answer: C. a large number of</span><br>
+                Explanation: 'Cars' is a plural countable noun. The correct expression for a large quantity of countable nouns is 'a large number of'.
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quizForm = document.getElementById('quizForm');
+        const questions = quizForm.querySelectorAll('.question');
+
+        questions.forEach(question => {
+            const options = question.querySelectorAll('input[type="radio"]');
+            const resultDiv = question.querySelector('.result');
+            const explanationDiv = question.querySelector('.explanation');
+
+            options.forEach(option => {
+                option.addEventListener('change', function() {
+                    const selectedValue = this.value;
+                    const questionNumber = this.name.substring(1);
+                    let isCorrect = false;
+
+                    // Define correct answers
+                    const correctAnswers = {
+                        'q1': 'C', 'q2': 'B', 'q3': 'B', 'q4': 'B', 'q5': 'B',
+                        'q6': 'A', 'q7': 'B', 'q8': 'C', 'q9': 'C', 'q10': 'B',
+                        'q11': 'B', 'q12': 'A', 'q13': 'A', 'q14': 'C', 'q15': 'B',
+                        'q16': 'A', 'q17': 'A', 'q18': 'B', 'q19': 'B', 'q20': 'C'
+                    };
+
+                    if (selectedValue === correctAnswers['q' + questionNumber]) {
+                        resultDiv.textContent = "Correct! ✅";
+                        resultDiv.className = 'result correct';
+                        isCorrect = true;
+                    } else {
+                        resultDiv.textContent = "Wrong. ❌";
+                        resultDiv.className = 'result wrong';
+                    }
+
+                    // Show explanation for all attempts
+                    explanationDiv.style.display = 'block';
+                });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
