@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Task 1 Process Paraphrasing Practice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .practice-box {
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background-color: white;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #10b981; /* Green for Process */
+        }
+        .prompt-text {
+            border: 1px dashed #d1d5db;
+            background-color: #f3f4f6;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        .user-input {
+            min-height: 50px;
+            padding: 10px;
+            border: 2px solid #3b82f6;
+            border-radius: 0.5rem;
+            resize: vertical;
+            font-size: 1rem;
+            line-height: 1.5;
+            overflow: hidden;
+            transition: border-color 0.3s;
+            white-space: pre-wrap;
+            width: 100%;
+            background-color: #ffffff;
+        }
+        .user-input:focus {
+            outline: none;
+            border-color: #1d4ed8;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        .reveal-btn {
+            background-color: #10b981; /* Teal */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .reveal-btn:hover {
+            background-color: #059669;
+        }
+        .answer-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid #38a169;
+            background-color: #e6fffa; /* Light teal */
+            border-radius: 0.5rem;
+            display: none;
+        }
+        .answer-box strong {
+            color: #047857;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 pb-2 border-b-2 border-green-500">
+            IELTS Task 1 Paraphrasing Practice: Flow Charts
+        </h1>
+
+        <p class="text-gray-600 mb-8 text-center">
+            Use the techniques from the guide (synonyms, structural change, grammar change) to paraphrase the following introductory sentences in **one single sentence**.
+        </p>
+
+        <!-- Practice 1: Manufacturing Process -->
+        <div class="practice-box">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Practice 1: Manufacturing</h2>
+            <div class="prompt-text">
+                The diagram below shows the steps involved in manufacturing glass bottles.
+            </div>
+            <div class="mb-3">
+                <div class="user-input" contenteditable="true" placeholder="Type your paraphrased introduction here..."></div>
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('answer1', this)">Show Exemplar Answer</button>
+            <div id="answer1" class="answer-box">
+                <strong>Exemplar Answer:</strong> The schematic illustrates the entire process of how glass containers are manufactured from raw materials.
+                <p class="text-sm text-gray-600 mt-2"><em>(Changes: diagram &rarr; schematic, shows &rarr; illustrates, steps involved in manufacturing &rarr; entire process of how, glass bottles &rarr; glass containers)</em></p>
+            </div>
+        </div>
+
+        <!-- Practice 2: Natural Cycle -->
+        <div class="practice-box">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Practice 2: Natural Cycle</h2>
+            <div class="prompt-text">
+                The chart shows the life cycle of the salmon.
+            </div>
+            <div class="mb-3">
+                <div class="user-input" contenteditable="true" placeholder="Type your paraphrased introduction here..."></div>
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('answer2', this)">Show Exemplar Answer</button>
+            <div id="answer2" class="answer-box">
+                <strong>Exemplar Answer:</strong> The provided figure depicts the various stages that the salmon goes through from birth to maturity.
+                <p class="text-sm text-gray-600 mt-2"><em>(Changes: chart &rarr; provided figure, shows &rarr; depicts, life cycle &rarr; various stages... from birth to maturity)</em></p>
+            </div>
+        </div>
+
+        <!-- Practice 3: Service/Abstract Process -->
+        <div class="practice-box">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Practice 3: Service Process</h2>
+            <div class="prompt-text">
+                The diagram below illustrates the process for registering a new student at a university.
+            </div>
+            <div class="mb-3">
+                <div class="user-input" contenteditable="true" placeholder="Type your paraphrased introduction here..."></div>
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer('answer3', this)">Show Exemplar Answer</button>
+            <div id="answer3" class="answer-box">
+                <strong>Exemplar Answer:</strong> The flow chart outlines the steps that must be completed by an applicant to enroll as a new student at a tertiary institution.
+                <p class="text-sm text-gray-600 mt-2"><em>(Changes: diagram &rarr; flow chart, illustrates &rarr; outlines, process for registering &rarr; steps that must be completed by an applicant to enroll, university &rarr; tertiary institution)</em></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle the visibility of the answer box
+        function toggleAnswer(answerId, button) {
+            const answerBox = document.getElementById(answerId);
+            if (answerBox.style.display === 'none' || answerBox.style.display === '') {
+                answerBox.style.display = 'block';
+                button.textContent = 'Hide Exemplar Answer';
+                button.style.backgroundColor = '#f56565'; // Red color when showing
+            } else {
+                answerBox.style.display = 'none';
+                button.textContent = 'Show Exemplar Answer';
+                button.style.backgroundColor = '#10b981'; // Teal color when hidden
+            }
+        }
+
+        // Auto-resize contenteditable areas
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('user-input')) {
+                autoResize(e.target);
+            }
+        }, false);
+        
+        function autoResize(element) {
+            if(document.contains(element)) {
+                element.style.height = 'auto';
+                element.style.height = (element.scrollHeight) + 'px';
+            }
+        }
+
+        // Initialize auto-resize for existing inputs on load
+        window.onload = function() {
+            document.querySelectorAll('.user-input').forEach(autoResize);
+        }
+    </script>
+</body>
+</html>
