@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Academic Writing Task 1 - Maps</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #34495e;
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db; /* Blue for maps/comparison */
+            padding-bottom: 15px;
+        }
+        .question-prompts {
+            text-align: center;
+            color: #e74c3c;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .paragraph {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db; /* Blue border */
+            position: relative;
+        }
+        .paragraph-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        .input-field {
+            flex: 1;
+            min-height: 40px;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 15px;
+            background: white;
+            overflow: hidden;
+            transition: border-color 0.3s;
+            white-space: pre-wrap;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3498db; /* Blue focus */
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        .hint-btn {
+            position: relative;
+            right: 30px;
+            top: 10px;
+            background: #3498db;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 22px;
+            font-size: 12px;
+            cursor: help;
+            margin-left: -25px;
+            z-index: 10;
+        }
+        .add-btn {
+            background: #1abc9c; /* Teal add button */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        .add-btn:hover {
+            background: #16a085;
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+        .hint-title {
+            color: #3498db;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .generate-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px;
+            background: #3498db; /* Blue generate button */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .generate-btn:hover {
+            background: #2980b9;
+        }
+        .output-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            border-left: 4px solid #1abc9c;
+        }
+        .output-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .essay-output {
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        .paragraph-add-btn {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .tips-container {
+            background-color: #e8f7fd; /* Light blue tips background */
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .tips-container ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .tips-container li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 15px;
+        }
+        .tips-container li:before {
+            content: "🧭"; /* Compass emoji */
+            position: absolute;
+            left: 0;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IELTS Academic Writing Task 1 - Map Comparison</h1>
+        <div class="question-prompts">
+            "Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
+        </div>
+        
+        <div class="tips-container">
+            <div class="tips-title">High-Score Tips for Map Tasks</div>
+            <ul>
+                <li>使用4段式结构：引言、概述、细节1、细节2。</li>
+                <li>**引言**：对题目进行同义改写，**必须**提及地点和时间段。</li>
+                <li>**概述**：总结最显著的整体变化，例如：**扩张** (expansion)、**现代化** (modernisation)、**绿化减少** (loss of green space)。</li>
+                <li>**细节段**：使用**方位词** (e.g., to the north, in the centre, adjacent to, across from) 来精确定位变化。</li>
+                <li>**时态**：根据图上的年份选择恰当的时态 (e.g., Past Simple for historical maps, Present Perfect Passive for changes up to 'now', Future Simple or Future Passive for plans).</li>
+                <li>**词汇**：多用表示**变化**的动词 (e.g., demolished, converted, replaced, constructed, remained, developed into)。</li>
+            </ul>
+        </div>
+        
+        <!-- Introduction Paragraph -->
+        <div class="paragraph intro-paragraph">
+            <div class="paragraph-title">Paragraph 1: Introduction (Paraphrase the Task)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Paraphrase the task statement, mentioning the location and the time period shown. (e.g., The maps illustrate how the town of X has developed between 1990 and 2020.)"></div>
+                <span class="hint-btn" onclick="showHint('hint1')">?</span>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <!-- Overview Paragraph -->
+        <div class="paragraph">
+            <div class="paragraph-title">Paragraph 2: Overview (Main Changes - Big Picture)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Summarize the overall nature of the change (e.g., Overall, the town underwent a dramatic transformation/significant expansion, becoming more commercialised/residential.)"></div>
+                <span class="hint-btn" onclick="showHint('hint2')">?</span>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 2: Mention one or two of the most significant features of the change, without detail (e.g., The most noticeable change was the complete loss of farmland and the addition of major infrastructure.)"></div>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <!-- Body Paragraph 1 (First Half/Major Changes) -->
+        <div class="paragraph">
+            <div class="paragraph-title">Paragraph 3: Details (Focus on a specific area, e.g., North/West or Major Facilities)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Start describing changes in one key area or development. Use prepositions of place (e.g., Initially, in the north-east, the small park was replaced by...)."></div>
+                <span class="hint-btn" onclick="showHint('hint3')">?</span>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 2: Describe a related change in this area. (e.g., The road running through the centre was converted into a pedestrian zone.)"></div>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 3: Use comparative language to contrast the old and new features. (e.g., Where the factory once stood, a new apartment complex was constructed.)"></div>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <!-- Body Paragraph 2 (Second Half/Remaining Changes) -->
+        <div class="paragraph">
+            <div class="paragraph-title">Paragraph 4: Details (Focus on the other area, e.g., South/East or Comparison of Amenities)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Transition to the remaining changes, focusing on the other side of the map or specific amenities. (e.g., Turning to the south side, the sports field remained untouched, but new housing was built adjacent to it.)"></div>
+                <span class="hint-btn" onclick="showHint('hint4')">?</span>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 2: Describe another transformation or a feature that stayed the same. (e.g., Conversely, the central shopping area underwent no changes.)"></div>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 3: Conclude with the final noticeable change or the overall outcome of the development. (e.g., This meant that the town became far more focused on residential and leisure provision.)"></div>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <button class="generate-btn" onclick="generateEssay()">Generate Report</button>
+        
+        <div class="output-container" id="outputContainer">
+            <div class="output-title">Your Generated Report</div>
+            <div class="essay-output" id="essayOutput"></div>
+        </div>
+    </div>
+
+    <!-- Hint Modals -->
+    <div id="hint1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint1')">&times;</span>
+            <div class="hint-title">Paraphrasing the Task (Introduction)</div>
+            <p><strong>Goal:</strong> Restate the prompt in your own words, mentioning the **location** and the **time frames** shown.</p>
+            <p><strong>Example Phrases:</strong></p>
+            <ul>
+                <li>"The two maps illustrate..." (Instead of 'show')</li>
+                <li>"...the changes that have taken place in [Location]..." (Instead of 'how it changed')</li>
+                <li>"...between [Year 1] and [Year 2]." or "...from its current state to its planned future."</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="hint2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint2')">&times;</span>
+            <div class="hint-title">Overview Paragraph (Main Features)</div>
+            <p><strong>Goal:</strong> Identify 1-2 major, high-level changes. **Do not give details or statistics.**</p>
+            <p><strong>Focus on:</strong></p>
+            <ul>
+                <li>**Nature of change:** expansion, urbanisation, or preservation.</li>
+                <li>**Overall trend:** residential focus, industrialisation, or shift towards tourism.</li>
+            </ul>
+            <p><strong>Example:</strong> "Overall, the town has been heavily industrialised over the period, with virtually all green spaces having been lost to new factory complexes and roads."</p>
+        </div>
+    </div>
+
+    <div id="hint3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint3')">&times;</span>
+            <div class="hint-title">Details 1: Describing Changes (Area & Verbs)</div>
+            <p>Use precise **directional language** and strong **verbs of change**.</p>
+            <p><strong>Directional Language:</strong> to the north, in the centre, adjacent to, on the west side, opposite the school.</p>
+            <p><strong>Verbs for Change:</strong></p>
+            <ul>
+                <li><strong>Added:</strong> constructed, built, erected, established, developed.</li>
+                <li><strong>Removed:</strong> demolished, knocked down, cleared, removed, pulled down.</li>
+                <li><strong>Altered:</strong> converted into, replaced by, relocated, expanded, modernised.</li>
+                <li><strong>Unchanged:</strong> remained intact, stayed the same, was untouched.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="hint4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint4')">&times;</span>
+            <div class="hint-title">Details 2: Comparison and Conclusion</div>
+            <p><strong>Goal:</strong> Describe the remaining changes or features that were preserved, focusing on comparison or contrast.</p>
+            <p><strong>Linking Words:</strong> Conversely, Turning to the south, Meanwhile, In contrast, This resulted in...</p>
+            <p><strong>Example:</strong> "**Conversely**, the church in the south-east remained intact. However, the path leading up to it was **converted** into a dual-carriageway, **greatly increasing** accessibility."</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to show hint modals
+        function showHint(hintId) {
+            document.getElementById(hintId).style.display = 'block';
+        }
+        
+        // Function to close modals
+        function closeModal(hintId) {
+            document.getElementById(hintId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            let modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to add new input field to any paragraph
+        function addInput(paragraph) {
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+            
+            const inputField = document.createElement('div');
+            inputField.className = 'input-field';
+            inputField.contentEditable = true;
+            inputField.placeholder = "Additional sentence/change description...";
+            
+            inputGroup.appendChild(inputField);
+            
+            // Insert before the add button container
+            const addButtonContainer = paragraph.querySelector('.paragraph-add-btn');
+            paragraph.insertBefore(inputGroup, addButtonContainer);
+            
+            // Auto-resize the new input field
+            autoResize(inputField);
+        }
+        
+        // Auto-resize text areas
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('input-field')) {
+                autoResize(e.target);
+            }
+        }, false);
+        
+        function autoResize(element) {
+            // Check if element is attached to DOM before attempting scrollHeight
+            if(document.contains(element)) {
+                element.style.height = 'auto';
+                element.style.height = (element.scrollHeight) + 'px';
+            }
+        }
+        
+        // Generate essay from all inputs
+        function generateEssay() {
+            const outputContainer = document.getElementById('outputContainer');
+            const essayOutput = document.getElementById('essayOutput');
+            
+            let essay = "";
+            
+            // Get all paragraphs
+            const paragraphs = document.querySelectorAll('.paragraph');
+            
+            paragraphs.forEach(paragraph => {
+                const inputs = paragraph.querySelectorAll('.input-field');
+                let paraText = "";
+                
+                // Combine all non-empty inputs within a paragraph into a single block of text
+                inputs.forEach(input => {
+                    const text = input.textContent.trim();
+                    if (text !== "") {
+                        // Use a full stop if the text is not just a fragment and doesn't end with punctuation
+                        // Also ensure proper spacing between sentences
+                        paraText += text.replace(/([.?!;])$/, '$1 ') + (text.match(/[.?!;]$/) ? '' : '. ');
+                    }
+                });
+                
+                // Clean up final paragraph text
+                paraText = paraText.trim().replace(/\.\s*$/, '.');
+                
+                if (paraText.length > 0) {
+                    essay += paraText + "\n\n";
+                }
+            });
+            
+            // Clean up final output
+            essay = essay.trim();
+            
+            // Display the generated essay
+            essayOutput.textContent = essay;
+            outputContainer.style.display = 'block';
+            
+            // Scroll to the output
+            outputContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
