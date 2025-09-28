@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Academic Writing Task 1 - Flow Chart</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #2ecc71; /* Green for flow/process */
+            padding-bottom: 15px;
+        }
+        .question-prompts {
+            text-align: center;
+            color: #e74c3c;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .paragraph {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #2ecc71; /* Green border */
+            position: relative;
+        }
+        .paragraph-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        .input-field {
+            flex: 1;
+            min-height: 40px;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 15px;
+            background: white;
+            overflow: hidden;
+            transition: border-color 0.3s;
+            white-space: pre-wrap;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #2ecc71; /* Green focus */
+            box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+        }
+        .hint-btn {
+            position: relative;
+            right: 30px;
+            top: 10px;
+            background: #2ecc71;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 22px;
+            font-size: 12px;
+            cursor: help;
+            margin-left: -25px;
+            z-index: 10;
+        }
+        .add-btn {
+            background: #3498db; /* Blue add button */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        .add-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+        .hint-title {
+            color: #2ecc71;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .intro-paragraph .input-group {
+            display: flex; /* Keep it as flex for better control */
+            width: 100%;
+            margin-right: 0;
+            vertical-align: top;
+        }
+        .generate-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px;
+            background: #2ecc71; /* Green generate button */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .generate-btn:hover {
+            background: #27ae60;
+        }
+        .output-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        .output-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .essay-output {
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        .paragraph-add-btn {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .tips-container {
+            background-color: #e8fcf2; /* Light green tips background */
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .intro-paragraph .input-group {
+                width: 100%;
+                display: flex;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IELTS Academic Writing Task 1 - Flow Chart/Diagram</h1>
+        <div class="question-prompts">
+            "Summarise the information by selecting and reporting the main features"<br>
+            "Make comparisons where relevant"
+        </div>
+        
+        <div class="tips-container">
+            <div class="tips-title">高分技巧提示 (High-Score Tips)</div>
+            <ul>
+                <li>使用4段式结构：引言、概述、细节1、细节2</li>
+                <li>**引言**：对题目进行同义改写，**必须**提及图表所示的过程。</li>
+                <li>**概述**：总结总步骤数、起点和终点，以及过程是否是循环（Cycle）或线性（Linear）。</li>
+                <li>**细节段**：使用**顺序连接词** (e.g., First, Next, Subsequently, Finally) 描述流程。</li>
+                <li>**细节段**：将整个过程分成两个逻辑部分来描述。</li>
+                <li>使用**被动语态** (Passive Voice) 来描述生产或制造过程。</li>
+                <li>字数控制在150-190词之间。</li>
+            </ul>
+        </div>
+        
+        <div class="paragraph intro-paragraph">
+            <div class="paragraph-title">Paragraph 1: Introduction (Paraphrase the Task)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Paraphrase the task statement (what the diagram shows)..."></div>
+                <span class="hint-btn" onclick="showHint('hint1')">?</span>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <div class="paragraph">
+            <div class="paragraph-title">Paragraph 2: Overview (Main Features)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: State the total number of stages and whether the process is cyclical or linear. (e.g., Overall, the process comprises five main stages and is linear/cyclical.)"></div>
+                <span class="hint-btn" onclick="showHint('hint2')">?</span>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 2: State the starting point and the ending point of the entire process. (e.g., It begins with... and concludes with...)"></div>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <div class="paragraph">
+            <div class="paragraph-title">Paragraph 3: Details (The First Half/Part 1)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Begin with 'First' or 'To begin with', describing the first stage."></div>
+                <span class="hint-btn" onclick="showHint('hint4')">?</span>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 2: Use 'Next', 'Then', or 'Subsequently' to describe the 2nd stage/connection."></div>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 3: Describe the 3rd stage, perhaps using a relative clause (which is then...)."></div>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <div class="paragraph">
+            <div class="paragraph-title">Paragraph 4: Details (The Second Half/Part 2)</div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 1: Use 'Moving on to the next phase' or similar to start the second body paragraph (e.g., stage 4)."></div>
+                <span class="hint-btn" onclick="showHint('hint5')">?</span>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 2: Describe the following stage, using a sequencing word like 'Afterwards' or 'Following this'."></div>
+            </div>
+            <div class="input-group">
+                <div class="input-field" contenteditable="true" placeholder="Sentence 3: Conclude the process using 'Finally' or 'The final step involves...'."></div>
+            </div>
+            <div class="paragraph-add-btn">
+                <button class="add-btn" onclick="addInput(this.parentNode.parentNode)">+</button>
+            </div>
+        </div>
+        
+        <button class="generate-btn" onclick="generateEssay()">Generate Report</button>
+        
+        <div class="output-container" id="outputContainer">
+            <div class="output-title">Your Generated Report</div>
+            <div class="essay-output" id="essayOutput"></div>
+        </div>
+    </div>
+
+    <div id="hint1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint1')">&times;</span>
+            <div class="hint-title">如何改写题目 (How to Paraphrase)</div>
+            <p>使用同义词替换：</p>
+            <ul>
+                <li>"shows how" → "illustrates the stages involved in", "demonstrates the process of"</li>
+                <li>"producing" → "manufacturing", "generating", "creation of"</li>
+                <li>"diagram" → "flow chart", "schematic", "figure"</li>
+            </ul>
+            <p>例句：</p>
+            <p>原题: "The diagram below shows how geothermal energy is used to produce electricity."</p>
+            <p>改写: "The **schematic illustrates** the steps **involved in generating electricity** from **geothermal power**."</p>
+        </div>
+    </div>
+
+    <div id="hint2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint2')">&times;</span>
+            <div class="hint-title">概述段落 (Overview Paragraph)</div>
+            <p>**内容要点**：</p>
+            <ul>
+                <li>**总结步骤数**：The process comprises [number] main stages.</li>
+                <li>**描述性质**：The process is linear/cyclical. (线性或循环)</li>
+                <li>**起点和终点**：It begins with [start point] and ends with [end point].</li>
+            </ul>
+            <p>例句：</p>
+            <p>"**Overall**, the entire process **is linear** and **comprises five key stages**. It **begins** with the delivery of raw material and **culminates** in the packaging of the finished product."</p>
+        </div>
+    </div>
+
+    <div id="hint4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint4')">&times;</span>
+            <div class="hint-title">顺序连接词 (Sequencing Language) - 流程前半段</div>
+            <p>用于流程开始和中段的连接词：</p>
+            <ul>
+                <li>**起点**：To begin with, First of all, The process commences when...</li>
+                <li>**接续**：Next, Subsequently, Then, Following this, After that, Once [A] is completed...</li>
+                <li>**被动语态**：...the material is taken to..., ...the mixture is heated... (流程图常用被动语态)</li>
+            </ul>
+            <p>例句：</p>
+            <p>"**To begin with**, the raw materials are collected and sorted. **Next**, they are transported to the grinding machine, **after which** the resulting powder is mixed with water."</p>
+        </div>
+    </div>
+
+    <div id="hint5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hint5')">&times;</span>
+            <div class="hint-title">顺序连接词 (Sequencing Language) - 流程后半段</div>
+            <p>用于流程后半段和结尾的连接词：</p>
+            <ul>
+                <li>**分段过渡**：Moving on to the next phase, Turning to the second half of the process, At this stage...</li>
+                <li>**接续**：Following this, Subsequently, In the penultimate stage...</li>
+                <li>**终点**：Finally, The process culminates when, The last step involves...</li>
+            </ul>
+            <p>例句：</p>
+            <p>"**Moving on to the next phase**, the liquid is filtered to remove impurities. **Afterwards**, it is poured into moulds and allowed to cool. **Finally**, the finished items are inspected for quality before being packaged and sent for distribution."</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to show hint modals
+        function showHint(hintId) {
+            document.getElementById(hintId).style.display = 'block';
+        }
+        
+        // Function to close modals
+        function closeModal(hintId) {
+            document.getElementById(hintId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            let modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        }
+        
+        // Function to add new input field to any paragraph
+        function addInput(paragraph) {
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+            
+            const inputField = document.createElement('div');
+            inputField.className = 'input-field';
+            inputField.contentEditable = true;
+            inputField.placeholder = "Additional sentence/step description...";
+            
+            inputGroup.appendChild(inputField);
+            
+            // Insert before the add button container
+            const addButtonContainer = paragraph.querySelector('.paragraph-add-btn');
+            paragraph.insertBefore(inputGroup, addButtonContainer);
+        }
+        
+        // Auto-resize text areas
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('input-field')) {
+                autoResize(e.target);
+            }
+        }, false);
+        
+        function autoResize(element) {
+            element.style.height = 'auto';
+            element.style.height = (element.scrollHeight) + 'px';
+        }
+        
+        // Generate essay from all inputs
+        function generateEssay() {
+            const outputContainer = document.getElementById('outputContainer');
+            const essayOutput = document.getElementById('essayOutput');
+            
+            let essay = "";
+            
+            // Get all paragraphs
+            const paragraphs = document.querySelectorAll('.paragraph');
+            
+            paragraphs.forEach(paragraph => {
+                const inputs = paragraph.querySelectorAll('.input-field');
+                let paraText = "";
+                
+                // Combine all non-empty inputs within a paragraph into a single block of text
+                inputs.forEach(input => {
+                    const text = input.textContent.trim();
+                    if (text !== "") {
+                        // Use a full stop if the text is not just a fragment and doesn't end with punctuation
+                        paraText += text + (text.match(/[.?!;]$/) ? ' ' : '. ');
+                    }
+                });
+                
+                // Remove trailing spaces and extra full stop, and add paragraph break
+                paraText = paraText.trim().replace(/\.\s*$/, '.');
+                
+                if (paraText.length > 0) {
+                    essay += paraText + "\n\n";
+                }
+            });
+            
+            // Clean up final output
+            essay = essay.trim();
+            
+            // Display the generated essay
+            essayOutput.textContent = essay;
+            outputContainer.style.display = 'block';
+            
+            // Scroll to the output
+            outputContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
