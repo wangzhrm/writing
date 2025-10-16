@@ -1,0 +1,114 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 14pt;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            margin-bottom: 20px;
+        }
+        .instructions p {
+            margin: 5px 0;
+        }
+        .chart {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .answer-space {
+            margin-top: 20px;
+        }
+        .answer-space p {
+            margin: 0;
+            font-weight: bold;
+        }
+        .answer-lines {
+            border: 1px solid #000;
+            min-height: 300px;
+            background-image: linear-gradient(#000 1px, transparent 1px);
+            background-size: 100% 1.5em;
+            background-position: 0 1.1em;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            IELTS Writing Task 1
+        </div>
+        <div class="instructions">
+            <p><strong>Part 1</strong></p>
+            <p>You should spend about 20 minutes on this task.</p>
+            <p>Write at least 150 words.</p>
+            <p>The maps below show the centre of a small town called Islip as it is now, and plans for its development.</p>
+            <p><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></p>
+        </div>
+        <div class="chart">
+            <img src="https://tonysew.wordpress.com/wp-content/uploads/2025/09/5489a2c6-c06f-4544-b990-afbd6976062c.png" alt="Islip Town Centre Maps" style="max-width: 100%;">
+        </div>
+        <div class="answer-space">
+            <p>Write your answer below:</p>
+            <div class="answer-lines"></div>
+        </div>
+    </div>
+</body>
+</html>
