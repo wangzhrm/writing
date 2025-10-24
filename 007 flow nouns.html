@@ -1,0 +1,349 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Flowchart Nouns</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #005a87;
+            border-bottom: 2px solid #005a87;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .word-list, .example-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .word-table td {
+            padding: 8px;
+            vertical-align: top;
+            border-bottom: 1px solid #ddd;
+            width: 25%;
+        }
+        .word {
+            font-weight: bold;
+            color: #333;
+        }
+        .chinese {
+            color: #555;
+        }
+        .example-item {
+            margin-bottom: 15px;
+        }
+        .example {
+            font-style: italic;
+            color: #333;
+        }
+        .chinese-example {
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>IELTS Writing Task 1: Flowchart Nouns</h1>
+
+    <div class="section">
+        <h2>Section 1: Nouns and Chinese Meanings</h2>
+        <div class="word-list">
+            <h3>General Process-Related Nouns</h3>
+            <table class="word-table">
+                <tr><td><span class="word">Process</span></td><td><span class="chinese">(过程)</span></td><td><span class="word">Stage</span></td><td><span class="chinese">(阶段)</span></td></tr>
+                <tr><td><span class="word">Step</span></td><td><span class="chinese">(步骤)</span></td><td><span class="word">Phase</span></td><td><span class="chinese">(阶段)</span></td></tr>
+                <tr><td><span class="word">Cycle</span></td><td><span class="chinese">(循环)</span></td><td><span class="word">Procedure</span></td><td><span class="chinese">(程序)</span></td></tr>
+                <tr><td><span class="word">Operation</span></td><td><span class="chinese">(操作)</span></td><td><span class="word">Activity</span></td><td><span class="chinese">(活动)</span></td></tr>
+                <tr><td><span class="word">Sequence</span></td><td><span class="chinese">(序列)</span></td><td><span class="word">Flow</span></td><td><span class="chinese">(流动)</span></td></tr>
+            </table>
+            <h3>Components and Materials</h3>
+            <table class="word-table">
+                <tr><td><span class="word">Material</span></td><td><span class="chinese">(材料)</span></td><td><span class="word">Ingredient</span></td><td><span class="chinese">(成分)</span></td></tr>
+                <tr><td><span class="word">Resource</span></td><td><span class="chinese">(资源)</span></td><td><span class="word">Input</span></td><td><span class="chinese">(输入)</span></td></tr>
+                <tr><td><span class="word">Output</span></td><td><span class="chinese">(输出)</span></td><td><span class="word">Product</span></td><td><span class="chinese">(产品)</span></td></tr>
+                <tr><td><span class="word">By-product</span></td><td><span class="chinese">(副产品)</span></td><td><span class="word">Waste</span></td><td><span class="chinese">(废物)</span></td></tr>
+            </table>
+            <h3>Equipment and Tools</h3>
+            <table class="word-table">
+                <tr><td><span class="word">Machine</span></td><td><span class="chinese">(机器)</span></td><td><span class="word">Equipment</span></td><td><span class="chinese">(设备)</span></td></tr>
+                <tr><td><span class="word">Tool</span></td><td><span class="chinese">(工具)</span></td><td><span class="word">Device</span></td><td><span class="chinese">(设备)</span></td></tr>
+                <tr><td><span class="word">Container</span></td><td><span class="chinese">(容器)</span></td><td><span class="word">Conveyor</span></td><td><span class="chinese">(传送带)</span></td></tr>
+                <tr><td><span class="word">Filter</span></td><td><span class="chinese">(过滤器)</span></td><td><span class="word">Pump</span></td><td><span class="chinese">(泵)</span></td></tr>
+                <tr><td><span class="word">Pipe</span></td><td><span class="chinese">(管道)</span></td><td><span class="word">Valve</span></td><td><span class="chinese">(阀门)</span></td></tr>
+            </table>
+            <h3>Locations and Facilities</h3>
+            <table class="word-table">
+                <tr><td><span class="word">Facility</span></td><td><span class="chinese">(设施)</span></td><td><span class="word">Factory</span></td><td><span class="chinese">(工厂)</span></td></tr>
+                <tr><td><span class="word">Plant</span></td><td><span class="chinese">(工厂)</span></td><td><span class="word">Station</span></td><td><span class="chinese">(站点)</span></td></tr>
+                <tr><td><span class="word">Site</span></td><td><span class="chinese">(地点)</span></td><td><span class="word">Area</span></td><td><span class="chinese">(区域)</span></td></tr>
+                <tr><td><span class="word">Production Line</span></td><td><span class="chinese">(生产线)</span></td><td></td><td></td></tr>
+            </table>
+            <h3>Natural and Environmental Processes</h3>
+            <table class="word-table">
+                <tr><td><span class="word">Reservoir</span></td><td><span class="chinese">(水库)</span></td><td><span class="word">Surface</span></td><td><span class="chinese">(表面)</span></td></tr>
+                <tr><td><span class="word">Atmosphere</span></td><td><span class="chinese">(大气)</span></td><td><span class="word">Precipitation</span></td><td><span class="chinese">(降水)</span></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Section 2: Nouns, Example Sentences, and Chinese Translations</h2>
+        <div class="example-list">
+            <h3>General Process-Related Nouns</h3>
+            <div class="example-item">
+                <span class="word">Process (过程)</span><br>
+                <span class="example">The process of manufacturing paper involves several stages.</span><br>
+                <span class="chinese-example">制造纸张的过程涉及几个阶段。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Stage (阶段)</span><br>
+                <span class="example">The first stage of the cycle is the collection of raw materials.</span><br>
+                <span class="chinese-example">循环的第一阶段是收集原材料。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Step (步骤)</span><br>
+                <span class="example">The next step involves heating the mixture to a high temperature.</span><br>
+                <span class="chinese-example">下一步是将混合物加热到高温。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Phase (阶段)</span><br>
+                <span class="example">The cooling phase ensures the product solidifies properly.</span><br>
+                <span class="chinese-example">冷却阶段确保产品适当固化。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Cycle (循环)</span><br>
+                <span class="example">The water cycle describes how water moves through the environment.</span><br>
+                <span class="chinese-example">水循环描述了水如何在环境中移动。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Procedure (程序)</span><br>
+                <span class="example">The procedure for recycling plastic is clearly outlined in the diagram.</span><br>
+                <span class="chinese-example">回收塑料的程序在图表中清晰概述。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Operation (操作)</span><br>
+                <span class="example">The operation of the machine is automated for efficiency.</span><br>
+                <span class="chinese-example">机器的操作是自动化的，以提高效率。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Activity (活动)</span><br>
+                <span class="example">Sorting waste is a key activity in the recycling process.</span><br>
+                <span class="chinese-example">分类废物是回收过程中的关键活动。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Sequence (序列)</span><br>
+                <span class="example">The sequence of steps ensures consistent product quality.</span><br>
+                <span class="chinese-example">步骤序列确保产品品质的一致性。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Flow (流动)</span><br>
+                <span class="example">The flow of water through the system is carefully controlled.</span><br>
+                <span class="chinese-example">水在系统中的流动受到仔细控制。</span>
+            </div>
+            <h3>Components and Materials</h3>
+            <div class="example-item">
+                <span class="word">Material (材料)</span><br>
+                <span class="example">The material used in production is sourced locally.</span><br>
+                <span class="chinese-example">生产中使用的材料是本地采购的。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Ingredient (成分)</span><br>
+                <span class="example">Each ingredient is carefully measured before mixing.</span><br>
+                <span class="chinese-example">每种成分在混合前都被仔细测量。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Resource (资源)</span><br>
+                <span class="example">The main resource for this process is renewable energy.</span><br>
+                <span class="chinese-example">该过程的主要资源是可再生能源。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Input (输入)</span><br>
+                <span class="example">The input for the machine includes raw cotton and water.</span><br>
+                <span class="chinese-example">机器的输入包括原棉和水。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Output (输出)</span><br>
+                <span class="example">The output of the factory is high-quality fabric.</span><br>
+                <span class="chinese-example">工厂的输出是高质量的织物。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Product (产品)</span><br>
+                <span class="example">The final product is packaged and sent to retailers.</span><br>
+                <span class="chinese-example">最终产品被包装并送往零售商。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">By-product (副产品)</span><br>
+                <span class="example">The by-product of the process is used as fertilizer.</span><br>
+                <span class="chinese-example">该过程的副产品被用作肥料。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Waste (废物)</span><br>
+                <span class="example">Waste from production is recycled to reduce pollution.</span><br>
+                <span class="chinese-example">生产中的废物被回收以减少污染。</span>
+            </div>
+            <h3>Equipment and Tools</h3>
+            <div class="example-item">
+                <span class="word">Machine (机器)</span><br>
+                <span class="example">The machine grinds the raw material into fine powder.</span><br>
+                <span class="chinese-example">机器将原材料研磨成细粉。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Equipment (设备)</span><br>
+                <span class="example">Specialized equipment is required for the filtration process.</span><br>
+                <span class="chinese-example">过滤过程需要专用设备。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Tool (工具)</span><br>
+                <span class="example">A cutting tool is used to shape the metal.</span><br>
+                <span class="chinese-example">切割工具用于塑造金属。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Device (设备)</span><br>
+                <span class="example">The device regulates the temperature during production.</span><br>
+                <span class="chinese-example">该设备在生产过程中调节温度。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Container (容器)</span><br>
+                <span class="example">The liquid is stored in a container before packaging.</span><br>
+                <span class="chinese-example">液体在包装前储存在容器中。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Conveyor (传送带)</span><br>
+                <span class="example">The conveyor transports goods to the next stage.</span><br>
+                <span class="chinese-example">传送带将货物运送到下一阶段。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Filter (过滤器)</span><br>
+                <span class="example">A filter removes impurities from the water.</span><br>
+                <span class="chinese-example">过滤器去除水中的杂质。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Pump (泵)</span><br>
+                <span class="example">The pump moves liquid through the pipes.</span><br>
+                <span class="chinese-example">泵将液体通过管道移动。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Pipe (管道)</span><br>
+                <span class="example">Water flows through a pipe to the treatment facility.</span><br>
+                <span class="chinese-example">水通过管道流向处理设施。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Valve (阀门)</span><br>
+                <span class="example">The valve controls the flow of gas in the system.</span><br>
+                <span class="chinese-example">阀门控制系统中气体的流动。</span>
+            </div>
+            <h3>Locations and Facilities</h3>
+            <div class="example-item">
+                <span class="word">Facility (设施)</span><br>
+                <span class="example">The facility is equipped with modern machinery.</span><br>
+                <span class="chinese-example">该设施配备了现代机械。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Factory (工厂)</span><br>
+                <span class="example">The factory produces thousands of units daily.</span><br>
+                <span class="chinese-example">工厂每天生产数千个单位。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Plant (工厂)</span><br>
+                <span class="example">The plant specializes in recycling plastic waste.</span><br>
+                <span class="chinese-example">该工厂专门回收塑料废物。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Station (站点)</span><br>
+                <span class="example">Each station in the assembly line has a specific task.</span><br>
+                <span class="chinese-example">装配线中的每个站点都有特定任务。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Site (地点)</span><br>
+                <span class="example">The site for processing is located near the river.</span><br>
+                <span class="chinese-example">加工地点位于河边。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Area (区域)</span><br>
+                <span class="example">The storage area holds raw materials before processing.</span><br>
+                <span class="chinese-example">存储区域在加工前存放原材料。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Production Line (生产线)</span><br>
+                <span class="example">The production line operates continuously.</span><br>
+                <span class="chinese-example">生产线持续运行。</span>
+            </div>
+            <h3>Natural and Environmental Processes</h3>
+            <div class="example-item">
+                <span class="word">Reservoir (水库)</span><br>
+                <span class="example">Water is stored in a reservoir before treatment.</span><br>
+                <span class="chinese-example">水在处理前储存在水库中。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Surface (表面)</span><br>
+                <span class="example">Rainwater collects on the surface before evaporating.</span><br>
+                <span class="chinese-example">雨水在蒸发前聚集在表面上。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Atmosphere (大气)</span><br>
+                <span class="example">Water vapor rises into the atmosphere during the cycle.</span><br>
+                <span class="chinese-example">水蒸气在循环过程中上升到大气中。</span>
+            </div>
+            <div class="example-item">
+                <span class="word">Precipitation (降水)</span><br>
+                <span class="example">Precipitation returns water to the earth’s surface.</span><br>
+                <span class="chinese-example">降水将水返回到地球表面。</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
