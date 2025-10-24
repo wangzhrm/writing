@@ -1,0 +1,316 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Map Vocabulary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #005a87;
+            border-bottom: 2px solid #005a87;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .word-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .word-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .word-table td {
+            padding: 8px;
+            vertical-align: top;
+            border-bottom: 1px solid #ddd;
+        }
+        .word-table td:first-child {
+            width: 30%;
+        }
+        .word-table td:last-child {
+            width: 70%;
+        }
+        .word {
+            font-weight: bold;
+            color: #333;
+        }
+        .chinese {
+            color: #555;
+        }
+        .example {
+            font-style: italic;
+            color: #333;
+        }
+        .chinese-example {
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>IELTS Writing Task 1: Map Vocabulary</h1>
+
+    <div class="section">
+        <h2>Location and Position</h2>
+        <div class="word-list">
+            <table class="word-table">
+                <tr>
+                    <td><span class="word">Located/Situated (位于)</span></td>
+                    <td><span class="example">The park is located in the northern part of the town.</span><br><span class="chinese-example">公园位于城镇的北部。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Positioned (定位)</span></td>
+                    <td><span class="example">The new shopping mall is positioned to the east of the residential area.</span><br><span class="chinese-example">新购物中心定位在住宅区的东部。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Adjacent to (毗邻)</span></td>
+                    <td><span class="example">The library is adjacent to the town hall.</span><br><span class="chinese-example">图书馆毗邻市政厅。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Opposite (对面)</span></td>
+                    <td><span class="example">The school is opposite the supermarket.</span><br><span class="chinese-example">学校在超市对面。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Near/Close to (靠近)</span></td>
+                    <td><span class="example">The factory is close to the river.</span><br><span class="chinese-example">工厂靠近河流。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">In the vicinity of (在……附近)</span></td>
+                    <td><span class="example">A new park was built in the vicinity of the housing estate.</span><br><span class="chinese-example">在住宅区附近新建了一个公园。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Bordering (接壤)</span></td>
+                    <td><span class="example">The farmland bordering the forest was converted into a park.</span><br><span class="chinese-example">与森林接壤的农田被改建为公园。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Surrounded by (被……包围)</span></td>
+                    <td><span class="example">The lake is surrounded by residential buildings.</span><br><span class="chinese-example">湖泊被住宅楼包围。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Central/Centrally located (中心的/位于中心)</span></td>
+                    <td><span class="example">The town square is centrally located.</span><br><span class="chinese-example">城镇广场位于中心。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">On the outskirts (在郊区)</span></td>
+                    <td><span class="example">The new factory was built on the outskirts of the city.</span><br><span class="chinese-example">新工厂建在城市郊区。</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Directions</h2>
+        <div class="word-list">
+            <table class="word-table">
+                <tr>
+                    <td><span class="word">North/South/East/West (北/南/东/西)</span></td>
+                    <td><span class="example">The railway station is in the south of the town.</span><br><span class="chinese-example">火车站位于城镇的南部。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Northeast/Southwest, etc. (东北/西南等)</span></td>
+                    <td><span class="example">A new road was constructed in the northeast corner of the map.</span><br><span class="chinese-example">在地图的东北角新建了一条道路。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">To the north/south/east/west of (在……的北/南/东/西)</span></td>
+                    <td><span class="example">The park was developed to the west of the old factory.</span><br><span class="chinese-example">公园在旧工厂的西部开发。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Towards (朝向)</span></td>
+                    <td><span class="example">The new road extends towards the northern boundary.</span><br><span class="chinese-example">新道路朝北部边界延伸。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Along (沿着)</span></td>
+                    <td><span class="example">A footpath runs along the riverbank.</span><br><span class="chinese-example">一条步行道沿着河岸延伸。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Parallel to (平行于)</span></td>
+                    <td><span class="example">The new railway runs parallel to the main road.</span><br><span class="chinese-example">新铁路与主干道平行。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Across (横跨)</span></td>
+                    <td><span class="example">A bridge was built across the river.</span><br><span class="chinese-example">一座桥梁横跨河流建成。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Beyond (超出)</span></td>
+                    <td><span class="example">The residential area extends beyond the forest.</span><br><span class="chinese-example">住宅区延伸到森林之外。</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Changes and Development</h2>
+        <div class="word-list">
+            <table class="word-table">
+                <tr>
+                    <td><span class="word">Constructed/Built (建造)</span></td>
+                    <td><span class="example">A new hospital was constructed in the western part of the town.</span><br><span class="chinese-example">在城镇西部新建了一所医院。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Demolished/Removed (拆除/移除)</span></td>
+                    <td><span class="example">The old factory was demolished to make way for a park.</span><br><span class="chinese-example">旧工厂被拆除以腾出空间建公园。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Replaced by/With (被……取代)</span></td>
+                    <td><span class="example">The farmland was replaced by a shopping complex.</span><br><span class="chinese-example">农田被购物中心取代。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Converted into (改建为)</span></td>
+                    <td><span class="example">The warehouse was converted into a community center.</span><br><span class="chinese-example">仓库被改建为社区中心。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Expanded/Extended (扩展/延长)</span></td>
+                    <td><span class="example">The residential area was expanded to the north.</span><br><span class="chinese-example">住宅区向北部扩展。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Relocated (迁移)</span></td>
+                    <td><span class="example">The school was relocated to the eastern part of the town.</span><br><span class="chinese-example">学校被迁移到城镇的东部。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Developed (开发)</span></td>
+                    <td><span class="example">The southern area was developed into a commercial zone.</span><br><span class="chinese-example">南部地区被开发为商业区。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Renovated/Refurbished (翻新/整修)</span></td>
+                    <td><span class="example">The old library was renovated to include modern facilities.</span><br><span class="chinese-example">旧图书馆被翻新以包含现代化设施。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Transformed (转变)</span></td>
+                    <td><span class="example">The industrial zone was transformed into a green space.</span><br><span class="chinese-example">工业区被转变为绿地。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Added (添加)</span></td>
+                    <td><span class="example">A playground was added near the school.</span><br><span class="chinese-example">在学校附近添加了一个游乐场。</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Features and Infrastructure</h2>
+        <div class="word-list">
+            <table class="word-table">
+                <tr>
+                    <td><span class="word">Building (建筑)</span></td>
+                    <td><span class="example">Several new buildings were erected in the town center.</span><br><span class="chinese-example">在镇中心新建了几栋建筑。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Facility (设施)</span></td>
+                    <td><span class="example">A sports facility was built near the park.</span><br><span class="chinese-example">在公园附近建造了一个体育设施。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Residential area (住宅区)</span></td>
+                    <td><span class="example">The residential area expanded significantly by 2020.</span><br><span class="chinese-example">到2020年，住宅区显著扩展。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Commercial area (商业区)</span></td>
+                    <td><span class="example">The commercial area now includes a large shopping mall.</span><br><span class="chinese-example">商业区现在包括一个大型购物中心。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Industrial area (工业区)</span></td>
+                    <td><span class="example">The industrial area was relocated to the outskirts.</span><br><span class="chinese-example">工业区被迁移到郊区。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Road/Highway (道路/高速公路)</span></td>
+                    <td><span class="example">A new highway was constructed to connect the town to the city.</span><br><span class="chinese-example">新建了一条高速公路以连接城镇和城市。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Path/Footpath (小路/步行道)</span></td>
+                    <td><span class="example">A footpath was added along the river.</span><br><span class="chinese-example">沿河添加了一条步行道。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Bridge (桥梁)</span></td>
+                    <td><span class="example">A bridge was built to improve access to the northern district.</span><br><span class="chinese-example">建造了一座桥梁以改善北部地区的通行。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Railway/Train station (铁路/火车站)</span></td>
+                    <td><span class="example">The railway station was modernized in 2025.</span><br><span class="chinese-example">火车站在2025年进行了现代化改造。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Park/Green space (公园/绿地)</span></td>
+                    <td><span class="example">A large park was created in the center of the town.</span><br><span class="chinese-example">在镇中心创建了一个大型公园。</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Size and Extent</h2>
+        <div class="word-list">
+            <table class="word-table">
+                <tr>
+                    <td><span class="word">Significant/Substantial (显著的/大量的)</span></td>
+                    <td><span class="example">The town underwent significant development over the decade.</span><br><span class="chinese-example">该城镇在十年间经历了显著的发展。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Considerable (相当大的)</span></td>
+                    <td><span class="example">A considerable area of farmland was converted into housing.</span><br><span class="chinese-example">相当大的农田面积被改建为住宅。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Minor/Small-scale (小的/小规模的)</span></td>
+                    <td><span class="example">A small-scale park was added near the school.</span><br><span class="chinese-example">在学校附近添加了一个小型公园。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Extensive (广泛的)</span></td>
+                    <td><span class="example">The extensive road network improved transportation.</span><br><span class="chinese-example">广泛的道路网络改善了交通。</span></td>
+                </tr>
+                <tr>
+                    <td><span class="word">Limited (有限的)</span></td>
+                    <td><span class="example">The changes to the western part were limited to a new footpath.</span><br><span class="chinese-example">西部地区的变化仅限于新增一条步行道。</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
