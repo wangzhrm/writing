@@ -1,0 +1,224 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary for Trends</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #444;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px 0;
+        }
+        .example {
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+        }
+        .description {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-left: 4px solid #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vocabulary for Describing Trends</h1>
+
+        <div class="section">
+            <h2>Increases</h2>
+            <h3>Verbs</h3>
+            <ul>
+                <li>Rise (rose, risen)</li>
+                <li>Increase (increased, increasing)</li>
+                <li>Climb (climbed, climbing)</li>
+                <li>Grow (grew, grown)</li>
+                <li>Soar (soared, soaring)</li>
+                <li>Surge (surged, surging)</li>
+                <li>Jump (jumped, jumping)</li>
+                <li>Rocket (rocketed, rocketing)</li>
+                <li>Go up (went up, gone up)</li>
+            </ul>
+            <h3>Nouns</h3>
+            <ul>
+                <li>An increase</li>
+                <li>A rise</li>
+                <li>A growth</li>
+                <li>An upward trend</li>
+                <li>A surge</li>
+                <li>A climb</li>
+            </ul>
+            <h3>Adjectives/Adverbs</h3>
+            <ul>
+                <li>Sharp(ly)</li>
+                <li>Dramatic(ally)</li>
+                <li>Significant(ly)</li>
+                <li>Substantial(ly)</li>
+                <li>Rapid(ly)</li>
+                <li>Considerable(ably)</li>
+                <li>Steady (steadily)</li>
+                <li>Gradual(ly)</li>
+                <li>Marked(ly)</li>
+                <li>Notable (notably)</li>
+            </ul>
+            <p class="example">Examples:</p>
+            <ul class="example">
+                <li>The number of tourists rose sharply from 2010 to 2015.</li>
+                <li>There was a significant increase in sales over the period.</li>
+                <li>The population grew steadily between 2000 and 2020.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Decreases</h2>
+            <h3>Verbs</h3>
+            <ul>
+                <li>Fall (fell, fallen)</li>
+                <li>Decrease (decreased, decreasing)</li>
+                <li>Decline (declined, declining)</li>
+                <li>Drop (dropped, dropping)</li>
+                <li>Plummet (plummeted, plummeting)</li>
+                <li>Plunge (plunged, plunging)</li>
+                <li>Dip (dipped, dipping)</li>
+                <li>Shrink (shrank, shrunk)</li>
+                <li>Go down (went down, gone down)</li>
+                <li>Dwindle (dwindled, dwindling)</li>
+            </ul>
+            <h3>Nouns</h3>
+            <ul>
+                <li>A decrease</li>
+                <li>A decline</li>
+                <li>A fall</li>
+                <li>A drop</li>
+                <li>A downturn</li>
+                <li>A reduction</li>
+                <li>A slump</li>
+                <li>A dip</li>
+            </ul>
+            <h3>Adjectives/Adverbs</h3>
+            <ul>
+                <li>Sharp(ly)</li>
+                <li>Dramatic(ally)</li>
+                <li>Significant(ly)</li>
+                <li>Substantial(ly)</li>
+                <li>Rapid(ly)</li>
+                <li>Gradual(ly)</li>
+                <li>Steady (steadily)</li>
+                <li>Slight(ly)</li>
+                <li>Marginal(ly)</li>
+            </ul>
+            <p class="example">Examples:</p>
+            <ul class="example">
+                <li>The stock prices plummeted dramatically in 2023.</li>
+                <li>There was a steady decline in unemployment rates.</li>
+                <li>Production levels dipped slightly last quarter.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Descriptive Examples</h2>
+            <div class="description">
+                <p><strong>Rapid Rise:</strong></p>
+                <ul>
+                    <li>Sales rocketed dramatically within a single quarter.<br>
+                        <span class="text-gray-400 italic">销售额在一个季度内急剧上升。</span></li>
+                    <li>Website traffic soared sharply in just a month.<br>
+                        <span class="text-gray-400 italic">网站流量在一个月内急剧飙升。</span></li>
+                </ul>
+                <p><strong>Slow Rise:</strong></p>
+                <ul>
+                    <li>The number of subscribers grew steadily over several years.<br>
+                        <span class="text-gray-400 italic">订阅者数量在几年内稳步增长。</span></li>
+                    <li>Revenue rose gradually over the decade.<br>
+                        <span class="text-gray-400 italic">收入在十年间逐渐上升。</span></li>
+                </ul>
+                <p><strong>Rapid Fall:</strong></p>
+                <ul>
+                    <li>The market value plunged sharply overnight.<br>
+                        <span class="text-gray-400 italic">市场价值在一夜之间急剧下跌。</span></li>
+                    <li>Customer complaints plummeted rapidly after the new policy.<br>
+                        <span class="text-gray-400 italic">新政策实施后，客户投诉迅速减少。</span></li>
+                </ul>
+                <p><strong>Slow Fall:</strong></p>
+                <ul>
+                    <li>Attendance figures dwindled steadily over the season.<br>
+                        <span class="text-gray-400 italic">整个赛季的观众人数稳步减少。</span></li>
+                    <li>Production output shrank marginally over several months.<br>
+                        <span class="text-gray-400 italic">生产产量在几个月内略微减少。</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

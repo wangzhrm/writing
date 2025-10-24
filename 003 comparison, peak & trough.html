@@ -1,0 +1,182 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1 Vocabulary: Comparisons and Peaks/Lows</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-6 max-w-4xl">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">IELTS Writing Task 1 Vocabulary: Comparisons and Peaks/Lows</h1>
+
+        <!-- Comparisons Section -->
+        <section class="mb-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Vocabulary for Comparisons</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Adjectives</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>Higher (than)<br>
+                            <span class="text-gray-400 italic">The sales in 2020 were higher than those in 2019.</span></li>
+                        <li>Lower (than)<br>
+                            <span class="text-gray-400 italic">The unemployment rate was lower than the previous year.</span></li>
+                        <li>More (than)<br>
+                            <span class="text-gray-400 italic">The city attracted more tourists than expected.</span></li>
+                        <li>Less (than)<br>
+                            <span class="text-gray-400 italic">The company spent less on advertising than its competitors.</span></li>
+                        <li>Similar (to)<br>
+                            <span class="text-gray-400 italic">The trend in Europe was similar to that in Asia.</span></li>
+                        <li>Equal (to)<br>
+                            <span class="text-gray-400 italic">The production output was equal to last year's figures.</span></li>
+                        <li>Identical (to)<br>
+                            <span class="text-gray-400 italic">The results in both regions were identical to each other.</span></li>
+                        <li>Comparable (to)<br>
+                            <span class="text-gray-400 italic">The growth rate was comparable to that of the previous decade.</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Adverbs</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>Comparatively<br>
+                            <span class="text-gray-400 italic">The costs were comparatively lower in rural areas.</span></li>
+                        <li>Relatively<br>
+                            <span class="text-gray-400 italic">The increase was relatively modest compared to expectations.</span></li>
+                        <li>Similarly<br>
+                            <span class="text-gray-400 italic">Sales in both stores rose similarly over the period.</span></li>
+                        <li>Equally<br>
+                            <span class="text-gray-400 italic">Both products were equally popular among consumers.</span></li>
+                    </ul>
+                    <h3 class="text-xl font-medium text-gray-600 mt-4 mb-2">Phrases</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>In comparison with<br>
+                            <span class="text-gray-400 italic">In comparison with 2018, profits in 2019 were higher.</span></li>
+                        <li>Compared to<br>
+                            <span class="text-gray-400 italic">Sales dropped significantly compared to the previous quarter.</span></li>
+                        <li>As opposed to<br>
+                            <span class="text-gray-400 italic">The trend was declining, as opposed to the steady rise in 2020.</span></li>
+                        <li>In contrast to<br>
+                            <span class="text-gray-400 italic">In contrast to last year, production remained stable.</span></li>
+                        <li>Outstripped<br>
+                            <span class="text-gray-400 italic">The company's revenue outstripped its competitors in 2022.</span></li>
+                        <li>Surpassed<br>
+                            <span class="text-gray-400 italic">The number of visitors surpassed expectations in July.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Peaks and Lows Section -->
+        <section class="mb-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Vocabulary for Peaks and Lows</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Verbs</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>Peak (peaked, peaking)<br>
+                            <span class="text-gray-400 italic">Sales peaked in December before declining.</span></li>
+                        <li>Reach a high (reached, reaching)<br>
+                            <span class="text-gray-400 italic">The stock price reached a high in mid-2021.</span></li>
+                        <li>Hit a low (hit, hitting)<br>
+                            <span class="text-gray-400 italic">Unemployment hit a low in 2020.</span></li>
+                        <li>Bottom out (bottomed out, bottoming out)<br>
+                            <span class="text-gray-400 italic">The market bottomed out after a prolonged decline.</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Nouns</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>A peak<br>
+                            <span class="text-gray-400 italic">The data showed a peak in production in 2019.</span></li>
+                        <li>A high<br>
+                            <span class="text-gray-400 italic">The company recorded a high in sales in July.</span></li>
+                        <li>A low<br>
+                            <span class="text-gray-400 italic">The chart indicates a low in temperatures in January.</span></li>
+                        <li>A trough<br>
+                            <span class="text-gray-400 italic">The economy experienced a trough during the recession.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exemplary Sentences with Chinese Translations -->
+        <section class="p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Exemplary Sentences with Chinese Translations</h2>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">More Than</h3>
+            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                <li>The population of City A was significantly more than that of City B.<br>
+                    <span class="text-gray-400 italic">A市的人口明显多于B市。</span></li>
+                <li>Online sales in 2023 were considerably higher than those in 2022.<br>
+                    <span class="text-gray-400 italic">2023年的在线销售额远高于2022年。</span></li>
+            </ul>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">Less Than</h3>
+            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                <li>The cost of production was less than anticipated in the budget.<br>
+                    <span class="text-gray-400 italic">生产成本低于预算预期。</span></li>
+                <li>The number of visitors was notably lower than the previous year.<br>
+                    <span class="text-gray-400 italic">访客数量明显低于前一年。</span></li>
+            </ul>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">Similarity</h3>
+            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                <li>The growth patterns in both regions were strikingly similar to each other.<br>
+                    <span class="text-gray-400 italic">两个地区的增长模式惊人地相似。</span></li>
+                <li>Export figures were comparable to those recorded in 2020.<br>
+                    <span class="text-gray-400 italic">出口数据与2020年记录的数据相当。</span></li>
+            </ul>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">Peak</h3>
+            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                <li>Electricity consumption peaked during the summer months.<br>
+                    <span class="text-gray-400 italic">电力消耗在夏季达到高峰。</span></li>
+                <li>The company’s profits reached a high in the third quarter of 2022.<br>
+                    <span class="text-gray-400 italic">公司利润在2022年第三季度达到高点。</span></li>
+            </ul>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">Trough</h3>
+            <ul class="list-disc pl-5 text-gray-600">
+                <li>The economy hit a trough during the financial crisis in 2008.<br>
+                    <span class="text-gray-400 italic">经济在2008年金融危机期间达到低谷。</span></li>
+                <li>Car sales bottomed out after a significant decline in demand.<br>
+                    <span class="text-gray-400 italic">汽车销量在需求大幅下降后触底。</span></li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

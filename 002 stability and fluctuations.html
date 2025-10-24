@@ -1,0 +1,142 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1 Vocabulary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-6 max-w-4xl">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">IELTS Writing Task 1 Vocabulary</h1>
+
+        <!-- Stability or No Change Section -->
+        <section class="mb-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Vocabulary for Stability or No Change</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Verbs</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>Remain stable</li>
+                        <li>Stay constant</li>
+                        <li>Level off (leveled off, leveling off)</li>
+                        <li>Stabilize (stabilized, stabilizing)</li>
+                        <li>Plateau (plateaued, plateauing)</li>
+                        <li>Maintain (maintained, maintaining)</li>
+                        <li>Hover (hovered, hovering)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Nouns</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>No change</li>
+                        <li>A plateau</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="text-xl font-medium text-gray-600 mt-4 mb-2">Example Sentences</h3>
+            <ul class="list-disc pl-5 text-gray-600">
+                <li>The price of oil remained stable throughout 2018.</li>
+                <li>After a sharp rise, the figures leveled off in 2019.</li>
+                <li>The percentage of students hovered around 20% for five years.</li>
+            </ul>
+        </section>
+
+        <!-- Fluctuations Section -->
+        <section class="mb-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Vocabulary for Fluctuations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Verbs</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>Fluctuate (fluctuated, fluctuating)</li>
+                        <li>Vary (varied, varying)</li>
+                        <li>Oscillate (oscillated, oscillating)</li>
+                        <li>Experience fluctuations</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-gray-600 mb-2">Nouns</h3>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>Fluctuation</li>
+                        <li>Variation</li>
+                        <li>Oscillation</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="text-xl font-medium text-gray-600 mt-4 mb-2">Example Sentences</h3>
+            <ul class="list-disc pl-5 text-gray-600">
+                <li>The data fluctuated widely between 2010 and 2015.</li>
+                <li>There were erratic variations in temperature over the period.</li>
+                <li>The market experienced significant fluctuations during the crisis.</li>
+            </ul>
+        </section>
+
+        <!-- Exemplary Sentences -->
+        <section class="p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Exemplary Sentences with Chinese Translations</h2>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">For Stability or No Change</h3>
+            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                <li>
+                    The unemployment rate maintained stability from 2020 to 2022.<br>
+                    <span class="text-gray-500 italic">失业率在2020年至2022年间保持稳定。</span>
+                </li>
+                <li>
+                    The number of visitors to the museum showed a plateau in 2021.<br>
+                    <span class="text-gray-500 italic">博物馆的访客数量在2021年呈现平稳状态。</span>
+                </li>
+            </ul>
+            <h3 class="text-xl font-medium text-gray-600 mb-2">For Fluctuations</h3>
+            <ul class="list-disc pl-5 text-gray-600">
+                <li>
+                    Stock prices oscillated significantly during the economic uncertainty.<br>
+                    <span class="text-gray-500 italic">在经济不确定期间，股票价格大幅波动。</span>
+                </li>
+                <li>
+                    The company’s profits experienced considerable fluctuations over the decade.<br>
+                    <span class="text-gray-500 italic">公司在过去十年中的利润经历了相当大的波动。</span>
+                </li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

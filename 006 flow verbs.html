@@ -1,0 +1,503 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Passive Voice Verbs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">IELTS Writing Task 1: Passive Voice Verbs for Flow Charts</h1>
+        
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">常用动词和被动语态</h2>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-blue-100">
+                        <th class="p-3 border-b">Active Voice Verb</th>
+                        <th class="p-3 border-b">Passive Voice Form</th>
+                        <th class="p-3 border-b">Active Voice Verb</th>
+                        <th class="p-3 border-b">Passive Voice Form</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-3 border-b">Produce</td>
+                        <td class="p-3 border-b">Produced</td>
+                        <td class="p-3 border-b">Collect</td>
+                        <td class="p-3 border-b">Collected</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Process</td>
+                        <td class="p-3 border-b">Processed</td>
+                        <td class="p-3 border-b">Transport</td>
+                        <td class="p-3 border-b">Transported</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Store</td>
+                        <td class="p-3 border-b">Stored</td>
+                        <td class="p-3 border-b">Package</td>
+                        <td class="p-3 border-b">Packaged</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Distribute</td>
+                        <td class="p-3 border-b">Distributed</td>
+                        <td class="p-3 border-b">Assemble</td>
+                        <td class="p-3 border-b">Assembled</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Extract</td>
+                        <td class="p-3 border-b">Extracted</td>
+                        <td class="p-3 border-b">Treat</td>
+                        <td class="p-3 border-b">Treated</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Heat</td>
+                        <td class="p-3 border-b">Heated</td>
+                        <td class="p-3 border-b">Cool</td>
+                        <td class="p-3 border-b">Cooled</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Mix</td>
+                        <td class="p-3 border-b">Mixed</td>
+                        <td class="p-3 border-b">Test</td>
+                        <td class="p-3 border-b">Tested</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Recycle</td>
+                        <td class="p-3 border-b">Recycled</td>
+                        <td class="p-3 border-b">Turn into</td>
+                        <td class="p-3 border-b">Turned into</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Form</td>
+                        <td class="p-3 border-b">Formed</td>
+                        <td class="p-3 border-b">Generate</td>
+                        <td class="p-3 border-b">Generated</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Create</td>
+                        <td class="p-3 border-b">Created</td>
+                        <td class="p-3 border-b">Develop</td>
+                        <td class="p-3 border-b">Developed</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Crush</td>
+                        <td class="p-3 border-b">Crushed</td>
+                        <td class="p-3 border-b">Grind</td>
+                        <td class="p-3 border-b">Ground</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Separate</td>
+                        <td class="p-3 border-b">Separated</td>
+                        <td class="p-3 border-b">Filter</td>
+                        <td class="p-3 border-b">Filtered</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Purify</td>
+                        <td class="p-3 border-b">Purified</td>
+                        <td class="p-3 border-b">Melt</td>
+                        <td class="p-3 border-b">Melted</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Boil</td>
+                        <td class="p-3 border-b">Boiled</td>
+                        <td class="p-3 border-b">Condense</td>
+                        <td class="p-3 border-b">Condensed</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Evaporate</td>
+                        <td class="p-3 border-b">Evaporated</td>
+                        <td class="p-3 border-b">Inject</td>
+                        <td class="p-3 border-b">Injected</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Pump</td>
+                        <td class="p-3 border-b">Pumped</td>
+                        <td class="p-3 border-b">Feed</td>
+                        <td class="p-3 border-b">Fed</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Stretch</td>
+                        <td class="p-3 border-b">Stretched</td>
+                        <td class="p-3 border-b">Flatten</td>
+                        <td class="p-3 border-b">Flattened</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Roll</td>
+                        <td class="p-3 border-b">Rolled</td>
+                        <td class="p-3 border-b">Examine</td>
+                        <td class="p-3 border-b">Examined</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Inspect</td>
+                        <td class="p-3 border-b">Inspected</td>
+                        <td class="p-3 border-b">Measure</td>
+                        <td class="p-3 border-b">Measured</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Monitor</td>
+                        <td class="p-3 border-b">Monitored</td>
+                        <td class="p-3 border-b">Load</td>
+                        <td class="p-3 border-b">Loaded</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Unload</td>
+                        <td class="p-3 border-b">Unloaded</td>
+                        <td class="p-3 border-b">Deliver</td>
+                        <td class="p-3 border-b">Delivered</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Send</td>
+                        <td class="p-3 border-b">Sent</td>
+                        <td class="p-3 border-b">Remove</td>
+                        <td class="p-3 border-b">Removed</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Eliminate</td>
+                        <td class="p-3 border-b">Eliminated</td>
+                        <td class="p-3 border-b">Blend</td>
+                        <td class="p-3 border-b">Blended</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Add</td>
+                        <td class="p-3 border-b">Added</td>
+                        <td class="p-3 border-b">Combine</td>
+                        <td class="p-3 border-b">Combined</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">通用动词</h2>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-blue-100">
+                        <th class="p-3 border-b">Active Voice Verb</th>
+                        <th class="p-3 border-b">Passive Voice Form</th>
+                        <th class="p-3 border-b">Active Voice Verb</th>
+                        <th class="p-3 border-b">Passive Voice Form</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-3 border-b">Process</td>
+                        <td class="p-3 border-b">Processed</td>
+                        <td class="p-3 border-b">Make</td>
+                        <td class="p-3 border-b">Made</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Use</td>
+                        <td class="p-3 border-b">Used</td>
+                        <td class="p-3 border-b">Form</td>
+                        <td class="p-3 border-b">Formed</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Convert</td>
+                        <td class="p-3 border-b">Converted</td>
+                        <td class="p-3 border-b">Change</td>
+                        <td class="p-3 border-b">Changed</td>
+                    </tr>
+                    <tr>
+                        <td class="p-3 border-b">Send</td>
+                        <td class="p-3 border-b">Sent</td>
+                        <td class="p-3 border-b">Take</td>
+                        <td class="p-3 border-b">Taken</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">example sentences</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">1. Produce / Produced (生产 / 被生产)</h3>
+                    <p>Paper is produced from wood pulp in the factory.</p>
+                    <p class="text-gray-600">纸张在工厂中由木浆生产。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">2. Collect / Collected (收集 / 被收集)</h3>
+                    <p>Raw materials are collected from the forest.</p>
+                    <p class="text-gray-600">原材料从森林中被收集。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">3. Process / Processed (处理 / 被处理)</h3>
+                    <p>The pulp is processed into a smooth mixture.</p>
+                    <p class="text-gray-600">纸浆被处理成均匀的混合物。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">4. Transport / Transported (运输 / 被运输)</h3>
+                    <p>Materials are transported to the processing plant.</p>
+                    <p class="text-gray-600">材料被运输到加工厂。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">5. Store / Stored (储存 / 被储存)</h3>
+                    <p>Finished products are stored in the warehouse.</p>
+                    <p class="text-gray-600">成品被储存在仓库中。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">6. Package / Packaged (包装 / 被包装)</h3>
+                    <p>Products are packaged in boxes for shipping.</p>
+                    <p class="text-gray-600">产品被包装在盒子中以便运输。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">7. Distribute / Distributed (分发 / 被分发)</h3>
+                    <p>Products are distributed to retailers nationwide.</p>
+                    <p class="text-gray-600">产品被分发到全国的零售商。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">8. Assemble / Assembled (组装 / 被组装)</h3>
+                    <p>Parts are assembled into the final product.</p>
+                    <p class="text-gray-600">零件被组装成最终产品。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">9. Extract / Extracted (提取 / 被提取)</h3>
+                    <p>Minerals are extracted from the earth.</p>
+                    <p class="text-gray-600">矿物从地球中被提取。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">10. Treat / Treated (处理 / 被处理)</h3>
+                    <p>Water is treated to remove impurities.</p>
+                    <p class="text-gray-600">水被处理以去除杂质。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">11. Heat / Heated (加热 / 被加热)</h3>
+                    <p>The mixture is heated to a high temperature.</p>
+                    <p class="text-gray-600">混合物被加热到高温。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">12. Cool / Cooled (冷却 / 被冷却)</h3>
+                    <p>The liquid is cooled to form a solid product.</p>
+                    <p class="text-gray-600">液体被冷却以形成固体产品。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">13. Mix / Mixed (混合 / 被混合)</h3>
+                    <p>Ingredients are mixed in a large container.</p>
+                    <p class="text-gray-600">原料在大型容器中被混合。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">14. Test / Tested (测试 / 被测试)</h3>
+                    <p>Products are tested for quality standards.</p>
+                    <p class="text-gray-600">产品被测试以确保质量标准。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">15. Recycle / Recycled (回收 / 被回收)</h3>
+                    <p>Plastic waste is recycled into new products.</p>
+                    <p class="text-gray-600">塑料废物被回收成新产品。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">16. Turn into / Turned into (变成 / 被变成)</h3>
+                    <p>Raw materials are turned into pulp during processing.</p>
+                    <p class="text-gray-600">原材料在加工过程中被变成纸浆。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">17. Form / Formed (形成 / 被形成)</h3>
+                    <p>Sheets are formed from the processed pulp.</p>
+                    <p class="text-gray-600">纸张从加工过的纸浆中被形成。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">18. Generate / Generated (产生 / 被产生)</h3>
+                    <p>Energy is generated from waste materials.</p>
+                    <p class="text-gray-600">能源从废料中被产生。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">19. Create / Created (创造 / 被创造)</h3>
+                    <p>New products are created from recycled materials.</p>
+                    <p class="text-gray-600">新产品从回收材料中被创造。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">20. Develop / Developed (开发 / 被开发)</h3>
+                    <p>Prototypes are developed during the design phase.</p>
+                    <p class="text-gray-600">原型在设计阶段被开发。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">21. Crush / Crushed (压碎 / 被压碎)</h3>
+                    <p>Raw materials are crushed into smaller pieces.</p>
+                    <p class="text-gray-600">原材料被压碎成小块。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">22. Grind / Ground (研磨 / 被研磨)</h3>
+                    <p>Grains are ground into fine powder.</p>
+                    <p class="text-gray-600">谷物被研磨成细粉。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">23. Separate / Separated (分离 / 被分离)</h3>
+                    <p>Components are separated during recycling.</p>
+                    <p class="text-gray-600">在回收过程中，部件被分离。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">24. Filter / Filtered (过滤 / 被过滤)</h3>
+                    <p>Liquid is filtered to remove impurities.</p>
+                    <p class="text-gray-600">液体被过滤以去除杂质。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">25. Purify / Purified (净化 / 被净化)</h3>
+                    <p>Water is purified before bottling.</p>
+                    <p class="text-gray-600">水在装瓶前被净化。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">26. Melt / Melted (熔化 / 被熔化)</h3>
+                    <p>Plastic is melted for reshaping.</p>
+                    <p class="text-gray-600">塑料被熔化以便重新塑造。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">27. Boil / Boiled (煮沸 / 被煮沸)</h3>
+                    <p>Water is boiled to eliminate bacteria.</p>
+                    <p class="text-gray-600">水被煮沸以消除细菌。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">28. Condense / Condensed (冷凝 / 被冷凝)</h3>
+                    <p>Vapor is condensed into liquid form.</p>
+                    <p class="text-gray-600">蒸汽被冷凝成液体形式。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">29. Evaporate / Evaporated (蒸发 / 被蒸发)</h3>
+                    <p>Liquid is evaporated to concentrate the solution.</p>
+                    <p class="text-gray-600">液体被蒸发以浓缩溶液。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">30. Inject / Injected (注入 / 被注入)</h3>
+                    <p>Additives are injected into the mixture.</p>
+                    <p class="text-gray-600">添加剂被注入混合物中。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">31. Pump / Pumped (泵送 / 被泵送)</h3>
+                    <p>Water is pumped into storage tanks.</p>
+                    <p class="text-gray-600">水被泵送至储罐中。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">32. Feed / Fed (供给 / 被供给)</h3>
+                    <p>Raw materials are fed into the machine.</p>
+                    <p class="text-gray-600">原材料被供给到机器中。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">33. Stretch / Stretched (拉伸 / 被拉伸)</h3>
+                    <p>Plastic film is stretched to form sheets.</p>
+                    <p class="text-gray-600">塑料薄膜被拉伸以形成薄片。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">34. Flatten / Flattened (压平 / 被压平)</h3>
+                    <p>Metal sheets are flattened for further processing.</p>
+                    <p class="text-gray-600">金属板被压平以便进一步加工。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">35. Roll / Rolled (滚动 / 被滚动)</h3>
+                    <p>Paper is rolled into large cylinders.</p>
+                    <p class="text-gray-600">纸张被卷成大圆筒。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">36. Examine / Examined (检查 / 被检查)</h3>
+                    <p>Products are examined for defects.</p>
+                    <p class="text-gray-600">产品被检查以发现缺陷。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">37. Inspect / Inspected (检验 / 被检验)</h3>
+                    <p>Items are inspected before packaging.</p>
+                    <p class="text-gray-600">物品在包装前被检验。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">38. Measure / Measured (测量 / 被测量)</h3>
+                    <p>Dimensions are measured for accuracy.</p>
+                    <p class="text-gray-600">尺寸被测量以确保准确性。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">39. Monitor / Monitored (监控 / 被监控)</h3>
+                    <p>The process is monitored for consistency.</p>
+                    <p class="text-gray-600">过程被监控以确保一致性。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">40. Load / Loaded (装载 / 被装载)</h3>
+                    <p>Goods are loaded onto trucks.</p>
+                    <p class="text-gray-600">货物被装载到卡车上。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">41. Unload / Unloaded (卸载 / 被卸载)</h3>
+                    <p>Materials are unloaded at the factory.</p>
+                    <p class="text-gray-600">材料在工厂被卸载。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">42. Deliver / Delivered (交付 / 被交付)</h3>
+                    <p>Products are delivered to retailers.</p>
+                    <p class="text-gray-600">产品被交付给零售商。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">43. Send / Sent (发送 / 被发送)</h3>
+                    <p>Packages are sent to distribution centers.</p>
+                    <p class="text-gray-600">包裹被发送到分发中心。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">44. Remove / Removed (移除 / 被移除)</h3>
+                    <p>Impurities are removed from the liquid.</p>
+                    <p class="text-gray-600">杂质从液体中被移除。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">45. Eliminate / Eliminated (消除 / 被消除)</h3>
+                    <p>Contaminants are eliminated during filtration.</p>
+                    <p class="text-gray-600">在过滤过程中，污染物被消除。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">46. Blend / Blended (混合 / 被混合)</h3>
+                    <p>Ingredients are blended to create a uniform mixture.</p>
+                    <p class="text-gray-600">原料被混合以创建均匀的混合物。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">47. Add / Added (添加 / 被添加)</h3>
+                    <p>Chemicals are added to the solution.</p>
+                    <p class="text-gray-600">化学物质被添加到溶液中。</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-medium text-blue-500">48. Combine / Combined (结合 / 被结合)</h3>
+                    <p>Materials are combined in a mixing chamber.</p>
+                    <p class="text-gray-600">材料在混合室中被结合。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-gray-500 mt-8">
+            <p>Created for IELTS Writing Task 1 preparation. Last updated October 24, 2025.</p>
+        </footer>
+    </div>
+</body>
+</html>

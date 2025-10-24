@@ -1,0 +1,135 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1: Time Expressions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .category {
+            margin-bottom: 30px;
+        }
+        .expression {
+            margin: 15px 0;
+        }
+        .expression strong {
+            color: #000;
+        }
+        .example, .chinese {
+            color: #888;
+            font-style: italic;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IELTS Writing Task 1: Time Expressions</h1>
+
+    <div class="category">
+        <h2>Time Points</h2>
+        <div class="expression">
+            <strong>In</strong> (在……期间)
+            <p class="example">Example: In 2020, the population increased significantly.</p>
+            <p class="chinese">例句：在2020年，人口显著增加。</p>
+        </div>
+        <div class="expression">
+            <strong>At</strong> (在……时刻)
+            <p class="example">Example: At the beginning of the decade, sales were low.</p>
+            <p class="chinese">例句：在十年初，销售额很低。</p>
+        </div>
+        <div class="expression">
+            <strong>On</strong> (在……那天)
+            <p class="example">Example: On January 1st, the new policy was implemented.</p>
+            <p class="chinese">例句：在1月1日，新政策开始实施。</p>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2>Time Periods</h2>
+        <div class="expression">
+            <strong>Over the period</strong> (在整个时期内)
+            <p class="example">Example: Over the period from 2015 to 2020, unemployment rates dropped.</p>
+            <p class="chinese">例句：在2015年至2020年的整个时期内，失业率下降。</p>
+        </div>
+        <div class="expression">
+            <strong>Throughout</strong> (贯穿整个)
+            <p class="example">Example: Throughout the decade, consumer spending remained stable.</p>
+            <p class="chinese">例句：整个十年中，消费者支出保持稳定。</p>
+        </div>
+        <div class="expression">
+            <strong>Between ... and ...</strong> (在……和……之间)
+            <p class="example">Example: Between 2000 and 2010, urban population grew rapidly.</p>
+            <p class="chinese">例句：在2000年至2010年间，城市人口迅速增长。</p>
+        </div>
+        <div class="expression">
+            <strong>By</strong> (截至)
+            <p class="example">Example: By 2025, renewable energy usage had doubled.</p>
+            <p class="chinese">例句：截至2025年，可再生能源使用量翻倍。</p>
+        </div>
+        <div class="expression">
+            <strong>During</strong> (在……期间)
+            <p class="example">Example: During the first quarter, profits rose steadily.</p>
+            <p class="chinese">例句：在第一季度，利润稳步上升。</p>
+        </div>
+        <div class="expression">
+            <strong>From</strong> (从……开始)
+            <p class="example">Example: From 2010 onwards, technology advanced rapidly.</p>
+            <p class="chinese">例句：从2010年起，技术迅速发展。</p>
+        </div>
+    </div>
+</body>
+</html>
