@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英译汉练习：生活方式与迁移</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .prompt {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+            border: 1px solid #a5d6a7;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: #2e7d32;
+        }
+        .prompt h2 {
+            margin-top: 0;
+            color: #1b5e20;
+            font-size: 1.4em;
+            border-bottom: 2px solid #81c784;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .prompt p {
+            margin: 10px 0;
+            font-weight: normal; /* 确保非粗体 */
+        }
+        .sentence-block {
+            margin-bottom: 35px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .sentence-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .chinese {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 12px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0 8px 0;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .input-box:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        }
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 15px;
+            background-color: #e3f2fd;
+            border-left: 5px solid #1a73e8;
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            color: #0d47a1;
+            font-size: 1.1em;
+        }
+        .toggle-btn {
+            display: block;
+            margin: 50px auto;
+            padding: 14px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .toggle-btn:hover {
+            background-color: #0d47a1;
+            transform: scale(1.05);
+        }
+        .toggle-btn.hide {
+            background-color: #d32f2f;
+        }
+        .toggle-btn.hide:hover {
+            background-color: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="prompt">
+        <h2>写作题目</h2>
+        <p>In the past, people usually stayed in one place throughout their life. These days, people often move around. They often live in several different places in their lifetime. What are the advantages and disadvantages of both?</p>
+        <p>Give reasons for your answer and include any relevant information from your own knowledge and experience.<br>Write at least 250 words.</p>
+    </div>
+
+    <!-- Sentence 1 -->
+    <div class="sentence-block">
+        <div class="chinese">过去，终生居住在一个地方很常见，而今天，许多人频繁地从一个地方搬到另一个地方，一生中在多个地方生活。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">In the past, lifelong residence in one location was common, while today, many people move from one place to another quite frequently, living in several places over their lifetimes.</div>
+    </div>
+
+    <!-- Sentence 2 -->
+    <div class="sentence-block">
+        <div class="chinese">这两种生活方式各有优缺点。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Both lifestyles have their own advantages and disadvantages.</div>
+    </div>
+
+    <!-- Sentence 3 -->
+    <div class="sentence-block">
+        <div class="chinese">待在一个地方能培养稳定性和牢固的社区联系。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Staying in one place fosters stability and strong community ties.</div>
+    </div>
+
+    <!-- Sentence 4 -->
+    <div class="sentence-block">
+        <div class="chinese">长期生活在一个地方有助于与邻居和其他社区成员建立深厚的关系，形成一个支持性的网络，提升情感健康。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Living in one place for a long time can help develop deep relationships with neighbours and other community members, creating a supportive network that enhances emotional well-being.</div>
+    </div>
+
+    <!-- Sentence 5 -->
+    <div class="sentence-block">
+        <div class="chinese">例如，在小城镇中，世代相传的熟悉感提供了安全感并减少了孤立。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">For example, in small towns, generational familiarity provides security and reduces isolation.</div>
+    </div>
+
+    <!-- Sentence 6 -->
+    <div class="sentence-block">
+        <div class="chinese">从职业角度看，积累的本地知识——比如了解区域就业市场——可以带来持续的就业机会。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Professionally, accumulated local knowledge—such as understanding regional job markets—can lead to sustained employment.</div>
+    </div>
+
+    <!-- Sentence 7 -->
+    <div class="sentence-block">
+        <div class="chinese">根据我在家乡的经历，我的家人从终生的关系中受益，获得了他们想要的工作保障和社会尊重，而无需承受搬迁的压力。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">From my experience in a hometown setting, my family benefited from lifelong connections. It provided them with their desired job security and social respect without relocation stress.</div>
+    </div>
+
+    <!-- Sentence 8 -->
+    <div class="sentence-block">
+        <div class="chinese">然而，终生居住在一个地方可能会减少人们对新思想和新文化的接触。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">However, living in one place for the whole life could reduce people's exposure to new ideas and cultures.</div>
+    </div>
+
+    <!-- Sentence 9 -->
+    <div class="sentence-block">
+        <div class="chinese">这可能会降低人们的创造力，并可能剥夺他们通常从新事物和新想法中获得的乐趣。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">This may reduce people's creativity and potentially deprive them of the joy that usually comes with new things and new ideas.</div>
+    </div>
+
+    <!-- Sentence 10 -->
+    <div class="sentence-block">
+        <div class="chinese">从经济角度看，地方产业的衰退，比如工厂关闭，可能会让居民陷入失业，因为他们缺乏适应更广泛市场的技能。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Economically, declining local industries, like factory closures, can trap residents in unemployment, lacking skills for broader markets.</div>
+    </div>
+
+    <!-- Sentence 11 -->
+    <div class="sentence-block">
+        <div class="chinese">相反，频繁搬迁促进个人成长和适应能力。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Conversely, frequent relocation promotes personal growth and adaptability.</div>
+    </div>
+
+    <!-- Sentence 12 -->
+    <div class="sentence-block">
+        <div class="chinese">接触多样化的环境能丰富文化意识和韧性。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Exposure to diverse environments enriches cultural awareness and resilience.</div>
+    </div>
+
+    <!-- Sentence 13 -->
+    <div class="sentence-block">
+        <div class="chinese">职业机会可能会在这个过程中扩大。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Career opportunities may expand in this process.</div>
+    </div>
+
+    <!-- Sentence 14 -->
+    <div class="sentence-block">
+        <div class="chinese">我曾在多个城市学习和工作，学会了多种语言并形成了全球思维，如果我一直待在一个地方，这些对我来说几乎是无法获得的。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Having lived in multiple cities for studies and work, I acquired languages and a global mindset, both of which can hardly be attainable to me if I had lived in one place all my life.</div>
+    </div>
+
+    <!-- Sentence 15 -->
+    <div class="sentence-block">
+        <div class="chinese">然而，流动性会破坏人际关系，增加孤独感。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Yet, mobility disrupts relationships, increasing loneliness.</div>
+    </div>
+
+    <!-- Sentence 16 -->
+    <div class="sentence-block">
+        <div class="chinese">从财务上看，频繁搬迁会增加与交通和住房相关的预算。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Financially, frequent relocations would increase people's budget relating to transportation and housing.</div>
+    </div>
+
+    <!-- Sentence 17 -->
+    <div class="sentence-block">
+        <div class="chinese">他们的孩子在转学时可能会面临教育中断。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Their children may face educational interruptions as they transfer from one school to another.</div>
+    </div>
+
+    <!-- Sentence 18 -->
+    <div class="sentence-block">
+        <div class="chinese">其中一些孩子甚至可能在与他人交朋友时遇到问题。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Some of them may even have problems in making friends with others.</div>
+    </div>
+
+    <!-- Sentence 19 -->
+    <div class="sentence-block">
+        <div class="chinese">总之，定居一地提供了更强的联系和就业保障，但有失去接触新想法的机会的风险。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">In conclusion, living in one place offers stronger connection and job security, risks losing opportunities to be exposed to new ideas.</div>
+    </div>
+
+    <!-- Sentence 20 -->
+    <div class="sentence-block">
+        <div class="chinese">相反，频繁搬迁促进个人成长，但会增加成本和人们感受到的压力。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">On the contrary, moving frequently fosters personal growth, but increases costs as well as stresses felt by people.</div>
+    </div>
+
+    <!-- Sentence 21 -->
+    <div class="sentence-block">
+        <div class="chinese">因此，一个好的策略可能是仔细考虑两种生活方式，并选择最适合自己的那种。</div>
+        <input type="text" class="input-box" placeholder="在此输入原文英文句子...">
+        <div class="answer">Therefore, a good strategy is probably to consider two lifestyles carefully and choose one that suits you best.</div>
+    </div>
+
+    <button class="toggle-btn" id="toggleButton" onclick="toggleAnswers()">show the English text</button>
+
+    <script>
+        function toggleAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            const button = document.getElementById('toggleButton');
+            let allHidden = true;
+
+            answers.forEach(answer => {
+                if (answer.style.display === 'block') {
+                    allHidden = false;
+                }
+            });
+
+            if (allHidden) {
+                // Show all answers
+                answers.forEach(answer => {
+                    answer.style.display = 'block';
+                });
+                button.textContent = 'hide the English text';
+                button.classList.add('hide');
+            } else {
+                // Hide all answers
+                answers.forEach(answer => {
+                    answer.style.display = 'none';
+                });
+                button.textContent = 'show the English text';
+                button.classList.remove('hide');
+            }
+        }
+
+        // Press Enter to go to next input
+        document.querySelectorAll('.input-box').forEach((input, index, inputs) => {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
