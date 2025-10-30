@@ -6,12 +6,58 @@
   <title>贴纸墙</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
       margin: 0;
       padding: 20px;
       background-color: #f5f5f5;
       position: relative;
       min-height: 100vh;
+      cursor: default;
+    }
+    .welcome-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .welcome-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+    }
+    .welcome-box h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .welcome-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 15px 0;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .welcome-box button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .welcome-box button:hover {
+      background-color: #0056b3;
     }
     .controls {
       margin-bottom: 20px;
@@ -20,111 +66,151 @@
     button {
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #007bff;
+      background-color: #28a745;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
     }
-    button:hover { opacity: 0.9; }
+    button:hover {
+      opacity: 0.9;
+    }
     .sticker {
       position: absolute;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      max-width: 200px;
-      word-wrap: break-word;
+      width: 250px;
+      min-height: 200px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background-color: #fff9c4; /* 模拟便利贴黄色 */
       cursor: move;
       user-select: none;
+      font-size: 16px;
+      line-height: 1.5;
+      overflow: hidden;
     }
-    .sticker p {
-      margin: 0;
-      font-size: 14px;
+    .sticker-name {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    .sticker-content {
+      min-height: 40px;
+      margin: 8px 0;
     }
     .sticker input {
       width: 100%;
-      padding: 5px;
-      margin-top: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
     }
     .sticker button {
-      margin-top: 5px;
-      padding: 3px 6px;
+      padding: 4px 8px;
       font-size: 12px;
+      margin-right: 5px;
     }
   </style>
 </head>
 <body>
+  <!-- 欢迎模态框：输入姓名 -->
+  <div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-box">
+      <h2>欢迎来到贴纸墙</h2>
+      <p>请输入你的姓名，开始分享你的想法</p>
+      <input type="text" id="userNameInput" placeholder="请输入你的名字" maxlength="10" />
+      <button id="startButton">开始贴贴纸</button>
+    </div>
+  </div>
+
+  <!-- 控制按钮 -->
   <div class="controls">
     <button id="addSticker">添加我的贴纸</button>
     <button id="refresh">刷新查看大家的想法</button>
   </div>
 
-  <!-- Firebase SDK: 使用 compat 版本，适合直接在 HTML 中使用 -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <!-- 引入 LeanCloud JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.22.0/dist/av-min.js"></script>
 
   <script>
-    // 🔧 你的 Firebase 配置信息
-    const firebaseConfig = {
-      apiKey: "AIzaSyA6bDyM0AXHua48sVD2xJlJ0D4NAE3uBa0",
-      authDomain: "stickerwall-374a4.firebaseapp.com",
-      projectId: "stickerwall-374a4",
-      storageBucket: "stickerwall-374a4.appspot.com",
-      messagingSenderId: "842541981539",
-      appId: "1:842541981539:web:4c1b6171e3772ecba8fd56"
-    };
-
-    // 初始化 Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const auth = firebase.auth();
+    // 初始化 LeanCloud（使用你的配置）
+    AV.init({
+      appId: "Gl2dY2QY6l7x82uiaEpRV1jH-gzGzoHsz",
+      appKey: "Td5758pFasptUitMJ7s9H3ED",
+      serverURL: "https://gl2dy2qy.lc-cn-n1-shared.com"
+    });
 
     let currentUser = null;
-    const COLORS = ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFDFBA', '#D0BBFF', '#FFB6C1', '#C1F0F6', '#FED8B1', '#E0BBE4'];
-    
-    // 匿名登录
-    auth.signInAnonymously().catch((error) => {
-      console.error("登录失败:", error);
-    });
+    const COLORS = [
+      '#FFF9C4', '#FFECB3', '#FFE0B2', '#FFCC80', 
+      '#FFB74D', '#FFA726', '#FF9800', '#FB8C00', 
+      '#F57C00', '#EF6C00'
+    ];
 
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        currentUser = user;
-        loadStickers(); // 用户登录后加载贴纸
+    // 等待用户输入姓名
+    document.getElementById('startButton').onclick = function() {
+      const name = document.getElementById('userNameInput').value.trim();
+      if (!name) {
+        alert("请输入你的姓名！");
+        return;
       }
-    });
+      currentUser = { id: 'user_' + Date.now(), name: name };
+      localStorage.setItem('sticker_user_name', name); // 记住用户名
+      document.getElementById('welcomeModal').style.display = 'none';
+    };
 
-    // 从 Firestore 加载所有贴纸
+    // 如果之前输入过，自动填充
+    window.onload = function() {
+      const savedName = localStorage.getItem('sticker_user_name');
+      if (savedName) {
+        document.getElementById('userNameInput').value = savedName;
+      }
+    };
+
+    // 加载贴纸
     function loadStickers() {
-      const stickersRef = db.collection('stickers');
-      stickersRef.onSnapshot((snapshot) => {
-        // 清空现有贴纸
+      const query = new AV.Query('Sticker');
+      query.descending('createdAt');
+      query.find().then(stickers => {
         document.querySelectorAll('.sticker').forEach(el => el.remove());
-        
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          createStickerElement(doc.id, data.text, data.userId, data.x, data.y, data.color);
+        stickers.forEach(sticker => {
+          createStickerElement(
+            sticker.id,
+            sticker.get('text'),
+            sticker.get('userId'),
+            sticker.get('userName'),
+            sticker.get('x'),
+            sticker.get('y'),
+            sticker.get('color')
+          );
         });
-      });
+      }).catch(console.error);
     }
 
-    // 创建贴纸 DOM 元素
-    function createStickerElement(id, text, userId, x, y, color) {
+    // 创建贴纸元素
+    function createStickerElement(id, text, stickerUserId, stickerUserName, x, y, color) {
       const sticker = document.createElement('div');
       sticker.className = 'sticker';
       sticker.style.left = x + 'px';
       sticker.style.top = y + 'px';
       sticker.style.backgroundColor = color;
 
-      const content = document.createElement('p');
-      content.textContent = text || '双击编辑...';
+      // 用户姓名（左上角）
+      const nameTag = document.createElement('div');
+      nameTag.className = 'sticker-name';
+      nameTag.textContent = `📌 ${stickerUserName}`;
+      sticker.appendChild(nameTag);
+
+      // 内容区域
+      const content = document.createElement('div');
+      content.className = 'sticker-content';
+      content.textContent = text || '双击编辑内容...';
       sticker.appendChild(content);
 
-      // 只有创建者才能编辑
-      if (currentUser && userId === currentUser.uid) {
+      // 编辑功能（仅自己可见）
+      if (stickerUserId === currentUser?.id) {
         const input = document.createElement('input');
         input.type = 'text';
         input.value = text || '';
@@ -140,22 +226,27 @@
         deleteBtn.style.backgroundColor = '#dc3545';
 
         deleteBtn.onclick = () => {
-          db.collection('stickers').doc(id).delete();
+          const avSticker = AV.Object.createWithoutData('Sticker', id);
+          avSticker.destroy().then(() => {
+            sticker.remove();
+          }).catch(console.error);
         };
 
         saveBtn.onclick = () => {
           const newText = input.value.trim();
-          db.collection('stickers').doc(id).update({
-            text: newText
-          });
-          input.style.display = 'none';
-          saveBtn.style.display = 'none';
-          deleteBtn.style.display = 'none';
-          content.style.display = 'block';
-          content.textContent = newText || '双击编辑...';
+          const avSticker = AV.Object.createWithoutData('Sticker', id);
+          avSticker.set('text', newText);
+          avSticker.save().then(() => {
+            input.style.display = 'none';
+            saveBtn.style.display = 'none';
+            deleteBtn.style.display = 'none';
+            content.style.display = 'block';
+            content.textContent = newText || '双击编辑内容...';
+          }).catch(console.error);
         };
 
         content.ondblclick = () => {
+          if (!currentUser) return;
           content.style.display = 'none';
           input.style.display = 'block';
           saveBtn.style.display = 'inline';
@@ -168,9 +259,7 @@
         sticker.appendChild(deleteBtn);
       }
 
-      // 拖拽功能
       makeDraggable(sticker, id);
-
       document.body.appendChild(sticker);
     }
 
@@ -178,6 +267,7 @@
     function makeDraggable(element, docId) {
       let pos = { x: 0, y: 0 };
       element.onmousedown = (e) => {
+        if (!currentUser) return;
         e.preventDefault();
         pos = { x: e.clientX - element.offsetLeft, y: e.clientY - element.offsetTop };
         document.onmousemove = dragMove;
@@ -188,7 +278,6 @@
         e.preventDefault();
         const newX = e.clientX - pos.x;
         const newY = e.clientY - pos.y;
-        
         element.style.left = newX + 'px';
         element.style.top = newY + 'px';
       }
@@ -196,38 +285,46 @@
       function stopDrag() {
         document.onmouseup = null;
         document.onmousemove = null;
-        // 保存新位置到数据库
-        if (currentUser) {
-          db.collection('stickers').doc(docId).update({
-            x: parseInt(element.style.left),
-            y: parseInt(element.style.top)
-          });
-        }
+        const sticker = AV.Object.createWithoutData('Sticker', docId);
+        sticker.set('x', parseInt(element.style.left));
+        sticker.set('y', parseInt(element.style.top));
+        sticker.save().catch(console.error);
       }
     }
 
     // 添加新贴纸
     document.getElementById('addSticker').onclick = () => {
-      if (!currentUser) return alert('请稍候，正在登录...');
+      if (!currentUser) {
+        alert("请先输入姓名！");
+        document.getElementById('welcomeModal').style.display = 'flex';
+        return;
+      }
 
-      const userColor = COLORS[currentUser.uid.charCodeAt(0) % COLORS.length];
-      const x = Math.random() * (window.innerWidth - 250) + 50;
-      const y = Math.random() * (window.innerHeight - 200) + 100;
+      const userColor = COLORS[currentUser.id.charCodeAt(0) % COLORS.length];
+      const x = Math.random() * (window.innerWidth - 300) + 50;
+      const y = Math.random() * (window.innerHeight - 250) + 100;
 
-      db.collection('stickers').add({
-        text: '',
-        userId: currentUser.uid,
-        color: userColor,
-        x: x,
-        y: y,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      const Sticker = AV.Object.extend('Sticker');
+      const sticker = new Sticker();
+      sticker.set('text', '');
+      sticker.set('userId', currentUser.id);
+      sticker.set('userName', currentUser.name);
+      sticker.set('color', userColor);
+      sticker.set('x', x);
+      sticker.set('y', y);
+
+      sticker.save().then(() => {
+        loadStickers();
+      }).catch(err => {
+        console.error("保存贴纸失败", err);
+        alert("保存失败，请检查网络");
       });
     };
 
-    // 刷新按钮
-    document.getElementById('refresh').onclick = () => {
-      location.reload();
-    };
+    // 刷新贴纸
+    document.getElementById('refresh').onclick = loadStickers;
   </script>
 </body>
 </html>
+
+
