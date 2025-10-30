@@ -69,7 +69,7 @@
     const STICKERS_CLASS = 'Stickers';
     const COLORS = ['#FFB3BA','#BAFFC9','#BAE1FF','#FFFFBA','#FFDFBA','#D0BBFF','#FFB6C1','#C1F0F6','#FED8B1','#E0BBE4'];
 
-    let currentUserId = null;
+    let currentUserId = null;  // 每个设备唯一，用于判断“谁能编辑”
     let userName = '';
     let liveQueryClient = null;
     let subscription = null;
@@ -85,12 +85,17 @@
     const confirmClear = document.getElementById('confirmClear');
     const cancelClear = document.getElementById('cancelClear');
 
-    // ---------- 姓名 ----------
+    // ---------- 姓名输入 ----------
     confirmBtn.onclick = () => {
       const name = nameInput.value.trim();
       if (!name) return alert('请输入姓名！');
       userName = name;
-      currentUserId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+      // 每个设备生成唯一 ID，保存到 localStorage（刷新后保持）
+      currentUserId = localStorage.getItem('stickerwall_userid');
+      if (!currentUserId) {
+        currentUserId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+        localStorage.setItem('stickerwall_userid', currentUserId);
+      }
       nameModal.style.display = 'none';
       mainControls.style.display = 'block';
       initLiveQuery();
@@ -99,10 +104,10 @@
     nameInput.addEventListener('keypress', e => e.key==='Enter' && confirmBtn.click());
     setTimeout(() => nameInput.focus(), 100);
 
-    // ---------- LiveQuery ----------
+    // ---------- LiveQuery 实时同步（全局共享） ----------
     function initLiveQuery() {
       if (liveQueryClient) return;
-      // 注意：这里必须用 wss:// 协议
+
       const wsURL = 'wss://gl2dy2qy.im.cn-n1.lncldapi.com';
       liveQueryClient = new AV.Realtime({
         appId: AV.applicationId,
@@ -118,7 +123,7 @@
           console.log('LiveQuery 订阅成功');
           sub.on('create', obj => {
             const d = obj.toJSON();
-            console.log('LiveQuery create', d.objectId);
+            console.log('收到创建:', d.objectId);
             createStickerElement(d.objectId, d.text, d.userId, d.userName, d.x, d.y, d.color);
           });
           sub.on('update', obj => {
@@ -135,31 +140,36 @@
             const el = document.querySelector(`.sticker[data-id="${obj.id}"]`);
             if (el) el.remove();
           });
-        }).catch(err => console.error('LiveQuery 订阅失败', err));
+        }).catch(err => {
+          console.error('LiveQuery 订阅失败', err);
+          alert('实时同步失败，请刷新页面');
+        });
       });
 
       liveQueryClient.on('error', err => console.error('LiveQuery 错误', err));
-      liveQueryClient.on('close', () => console.log('LiveQuery 连接关闭'));
     }
 
-    // ---------- 加载所有贴纸 ----------
+    // ---------- 加载所有贴纸（全局共享） ----------
     function loadStickers() {
       const q = new AV.Query(STICKERS_CLASS);
+      q.ascending('createdAt');  // 保证顺序一致
       q.find().then(results => {
         document.querySelectorAll('.sticker').forEach(el => el.remove());
         results.forEach(obj => {
           const d = obj.toJSON();
           createStickerElement(d.objectId, d.text, d.userId, d.userName||'匿名', d.x||0, d.y||0, d.color);
         });
+        console.log('加载完成，共', results.length, '个贴纸');
       }).catch(err => {
         console.error('加载失败', err);
-        alert('加载贴纸失败: '+err.message);
+        alert('加载失败: '+err.message);
       });
     }
 
     // ---------- 创建贴纸 DOM ----------
     function createStickerElement(id, text, userId, authorName, x, y, color) {
       if (document.querySelector(`.sticker[data-id="${id}"]`)) return;
+
       const s = document.createElement('div');
       s.className = 'sticker';
       s.dataset.id = id;
@@ -167,9 +177,16 @@
       s.style.top = y + 'px';
       s.style.backgroundColor = color;
 
-      const author = document.createElement('div'); author.className='author'; author.textContent=authorName; s.appendChild(author);
-      const p = document.createElement('p'); p.textContent = text||'双击编辑...'; s.appendChild(p);
+      const author = document.createElement('div'); 
+      author.className='author'; 
+      author.textContent = authorName; 
+      s.appendChild(author);
 
+      const p = document.createElement('p'); 
+      p.textContent = text||'双击编辑...'; 
+      s.appendChild(p);
+
+      // 只有创建者能编辑
       if (userId === currentUserId) {
         const input = document.createElement('input'); input.type='text'; input.value=text||''; input.style.display='none';
         const saveBtn = document.createElement('button'); saveBtn.textContent='保存'; saveBtn.style.display='none';
@@ -231,7 +248,7 @@
 
     // ---------- 添加贴纸 ----------
     document.getElementById('addSticker').onclick = () => {
-      if (!currentUserId || !userName) return alert('请先输入姓名！');
+      if (!currentUserId) return alert('请先输入姓名！');
       const color = COLORS[Math.floor(Math.random()*COLORS.length)];
       const x = Math.random()*(window.innerWidth-250)+50;
       const y = Math.random()*(window.innerHeight-200)+100;
@@ -247,12 +264,11 @@
         y: y
       });
       s.save().then(obj => {
-        // 立即在本地创建，LiveQuery 也会同步到其他客户端
         const d = obj.toJSON();
         createStickerElement(d.objectId, d.text, d.userId, d.userName, d.x, d.y, d.color);
       }).catch(err => {
         console.error('添加失败', err);
-        alert('添加失败，请检查网络或控制台');
+        alert('添加失败，请检查网络');
       });
     };
 
