@@ -82,7 +82,7 @@
       padding: 15px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      background-color: #fff9c4; /* 模拟便利贴黄色 */
+      background-color: #fff9c4;
       cursor: move;
       user-select: none;
       font-size: 16px;
@@ -115,7 +115,8 @@
   </style>
 </head>
 <body>
-  <!-- 欢迎模态框：输入姓名 -->
+
+  <!-- 欢迎模态框 -->
   <div class="welcome-modal" id="welcomeModal">
     <div class="welcome-box">
       <h2>欢迎来到贴纸墙</h2>
@@ -131,11 +132,11 @@
     <button id="refresh">刷新查看大家的想法</button>
   </div>
 
-  <!-- 引入 LeanCloud JS SDK -->
+  <!-- 引入 LeanCloud SDK -->
   <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.22.0/dist/av-min.js"></script>
 
   <script>
-    // 初始化 LeanCloud（使用你的配置）
+    // 初始化 LeanCloud
     AV.init({
       appId: "Gl2dY2QY6l7x82uiaEpRV1jH-gzGzoHsz",
       appKey: "Td5758pFasptUitMJ7s9H3ED",
@@ -149,24 +150,63 @@
       '#F57C00', '#EF6C00'
     ];
 
-    // 等待用户输入姓名
-    document.getElementById('startButton').onclick = function() {
-      const name = document.getElementById('userNameInput').value.trim();
-      if (!name) {
-        alert("请输入你的姓名！");
-        return;
-      }
-      currentUser = { id: 'user_' + Date.now(), name: name };
-      localStorage.setItem('sticker_user_name', name); // 记住用户名
-      document.getElementById('welcomeModal').style.display = 'none';
-    };
-
-    // 如果之前输入过，自动填充
+    // 页面加载完成后执行
     window.onload = function() {
+      const userNameInput = document.getElementById('userNameInput');
+      const startButton = document.getElementById('startButton');
+      const addStickerBtn = document.getElementById('addSticker');
+      const refreshBtn = document.getElementById('refresh');
+
+      // 自动填充用户名
       const savedName = localStorage.getItem('sticker_user_name');
       if (savedName) {
-        document.getElementById('userNameInput').value = savedName;
+        userNameInput.value = savedName;
       }
+
+      // 绑定“开始贴贴纸”按钮
+      startButton.onclick = function() {
+        const name = userNameInput.value.trim();
+        if (!name) {
+          alert("请输入你的姓名！");
+          return;
+        }
+        currentUser = { id: 'user_' + Date.now(), name: name };
+        localStorage.setItem('sticker_user_name', name);
+        document.getElementById('welcomeModal').style.display = 'none';
+        loadStickers(); // 输入姓名后立即加载贴纸
+      };
+
+      // 添加新贴纸
+      addStickerBtn.onclick = () => {
+        if (!currentUser) {
+          alert("请先输入姓名！");
+          document.getElementById('welcomeModal').style.display = 'flex';
+          return;
+        }
+
+        const userColor = COLORS[currentUser.id.charCodeAt(0) % COLORS.length];
+        const x = Math.random() * (window.innerWidth - 300) + 50;
+        const y = Math.random() * (window.innerHeight - 250) + 100;
+
+        const Sticker = AV.Object.extend('Sticker');
+        const sticker = new Sticker();
+        sticker.set('text', '');
+        sticker.set('userId', currentUser.id);
+        sticker.set('userName', currentUser.name);
+        sticker.set('color', userColor);
+        sticker.set('x', x);
+        sticker.set('y', y);
+
+        sticker.save().then(() => {
+          loadStickers();
+        }).catch(err => {
+          console.error("保存贴纸失败", err);
+          alert("保存失败，请检查网络");
+        });
+      };
+
+      // 刷新贴纸
+      refreshBtn.onclick = loadStickers;
     };
 
     // 加载贴纸
@@ -197,19 +237,16 @@
       sticker.style.top = y + 'px';
       sticker.style.backgroundColor = color;
 
-      // 用户姓名（左上角）
       const nameTag = document.createElement('div');
       nameTag.className = 'sticker-name';
       nameTag.textContent = `📌 ${stickerUserName}`;
       sticker.appendChild(nameTag);
 
-      // 内容区域
       const content = document.createElement('div');
       content.className = 'sticker-content';
       content.textContent = text || '双击编辑内容...';
       sticker.appendChild(content);
 
-      // 编辑功能（仅自己可见）
       if (stickerUserId === currentUser?.id) {
         const input = document.createElement('input');
         input.type = 'text';
@@ -291,40 +328,6 @@
         sticker.save().catch(console.error);
       }
     }
-
-    // 添加新贴纸
-    document.getElementById('addSticker').onclick = () => {
-      if (!currentUser) {
-        alert("请先输入姓名！");
-        document.getElementById('welcomeModal').style.display = 'flex';
-        return;
-      }
-
-      const userColor = COLORS[currentUser.id.charCodeAt(0) % COLORS.length];
-      const x = Math.random() * (window.innerWidth - 300) + 50;
-      const y = Math.random() * (window.innerHeight - 250) + 100;
-
-      const Sticker = AV.Object.extend('Sticker');
-      const sticker = new Sticker();
-      sticker.set('text', '');
-      sticker.set('userId', currentUser.id);
-      sticker.set('userName', currentUser.name);
-      sticker.set('color', userColor);
-      sticker.set('x', x);
-      sticker.set('y', y);
-
-      sticker.save().then(() => {
-        loadStickers();
-      }).catch(err => {
-        console.error("保存贴纸失败", err);
-        alert("保存失败，请检查网络");
-      });
-    };
-
-    // 刷新贴纸
-    document.getElementById('refresh').onclick = loadStickers;
   </script>
 </body>
 </html>
-
-
