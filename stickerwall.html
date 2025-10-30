@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>贴纸墙</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      position: relative;
+      min-height: 100vh;
+    }
+    .controls {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+    .sticker {
+      position: absolute;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      max-width: 200px;
+      word-wrap: break-word;
+      cursor: move;
+      user-select: none;
+    }
+    .sticker p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .sticker input {
+      width: 100%;
+      padding: 5px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+    .sticker button {
+      margin-top: 5px;
+      padding: 3px 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button id="addSticker">添加我的贴纸</button>
+    <button id="refresh">刷新查看大家的想法</button>
+  </div>
+
+  <!-- Firebase SDK: 使用 compat 版本，适合直接在 HTML 中使用 -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 🔧 你的 Firebase 配置信息
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6bDyM0AXHua48sVD2xJlJ0D4NAE3uBa0",
+      authDomain: "stickerwall-374a4.firebaseapp.com",
+      projectId: "stickerwall-374a4",
+      storageBucket: "stickerwall-374a4.appspot.com",
+      messagingSenderId: "842541981539",
+      appId: "1:842541981539:web:4c1b6171e3772ecba8fd56"
+    };
+
+    // 初始化 Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    let currentUser = null;
+    const COLORS = ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFDFBA', '#D0BBFF', '#FFB6C1', '#C1F0F6', '#FED8B1', '#E0BBE4'];
+    
+    // 匿名登录
+    auth.signInAnonymously().catch((error) => {
+      console.error("登录失败:", error);
+    });
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        currentUser = user;
+        loadStickers(); // 用户登录后加载贴纸
+      }
+    });
+
+    // 从 Firestore 加载所有贴纸
+    function loadStickers() {
+      const stickersRef = db.collection('stickers');
+      stickersRef.onSnapshot((snapshot) => {
+        // 清空现有贴纸
+        document.querySelectorAll('.sticker').forEach(el => el.remove());
+        
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          createStickerElement(doc.id, data.text, data.userId, data.x, data.y, data.color);
+        });
+      });
+    }
+
+    // 创建贴纸 DOM 元素
+    function createStickerElement(id, text, userId, x, y, color) {
+      const sticker = document.createElement('div');
+      sticker.className = 'sticker';
+      sticker.style.left = x + 'px';
+      sticker.style.top = y + 'px';
+      sticker.style.backgroundColor = color;
+
+      const content = document.createElement('p');
+      content.textContent = text || '双击编辑...';
+      sticker.appendChild(content);
+
+      // 只有创建者才能编辑
+      if (currentUser && userId === currentUser.uid) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = text || '';
+        input.style.display = 'none';
+        
+        const saveBtn = document.createElement('button');
+        saveBtn.textContent = '保存';
+        saveBtn.style.display = 'none';
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '删除';
+        deleteBtn.style.display = 'none';
+        deleteBtn.style.backgroundColor = '#dc3545';
+
+        deleteBtn.onclick = () => {
+          db.collection('stickers').doc(id).delete();
+        };
+
+        saveBtn.onclick = () => {
+          const newText = input.value.trim();
+          db.collection('stickers').doc(id).update({
+            text: newText
+          });
+          input.style.display = 'none';
+          saveBtn.style.display = 'none';
+          deleteBtn.style.display = 'none';
+          content.style.display = 'block';
+          content.textContent = newText || '双击编辑...';
+        };
+
+        content.ondblclick = () => {
+          content.style.display = 'none';
+          input.style.display = 'block';
+          saveBtn.style.display = 'inline';
+          deleteBtn.style.display = 'inline';
+          input.focus();
+        };
+
+        sticker.appendChild(input);
+        sticker.appendChild(saveBtn);
+        sticker.appendChild(deleteBtn);
+      }
+
+      // 拖拽功能
+      makeDraggable(sticker, id);
+
+      document.body.appendChild(sticker);
+    }
+
+    // 使贴纸可拖拽
+    function makeDraggable(element, docId) {
+      let pos = { x: 0, y: 0 };
+      element.onmousedown = (e) => {
+        e.preventDefault();
+        pos = { x: e.clientX - element.offsetLeft, y: e.clientY - element.offsetTop };
+        document.onmousemove = dragMove;
+        document.onmouseup = stopDrag;
+      };
+
+      function dragMove(e) {
+        e.preventDefault();
+        const newX = e.clientX - pos.x;
+        const newY = e.clientY - pos.y;
+        
+        element.style.left = newX + 'px';
+        element.style.top = newY + 'px';
+      }
+
+      function stopDrag() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+        // 保存新位置到数据库
+        if (currentUser) {
+          db.collection('stickers').doc(docId).update({
+            x: parseInt(element.style.left),
+            y: parseInt(element.style.top)
+          });
+        }
+      }
+    }
+
+    // 添加新贴纸
+    document.getElementById('addSticker').onclick = () => {
+      if (!currentUser) return alert('请稍候，正在登录...');
+
+      const userColor = COLORS[currentUser.uid.charCodeAt(0) % COLORS.length];
+      const x = Math.random() * (window.innerWidth - 250) + 50;
+      const y = Math.random() * (window.innerHeight - 200) + 100;
+
+      db.collection('stickers').add({
+        text: '',
+        userId: currentUser.uid,
+        color: userColor,
+        x: x,
+        y: y,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    };
+
+    // 刷新按钮
+    document.getElementById('refresh').onclick = () => {
+      location.reload();
+    };
+  </script>
+</body>
+</html>
