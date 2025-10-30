@@ -116,6 +116,7 @@
       transform: translateY(-2px);
     }
     
+    /* 桌面版贴纸样式 */
     .sticker {
       position: absolute;
       width: 250px;
@@ -134,6 +135,26 @@
     .sticker:hover {
       transform: scale(1.02);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* 移动版贴纸列表样式 */
+    .sticker-list {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .sticker-item {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+    
+    .sticker-item:active {
+      transform: scale(0.98);
     }
     
     .sticker-header {
@@ -160,19 +181,22 @@
       margin-top: 10px;
     }
     
-    .sticker.editing .sticker-actions {
+    .sticker.editing .sticker-actions,
+    .sticker-item.editing .sticker-actions {
       display: block;
     }
     
-    .sticker input {
+    .sticker input,
+    .sticker-item input {
       width: 100%;
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 4px;
-      font-size: 16px; /* 增大字体便于移动端输入 */
+      font-size: 16px;
     }
     
-    .sticker button {
+    .sticker button,
+    .sticker-item button {
       padding: 8px 12px;
       font-size: 14px;
       margin-right: 5px;
@@ -181,17 +205,20 @@
       cursor: pointer;
     }
     
-    .sticker .save-btn {
+    .sticker .save-btn,
+    .sticker-item .save-btn {
       background-color: #4CAF50;
       color: white;
     }
     
-    .sticker .cancel-btn {
+    .sticker .cancel-btn,
+    .sticker-item .cancel-btn {
       background-color: #f44336;
       color: white;
     }
     
-    .sticker .delete-btn {
+    .sticker .delete-btn,
+    .sticker-item .delete-btn {
       background-color: #ff5722;
       color: white;
     }
@@ -308,22 +335,27 @@
       }
       
       .sticker {
-        width: 220px;
-        min-height: 160px;
+        display: none; /* 在移动设备上隐藏桌面版贴纸 */
       }
       
-      .sticker-header {
-        font-size: 13px;
-      }
-      
-      .sticker-content {
-        font-size: 15px;
+      .sticker-list {
+        display: flex; /* 在移动设备上显示列表 */
       }
       
       .admin-delete {
         width: 60px;
         height: 60px;
         font-size: 28px;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .sticker-list {
+        display: none; /* 在桌面上隐藏列表 */
+      }
+      
+      .sticker {
+        display: flex; /* 在桌面上显示桌面版贴纸 */
       }
     }
     
@@ -339,11 +371,6 @@
       .welcome-box h1 {
         font-size: 22px;
       }
-      
-      .sticker {
-        width: 200px;
-        min-height: 150px;
-      }
     }
     
     /* 长按提示 */
@@ -354,12 +381,22 @@
     }
     
     /* 移动端触摸反馈 */
-    .sticker:active {
+    .sticker:active,
+    .sticker-item:active {
       transform: scale(0.98);
     }
     
     button:active {
       transform: scale(0.95);
+    }
+    
+    /* 用户颜色指示器 */
+    .user-color-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 5px;
     }
   </style>
 </head>
@@ -380,8 +417,11 @@
     <button id="refreshStickers">刷新贴纸墙</button>
   </div>
 
-  <!-- 贴纸容器 -->
+  <!-- 桌面版贴纸容器 -->
   <div id="stickersContainer"></div>
+  
+  <!-- 移动版贴纸列表 -->
+  <div class="sticker-list" id="stickersList"></div>
 
   <!-- 状态信息 -->
   <div class="status" id="statusInfo">正在加载贴纸...</div>
@@ -427,6 +467,7 @@
     const addStickerBtn = document.getElementById('addSticker');
     const refreshStickersBtn = document.getElementById('refreshStickers');
     const stickersContainer = document.getElementById('stickersContainer');
+    const stickersList = document.getElementById('stickersList');
     const statusInfo = document.getElementById('statusInfo');
     const adminDeleteBtn = document.getElementById('adminDelete');
     const passwordModal = document.getElementById('passwordModal');
@@ -501,6 +542,7 @@
       
       query.find().then(results => {
         stickersContainer.innerHTML = '';
+        stickersList.innerHTML = '';
         stickers = [];
         
         if (results.length === 0) {
@@ -520,7 +562,12 @@
           };
           
           stickers.push(stickerData);
+          
+          // 创建桌面版贴纸元素
           createStickerElement(stickerData);
+          
+          // 创建移动版贴纸列表项
+          createStickerListItem(stickerData);
         });
         
         statusInfo.textContent = `已加载 ${results.length} 个贴纸`;
@@ -530,7 +577,7 @@
       });
     }
 
-    // 创建贴纸元素
+    // 创建桌面版贴纸元素
     function createStickerElement(stickerData) {
       const sticker = document.createElement('div');
       sticker.className = 'sticker';
@@ -542,15 +589,22 @@
       // 贴纸头部 - 显示用户名
       const header = document.createElement('div');
       header.className = 'sticker-header';
-      header.innerHTML = `
-        <span>${stickerData.userName}</span>
-        ${stickerData.userId === currentUser.id ? '<span class="edit-hint">(长按编辑)</span>' : ''}
-      `;
+      
+      const colorIndicator = document.createElement('span');
+      colorIndicator.className = 'user-color-indicator';
+      colorIndicator.style.backgroundColor = stickerData.color;
+      
+      header.appendChild(colorIndicator);
+      header.innerHTML += ` ${stickerData.userName}`;
+      
+      if (stickerData.userId === currentUser.id) {
+        header.innerHTML += ' <span class="edit-hint">(双击编辑)</span>';
+      }
       
       // 贴纸内容
       const content = document.createElement('div');
       content.className = 'sticker-content';
-      content.textContent = stickerData.text || '点击编辑内容...';
+      content.textContent = stickerData.text || '双击编辑内容...';
       
       // 编辑区域（仅对贴纸所有者显示）
       const editArea = document.createElement('div');
@@ -590,7 +644,72 @@
       setupStickerEvents(sticker, stickerData);
     }
 
-    // 设置贴纸事件
+    // 创建移动版贴纸列表项
+    function createStickerListItem(stickerData) {
+      const stickerItem = document.createElement('div');
+      stickerItem.className = 'sticker-item';
+      stickerItem.id = `sticker-item-${stickerData.id}`;
+      stickerItem.style.borderLeft = `5px solid ${stickerData.color}`;
+      
+      // 贴纸头部 - 显示用户名
+      const header = document.createElement('div');
+      header.className = 'sticker-header';
+      
+      const colorIndicator = document.createElement('span');
+      colorIndicator.className = 'user-color-indicator';
+      colorIndicator.style.backgroundColor = stickerData.color;
+      
+      header.appendChild(colorIndicator);
+      header.innerHTML += ` ${stickerData.userName}`;
+      
+      if (stickerData.userId === currentUser.id) {
+        header.innerHTML += ' <span class="edit-hint">(点击编辑)</span>';
+      }
+      
+      // 贴纸内容
+      const content = document.createElement('div');
+      content.className = 'sticker-content';
+      content.textContent = stickerData.text || '点击编辑内容...';
+      
+      // 编辑区域（仅对贴纸所有者显示）
+      const editArea = document.createElement('div');
+      editArea.className = 'sticker-actions';
+      
+      const textInput = document.createElement('input');
+      textInput.type = 'text';
+      textInput.value = stickerData.text;
+      textInput.placeholder = '输入贴纸内容...';
+      
+      const saveBtn = document.createElement('button');
+      saveBtn.className = 'save-btn';
+      saveBtn.textContent = '保存';
+      
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'cancel-btn';
+      cancelBtn.textContent = '取消';
+      
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.textContent = '删除';
+      
+      editArea.appendChild(textInput);
+      editArea.appendChild(saveBtn);
+      editArea.appendChild(cancelBtn);
+      editArea.appendChild(deleteBtn);
+      
+      // 组装贴纸
+      stickerItem.appendChild(header);
+      stickerItem.appendChild(content);
+      stickerItem.appendChild(editArea);
+      
+      // 添加到列表
+      stickersList.appendChild(stickerItem);
+      
+      // 设置事件监听器
+      setupStickerListItemEvents(stickerItem, stickerData);
+    }
+
+    // 设置桌面版贴纸事件
     function setupStickerEvents(stickerElement, stickerData) {
       const content = stickerElement.querySelector('.sticker-content');
       const editArea = stickerElement.querySelector('.sticker-actions');
@@ -601,35 +720,6 @@
       
       // 只有贴纸所有者可以编辑
       if (stickerData.userId === currentUser.id) {
-        let longPressTimer;
-        let isLongPress = false;
-        
-        // 移动端：长按进入编辑模式
-        content.addEventListener('touchstart', function(e) {
-          longPressTimer = setTimeout(() => {
-            isLongPress = true;
-            stickerElement.classList.add('editing');
-            textInput.focus();
-            // 阻止默认行为，避免触发其他事件
-            e.preventDefault();
-          }, 500); // 500毫秒长按
-        });
-        
-        content.addEventListener('touchend', function(e) {
-          clearTimeout(longPressTimer);
-          // 如果不是长按，则可能是点击
-          if (!isLongPress) {
-            // 移动端点击也可以进入编辑模式
-            stickerElement.classList.add('editing');
-            textInput.focus();
-          }
-          isLongPress = false;
-        });
-        
-        content.addEventListener('touchmove', function() {
-          clearTimeout(longPressTimer);
-        });
-        
         // PC端：双击进入编辑模式
         content.addEventListener('dblclick', function() {
           stickerElement.classList.add('editing');
@@ -668,6 +758,52 @@
       }
     }
 
+    // 设置移动版贴纸列表项事件
+    function setupStickerListItemEvents(stickerItem, stickerData) {
+      const content = stickerItem.querySelector('.sticker-content');
+      const editArea = stickerItem.querySelector('.sticker-actions');
+      const textInput = stickerItem.querySelector('input');
+      const saveBtn = stickerItem.querySelector('.save-btn');
+      const cancelBtn = stickerItem.querySelector('.cancel-btn');
+      const deleteBtn = stickerItem.querySelector('.delete-btn');
+      
+      // 只有贴纸所有者可以编辑
+      if (stickerData.userId === currentUser.id) {
+        // 移动端：点击进入编辑模式
+        content.addEventListener('click', function() {
+          stickerItem.classList.add('editing');
+          textInput.focus();
+        });
+        
+        // 保存编辑
+        saveBtn.addEventListener('click', function() {
+          const newText = textInput.value.trim();
+          updateSticker(stickerData.id, newText);
+          stickerItem.classList.remove('editing');
+        });
+        
+        // 取消编辑
+        cancelBtn.addEventListener('click', function() {
+          stickerItem.classList.remove('editing');
+          textInput.value = stickerData.text;
+        });
+        
+        // 删除贴纸
+        deleteBtn.addEventListener('click', function() {
+          if (confirm('确定要删除这个贴纸吗？')) {
+            deleteSticker(stickerData.id);
+          }
+        });
+        
+        // 按Enter保存
+        textInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            saveBtn.click();
+          }
+        });
+      }
+    }
+
     // 更新贴纸内容
     function updateSticker(stickerId, newText) {
       const sticker = AV.Object.createWithoutData('Sticker', stickerId);
@@ -676,7 +812,9 @@
       sticker.save().then(() => {
         // 更新本地显示
         const content = document.querySelector(`#sticker-${stickerId} .sticker-content`);
-        content.textContent = newText || '点击编辑内容...';
+        const listContent = document.querySelector(`#sticker-item-${stickerId} .sticker-content`);
+        if (content) content.textContent = newText || '双击编辑内容...';
+        if (listContent) listContent.textContent = newText || '点击编辑内容...';
         statusInfo.textContent = '贴纸已更新';
       }).catch(error => {
         console.error('更新贴纸失败:', error);
@@ -691,9 +829,9 @@
       sticker.destroy().then(() => {
         // 从DOM中移除
         const stickerElement = document.getElementById(`sticker-${stickerId}`);
-        if (stickerElement) {
-          stickerElement.remove();
-        }
+        const stickerItem = document.getElementById(`sticker-item-${stickerId}`);
+        if (stickerElement) stickerElement.remove();
+        if (stickerItem) stickerItem.remove();
         statusInfo.textContent = '贴纸已删除';
       }).catch(error => {
         console.error('删除贴纸失败:', error);
@@ -701,24 +839,12 @@
       });
     }
 
-    // 使贴纸可拖拽（支持触摸设备）
+    // 使贴纸可拖拽（桌面版）
     function makeStickerDraggable(stickerElement, stickerId) {
       let isDragging = false;
       let offsetX, offsetY;
-      let startX, startY;
       
-      // PC端事件
       stickerElement.addEventListener('mousedown', startDrag);
-      
-      // 移动端事件
-      stickerElement.addEventListener('touchstart', function(e) {
-        // 如果正在编辑，不启动拖拽
-        if (stickerElement.classList.contains('editing')) return;
-        
-        const touch = e.touches[0];
-        startDragTouch(touch);
-        e.preventDefault(); // 阻止默认行为，避免页面滚动
-      });
       
       function startDrag(e) {
         // 如果正在编辑，不启动拖拽
@@ -732,21 +858,6 @@
         document.addEventListener('mouseup', stopDrag);
         
         e.preventDefault();
-      }
-      
-      function startDragTouch(touch) {
-        // 如果正在编辑，不启动拖拽
-        if (stickerElement.classList.contains('editing')) return;
-        
-        isDragging = true;
-        offsetX = touch.clientX - stickerElement.offsetLeft;
-        offsetY = touch.clientY - stickerElement.offsetTop;
-        
-        document.addEventListener('touchmove', dragTouch, { passive: false });
-        document.addEventListener('touchend', stopDrag);
-        
-        // 添加拖动时的样式
-        stickerElement.style.zIndex = '100';
       }
       
       function drag(e) {
@@ -763,34 +874,12 @@
         stickerElement.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
       }
       
-      function dragTouch(e) {
-        if (!isDragging) return;
-        
-        const touch = e.touches[0];
-        const newX = touch.clientX - offsetX;
-        const newY = touch.clientY - offsetY;
-        
-        // 限制在可视区域内
-        const maxX = window.innerWidth - stickerElement.offsetWidth;
-        const maxY = window.innerHeight - stickerElement.offsetHeight;
-        
-        stickerElement.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
-        stickerElement.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
-        
-        e.preventDefault(); // 阻止默认行为，避免页面滚动
-      }
-      
       function stopDrag() {
         if (!isDragging) return;
         
         isDragging = false;
         document.removeEventListener('mousemove', drag);
-        document.removeEventListener('touchmove', dragTouch);
         document.removeEventListener('mouseup', stopDrag);
-        document.removeEventListener('touchend', stopDrag);
-        
-        // 恢复z-index
-        stickerElement.style.zIndex = '';
         
         // 保存新位置到数据库
         const sticker = AV.Object.createWithoutData('Sticker', stickerId);
@@ -871,6 +960,7 @@
         return AV.Object.destroyAll(results);
       }).then(() => {
         stickersContainer.innerHTML = '';
+        stickersList.innerHTML = '';
         statusInfo.textContent = '所有贴纸已删除';
         hidePasswordModal();
       }).catch(error => {
