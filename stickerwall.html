@@ -12,6 +12,7 @@
       background-color: #f5f5f5;
       position: relative;
       min-height: 100vh;
+      touch-action: none; /* 防止页面滚动干扰拖拽 */
     }
     .controls {
       margin-bottom: 20px;
@@ -37,6 +38,7 @@
       word-wrap: break-word;
       cursor: move;
       user-select: none;
+      touch-action: none; /* 防止触摸滚动 */
     }
     .sticker .author {
       font-size: 10px;
@@ -147,6 +149,15 @@
       background: #dc3545;
       margin: 5px;
     }
+
+    /* 移动端优化：响应式 */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .controls button { padding: 8px 16px; font-size: 14px; }
+      .sticker { max-width: 150px; padding: 8px; }
+      .sticker p { font-size: 12px; }
+      .sticker .author { font-size: 9px; }
+    }
   </style>
 </head>
 <body>
@@ -201,6 +212,7 @@
 
     let currentUser = null;
     let userName = '';
+    let unsubscribeStickers = null; // 管理监听器
     const COLORS = ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFDFBA', '#D0BBFF', '#FFB6C1', '#C1F0F6', '#FED8B1', '#E0BBE4'];
 
     // 元素
@@ -221,7 +233,15 @@
       userName = name;
       nameModal.style.display = 'none';
       mainControls.style.display = 'block';
-      auth.signInAnonymously().catch(err => console.error("登录失败:", err));
+      // 立即登录并加载
+      auth.signInAnonymously()
+        .then(() => {
+          console.log('匿名登录成功');
+        })
+        .catch(err => {
+          console.error("登录失败:", err);
+          alert('登录失败，请刷新重试');
+        });
     };
 
     nameInput.addEventListener('keypress', e => e.key === 'Enter' && confirmBtn.click());
@@ -231,19 +251,35 @@
     auth.onAuthStateChanged(user => {
       if (user) {
         currentUser = user;
+        console.log('用户状态变化，加载贴纸');
         loadStickers();
+      } else {
+        console.log('无用户，隐藏控件');
+        mainControls.style.display = 'none';
       }
     });
 
-    // 加载贴纸
+    // 加载贴纸 - 确保正确监听
     function loadStickers() {
-      db.collection('stickers').onSnapshot(snapshot => {
-        document.querySelectorAll('.sticker').forEach(el => el.remove());
-        snapshot.forEach(doc => {
-          const d = doc.data();
-          createStickerElement(doc.id, d.text, d.userId, d.userName || '匿名', d.x, d.y, d.color);
-        });
-      });
+      if (unsubscribeStickers) {
+        unsubscribeStickers(); // 取消旧监听
+      }
+      const stickersRef = db.collection('stickers');
+      unsubscribeStickers = stickersRef.onSnapshot(
+        (snapshot) => {
+          console.log('收到快照，文档数:', snapshot.size);
+          document.querySelectorAll('.sticker').forEach(el => el.remove());
+          snapshot.forEach((doc) => {
+            const d = doc.data();
+            console.log('加载贴纸:', d.text, d.x, d.y);
+            createStickerElement(doc.id, d.text, d.userId, d.userName || '匿名', d.x || 0, d.y || 0, d.color);
+          });
+        },
+        (error) => {
+          console.error('监听错误:', error);
+          alert('加载贴纸失败: ' + error.message);
+        }
+      );
     }
 
     // 创建贴纸
@@ -263,7 +299,8 @@
         delBtn.onclick = () => confirm('确定删除？') && db.collection('stickers').doc(id).delete();
         saveBtn.onclick = () => {
           const newText = input.value.trim();
-          db.collection('stickers').doc(id).update({ text: newText });
+          db.collection('stickers').doc(id).update({ text: newText })
+            .catch(err => console.error('更新失败:', err));
           input.style.display = 'none'; saveBtn.style.display = 'none'; delBtn.style.display = 'none';
           content.style.display = 'block'; content.textContent = newText || '双击编辑...';
         };
@@ -278,19 +315,85 @@
       document.body.appendChild(s);
     }
 
-    // 拖拽
+    // 拖拽 - 支持触摸和鼠标
     function makeDraggable(el, id) {
       let pos = { x: 0, y: 0 };
-      el.onmousedown = e => {
+      let isDragging = false;
+      let startX, startY, startLeft, startTop;
+
+      // 鼠标事件
+      const mouseDown = (e) => {
         if (['INPUT','BUTTON'].includes(e.target.tagName)) return;
         e.preventDefault();
-        pos = { x: e.clientX - el.offsetLeft, y: e.clientY - el.offsetTop };
-        document.onmousemove = drag; document.onmouseup = stop;
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = el.offsetLeft;
+        startTop = el.offsetTop;
+        isDragging = true;
+        document.onmousemove = mouseMove;
+        document.onmouseup = mouseUp;
       };
-      function drag(e) { e.preventDefault(); el.style.left = (e.clientX - pos.x) + 'px'; el.style.top = (e.clientY - pos.y) + 'px'; }
-      function stop() {
-        document.onmousemove = null; document.onmouseup = null;
-        db.collection('stickers').doc(id).update({ x: parseInt(el.style.left), y: parseInt(el.style.top) });
+
+      const mouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+        el.style.left = (startLeft + deltaX) + 'px';
+        el.style.top = (startTop + deltaY) + 'px';
+      };
+
+      const mouseUp = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        document.onmousemove = null;
+        document.onmouseup = null;
+        savePosition(id, el);
+      };
+
+      el.onmousedown = mouseDown;
+
+      // 触摸事件
+      const touchStart = (e) => {
+        if (['INPUT','BUTTON'].includes(e.target.tagName)) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startLeft = el.offsetLeft;
+        startTop = el.offsetTop;
+        isDragging = true;
+        document.addEventListener('touchmove', touchMove, { passive: false });
+        document.addEventListener('touchend', touchEnd);
+      };
+
+      const touchMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        el.style.left = (startLeft + deltaX) + 'px';
+        el.style.top = (startTop + deltaY) + 'px';
+      };
+
+      const touchEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        document.removeEventListener('touchmove', touchMove);
+        document.removeEventListener('touchend', touchEnd);
+        savePosition(id, el);
+      };
+
+      el.ontouchstart = touchStart;
+
+      function savePosition(docId, element) {
+        if (currentUser && !isNaN(parseInt(element.style.left)) && !isNaN(parseInt(element.style.top))) {
+          db.collection('stickers').doc(docId).update({
+            x: parseInt(element.style.left),
+            y: parseInt(element.style.top)
+          }).catch(err => console.error('保存位置失败:', err));
+        }
       }
     }
 
@@ -300,12 +403,26 @@
       const color = COLORS[currentUser.uid.charCodeAt(0) % COLORS.length];
       const x = Math.random() * (window.innerWidth - 250) + 50;
       const y = Math.random() * (window.innerHeight - 200) + 100;
-      db.collection('stickers').add({ text: '', userId: currentUser.uid, userName, color, x, y, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+      db.collection('stickers').add({
+        text: '',
+        userId: currentUser.uid,
+        userName,
+        color,
+        x,
+        y,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).catch(err => {
+        console.error('添加贴纸失败:', err);
+        alert('添加失败，请重试');
+      });
     };
 
-    document.getElementById('refresh').onclick = () => location.reload();
+    document.getElementById('refresh').onclick = () => {
+      if (unsubscribeStickers) unsubscribeStickers();
+      loadStickers();
+    };
 
-    // === 一键清空：右下角小X按钮 + 密码验证 ===
+    // 一键清空
     clearAllBtn.onclick = () => {
       pwdModal.style.display = 'flex';
       pwdInput.value = '';
@@ -335,8 +452,12 @@
       });
     };
 
-    // 回车确认密码
     pwdInput.addEventListener('keypress', e => e.key === 'Enter' && confirmClear.click());
+
+    // 页面卸载时清理监听
+    window.addEventListener('beforeunload', () => {
+      if (unsubscribeStickers) unsubscribeStickers();
+    });
   </script>
 </body>
 </html>
