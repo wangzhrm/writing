@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>四选一投票</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body{font-family:Arial,sans-serif;text-align:center;margin:40px;background:#f7f9fc;color:#333}
+    h1{color:#2c3e50}
+    .options button{margin:10px;padding:15px 30px;font-size:18px;border:none;border-radius:8px;background:#3498db;color:#fff;cursor:pointer;transition:.3s}
+    .options button:hover{background:#2980b9}
+    #view-btn{background:#2ecc71;margin-top:20px;padding:12px 24px;font-size:16px}
+    #view-btn:hover{background:#27ae60}
+    #results{margin-top:30px;font-size:18px;line-height:1.6;background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+    .note{margin-top:20px;color:#7f8c8d;font-size:14px}
+  </style>
+</head>
+<body>
+  <h1>请选择一个选项</h1>
+  <div class="options">
+    <button onclick="vote('A')">A</button>
+    <button onclick="vote('B')">B</button>
+    <button onclick="vote('C')">C</button>
+    <button onclick="vote('D')">D</button>
+  </div>
+  <button id="view-btn" onclick="viewResults()">查看结果</button>
+  <div id="results"></div>
+  <p class="note">每个浏览器只能投一次（本地记录）</p>
+
+  <script>
+    // 你的配置（已填写）
+    const BIN_ID = '690b614cd0ea881f40d5b4f9';
+    const ACCESS_KEY = '$2a$10$puCeTitZrbkqZttkbatBmOMW/eZcekGukwtUMGtYm9CQK3XIG5gmK';  // 你的 X-Access-Key
+
+    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+    const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+    function hasVoted() {
+      return localStorage.getItem('hasVoted') === 'true';
+    }
+
+    async function vote(choice) {
+      if (hasVoted()) {
+        alert('你已经投过票啦！');
+        return;
+      }
+
+      try {
+        // 读取最新数据
+        const res = await fetch(`${PROXY_URL}${encodeURIComponent(BIN_URL + '/latest')}`);
+        if (!res.ok) throw new Error('无法读取数据');
+        const data = await res.json();
+        const votes = data.record || { A: 0, B: 0, C: 0, D: 0 };
+
+        // 更新票数
+        votes[choice] = (votes[choice] || 0) + 1;
+
+        // 写回数据
+        const updateRes = await fetch(`${PROXY_URL}${encodeURIComponent(BIN_URL)}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Access-Key': ACCESS_KEY
+          },
+          body: JSON.stringify(votes)
+        });
+
+        if (updateRes.ok) {
+          localStorage.setItem('hasVoted', 'true');
+          alert(`成功投给 ${choice}！`);
+          viewResults();
+        } else {
+          throw new Error('写入失败');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('投票失败：' + err.message + '，请刷新重试');
+      }
+    }
+
+    async function viewResults() {
+      try {
+        const res = await fetch(`${PROXY_URL}${encodeURIComponent(BIN_URL + '/latest')}`);
+        if (!res.ok) throw new Error('无法加载结果');
+        const data = await res.json();
+        const votes = data.record || { A: 0, B: 0, C: 0, D: 0 };
+        const total = Object.values(votes).reduce((a, b) => a + b, 0);
+
+        document.getElementById('results').innerHTML = `
+          <h2>投票结果</h2>
+          <p><strong>A:</strong> ${votes.A || 0} 票</p>
+          <p><strong>B:</strong> ${votes.B || 0} 票</p>
+          <p><strong>C:</strong> ${votes.C || 0} 票</p>
+          <p><strong>D:</strong> ${votes.D || 0} 票</p>
+          <p><strong>总票数:</strong> ${total}</p>
+        `;
+      } catch (err) {
+        document.getElementById('results').innerHTML = '<p style="color:red">加载失败，请刷新页面</p>';
+      }
+    }
+
+    // 页面加载时自动显示结果
+    window.onload = viewResults;
+  </script>
+</body>
+</html>
