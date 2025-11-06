@@ -10,8 +10,9 @@
       padding: 30px;
       text-align: center;
     }
-    button {
-      margin: 10px;
+    button.vote-btn {
+      display: block;
+      margin: 10px auto;
       padding: 15px 30px;
       font-size: 18px;
       cursor: pointer;
@@ -21,41 +22,90 @@
       font-weight: bold;
       color: green;
     }
-    #results {
+    #results-container {
       margin-top: 30px;
-      font-size: 18px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #admin-buttons {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+    }
+    #admin-buttons button {
+      font-size: 12px;
+      padding: 5px 10px;
+      margin-left: 5px;
+      cursor: pointer;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <h1>Vote for Your Favorite Idea!</h1>
 
-  <button onclick="vote('A')">Idea A</button>
-  <button onclick="vote('B')">Idea B</button>
-  <button onclick="vote('C')">Idea C</button>
-  <button onclick="vote('D')">Idea D</button>
+  <div id="vote-buttons"></div>
 
   <h2 id="status"></h2>
-  <div id="results"></div>
+
+  <div id="results-container">
+    <canvas id="voteChart"></canvas>
+    <div id="resultsTable"></div>
+  </div>
+
+  <!-- Admin buttons -->
+  <div id="admin-buttons">
+    <button onclick="passwordProtected(resetVotes)">Reset Votes</button>
+    <button onclick="passwordProtected(configureOptions)">Configure Options</button>
+  </div>
 
   <script>
-    const binId = "690b614cd0ea881f40d5b4f9"; // Your Bin ID
-    const apiKey = "$2a$10$mhQIaXkGG.V7HJDmwso9D.ChP8nEDgFE0Dke0VtnKJ5R7siCKvZHK";  // Replace with your Master Key
+    const binId = "690b614cd0ea881f40d5b4f9"; 
+    const apiKey = "$2a$10$mhQIaXkGG.V7HJDmwso9D.ChP8nEDgFE0Dke0VtnKJ5R7siCKvZHK";  
 
-    async function vote(choice) {
-      const url = `https://api.jsonbin.io/v3/b/${binId}/latest`;
+    let voteOptions = { "A": 1, "B": 0, "C": 0, "D": 0 }; 
+    let chart = null;
 
+    async function loadVoteOptions() {
       try {
-        // Get current vote counts
-        const res = await fetch(url, {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
           headers: { "X-Master-Key": apiKey }
         });
         const data = await res.json();
+        voteOptions = data.record;
+        renderVoteButtons();
+        showResults(voteOptions);
+      } catch (err) {
+        console.error("Failed to load options", err);
+      }
+    }
 
-        // Increment chosen idea
+    function renderVoteButtons() {
+      const container = document.getElementById("vote-buttons");
+      container.innerHTML = '';
+      for (const key in voteOptions) {
+        const btn = document.createElement("button");
+        btn.className = "vote-btn";
+        btn.innerText = key;
+        btn.onclick = () => vote(key);
+        container.appendChild(btn);
+      }
+    }
+
+    async function vote(choice) {
+      if (localStorage.getItem("hasVoted")) {
+        document.getElementById("status").innerText = "You can only vote once per reset!";
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+          headers: { "X-Master-Key": apiKey }
+        });
+        const data = await res.json();
         data.record[choice] += 1;
 
-        // Update JSONBin
         await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
           method: "PUT",
           headers: {
@@ -65,35 +115,110 @@
           body: JSON.stringify(data.record)
         });
 
-        document.getElementById("status").innerText = `Thanks for voting for ${choice}!`;
-        showResults(data.record);
+        localStorage.setItem("hasVoted", "true");
+        document.getElementById("status").innerText = `Thanks for voting for "${choice}"!`;
+        voteOptions = data.record;
+        showResults(voteOptions);
       } catch (err) {
         document.getElementById("status").innerText = "Error submitting your vote.";
         console.error(err);
       }
     }
 
-    function showResults(record) {
-      let resultsHTML = "<h3>Current Vote Counts:</h3>";
-      for (const key in record) {
-        resultsHTML += `${key}: ${record[key]}<br>`;
+    function passwordProtected(action) {
+      const password = prompt("Enter password:");
+      if (password === "wang123") {
+        action();
+      } else {
+        alert("Incorrect password!");
       }
-      document.getElementById("results").innerHTML = resultsHTML;
     }
 
-    // Load initial results on page load
-    window.onload = async () => {
+    async function resetVotes() {
+      if(!confirm("Are you sure you want to reset all votes?")) return;
+
+      for (const key in voteOptions) voteOptions[key] = 0;
+
       try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
-          headers: { "X-Master-Key": apiKey }
+        await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": apiKey
+          },
+          body: JSON.stringify(voteOptions)
         });
-        const data = await res.json();
-        showResults(data.record);
+
+        localStorage.removeItem("hasVoted");
+        document.getElementById("status").innerText = "Votes have been reset!";
+        showResults(voteOptions);
       } catch (err) {
-        console.error("Failed to load initial results", err);
+        console.error("Failed to reset votes", err);
       }
-    };
+    }
+
+    function configureOptions() {
+      const newOptionsStr = prompt("Enter vote options separated by ';' (e.g., Option1;Option2;Option3):", Object.keys(voteOptions).join(";"));
+      if (!newOptionsStr) return;
+
+      const newKeys = newOptionsStr.split(";").map(s => s.trim());
+      const newVoteOptions = {};
+      newKeys.forEach(key => newVoteOptions[key] = voteOptions[key] || 0);
+
+      voteOptions = newVoteOptions;
+      renderVoteButtons();
+
+      fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": apiKey
+        },
+        body: JSON.stringify(voteOptions)
+      }).then(() => showResults(voteOptions));
+    }
+
+    function showResults(record) {
+      const labels = Object.keys(record);
+      const values = Object.values(record);
+
+      const ctx = document.getElementById('voteChart').getContext('2d');
+      if(chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40']
+          }]
+        },
+        options: {
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const total = values.reduce((a,b)=>a+b,0);
+                  const percent = total ? ((context.raw/total)*100).toFixed(1) : 0;
+                  return `${context.label}: ${context.raw} votes (${percent}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      let tableHTML = "<table border='1' style='margin:auto'><tr><th>Option</th><th>Votes</th><th>Percentage</th></tr>";
+      const totalVotes = values.reduce((a,b)=>a+b,0);
+      labels.forEach((key,i)=>{
+        const percent = totalVotes ? ((values[i]/totalVotes)*100).toFixed(1) : 0;
+        tableHTML += `<tr><td>${key}</td><td>${values[i]}</td><td>${percent}%</td></tr>`;
+      });
+      tableHTML += "</table>";
+      document.getElementById("resultsTable").innerHTML = tableHTML;
+    }
+
+    window.onload = loadVoteOptions;
   </script>
 </body>
 </html>
-you
