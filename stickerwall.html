@@ -20,6 +20,8 @@
       padding: 15px;
       position: relative;
       overflow-x: hidden;
+      /* 允许选择文本 */
+      user-select: auto; 
     }
     
     .welcome-modal {
@@ -116,20 +118,30 @@
       transform: translateY(-2px);
     }
     
+    /* 桌面版贴纸容器 - 实现网格布局 */
+    #stickersContainer {
+        display: grid;
+        /* 响应式网格：最小宽度 250px 的贴纸，自动填充行 */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+        gap: 20px; /* 贴纸之间的间距 */
+        padding-top: 20px;
+    }
+    
     /* 桌面版贴纸样式 */
     .sticker {
-      position: absolute;
-      width: 250px;
+      position: static; /* 禁用绝对定位，以便在网格布局中生效 */
+      width: auto; /* 让网格控制宽度 */
       min-height: 180px;
       padding: 15px;
       border-radius: 12px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-      cursor: move;
-      user-select: none;
+      /* 禁用拖拽时的光标，以强调不再自由移动 */
+      cursor: default; 
+      user-select: auto; /* 允许选择文本 */
       display: flex;
       flex-direction: column;
       transition: transform 0.2s, box-shadow 0.2s;
-      touch-action: none;
+      touch-action: auto;
     }
     
     .sticker:hover {
@@ -151,6 +163,7 @@
       padding: 15px;
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s;
+      user-select: auto; /* 允许选择文本 */
     }
     
     .sticker-item:active {
@@ -357,6 +370,10 @@
       .sticker {
         display: flex; /* 在桌面上显示桌面版贴纸 */
       }
+      /* 确保桌面网格容器在桌面设备上显示 */
+      #stickersContainer {
+        display: grid; 
+      }
     }
     
     @media (max-width: 480px) {
@@ -383,7 +400,8 @@
     /* 移动端触摸反馈 */
     .sticker:active,
     .sticker-item:active {
-      transform: scale(0.98);
+      /* 移除活动时的缩放，因为它会干扰文本选择 */
+      /* transform: scale(0.98); */
     }
     
     button:active {
@@ -401,7 +419,6 @@
   </style>
 </head>
 <body>
-  <!-- 欢迎模态框 -->
   <div class="welcome-modal" id="welcomeModal">
     <div class="welcome-box">
       <h1>欢迎来到共享贴纸墙</h1>
@@ -411,25 +428,19 @@
     </div>
   </div>
 
-  <!-- 控制按钮 -->
   <div class="controls">
     <button id="addSticker">添加新贴纸</button>
     <button id="refreshStickers">刷新贴纸墙</button>
   </div>
 
-  <!-- 桌面版贴纸容器 -->
   <div id="stickersContainer"></div>
   
-  <!-- 移动版贴纸列表 -->
   <div class="sticker-list" id="stickersList"></div>
 
-  <!-- 状态信息 -->
   <div class="status" id="statusInfo">正在加载贴纸...</div>
 
-  <!-- 管理员删除按钮 -->
   <div class="admin-delete" id="adminDelete">×</div>
 
-  <!-- 密码确认模态框 -->
   <div class="password-modal" id="passwordModal">
     <div class="password-box">
       <h3>管理员操作</h3>
@@ -538,7 +549,8 @@
       statusInfo.textContent = '正在加载贴纸...';
       
       const query = new AV.Query('Sticker');
-      query.descending('createdAt');
+      // 默认按创建时间倒序排列，以保持有序性
+      query.descending('createdAt'); 
       
       query.find().then(results => {
         stickersContainer.innerHTML = '';
@@ -556,14 +568,15 @@
             text: sticker.get('text') || '',
             userId: sticker.get('userId'),
             userName: sticker.get('userName'),
-            x: sticker.get('x') || 100,
-            y: sticker.get('y') || 100,
+            // x, y 坐标在网格布局中不再使用
+            x: sticker.get('x') || 0, 
+            y: sticker.get('y') || 0,
             color: sticker.get('color') || '#FFD700'
           };
           
           stickers.push(stickerData);
           
-          // 创建桌面版贴纸元素
+          // 创建桌面版贴纸元素 (由 Grid 控制位置)
           createStickerElement(stickerData);
           
           // 创建移动版贴纸列表项
@@ -582,8 +595,9 @@
       const sticker = document.createElement('div');
       sticker.className = 'sticker';
       sticker.id = `sticker-${stickerData.id}`;
-      sticker.style.left = `${stickerData.x}px`;
-      sticker.style.top = `${stickerData.y}px`;
+      // **移除位置设置，交由 CSS Grid 控制**
+      // sticker.style.left = `${stickerData.x}px`;
+      // sticker.style.top = `${stickerData.y}px`;
       sticker.style.backgroundColor = stickerData.color;
       
       // 贴纸头部 - 显示用户名
@@ -753,8 +767,8 @@
           }
         });
         
-        // 拖拽功能
-        makeStickerDraggable(stickerElement, stickerData.id);
+        // **移除拖拽功能的调用，以维持网格布局的有序性**
+        // makeStickerDraggable(stickerElement, stickerData.id); 
       }
     }
 
@@ -771,6 +785,8 @@
       if (stickerData.userId === currentUser.id) {
         // 移动端：点击进入编辑模式
         content.addEventListener('click', function() {
+          // 如果已经是编辑模式，则不再次触发
+          if (stickerItem.classList.contains('editing')) return;
           stickerItem.classList.add('editing');
           textInput.focus();
         });
@@ -839,15 +855,16 @@
       });
     }
 
-    // 使贴纸可拖拽（桌面版）
+    // 使贴纸可拖拽（桌面版） - **此功能已被禁用以保持网格布局的有序性**
     function makeStickerDraggable(stickerElement, stickerId) {
+      // 拖拽功能被禁用
+      /*
       let isDragging = false;
       let offsetX, offsetY;
       
       stickerElement.addEventListener('mousedown', startDrag);
       
       function startDrag(e) {
-        // 如果正在编辑，不启动拖拽
         if (stickerElement.classList.contains('editing')) return;
         
         isDragging = true;
@@ -866,7 +883,6 @@
         const newX = e.clientX - offsetX;
         const newY = e.clientY - offsetY;
         
-        // 限制在可视区域内
         const maxX = window.innerWidth - stickerElement.offsetWidth;
         const maxY = window.innerHeight - stickerElement.offsetHeight;
         
@@ -881,12 +897,13 @@
         document.removeEventListener('mousemove', drag);
         document.removeEventListener('mouseup', stopDrag);
         
-        // 保存新位置到数据库
-        const sticker = AV.Object.createWithoutData('Sticker', stickerId);
-        sticker.set('x', parseInt(stickerElement.style.left));
-        sticker.set('y', parseInt(stickerElement.style.top));
-        sticker.save().catch(console.error);
+        // 拖拽保存功能也被禁用，以保持网格布局的有序性
+        // const sticker = AV.Object.createWithoutData('Sticker', stickerId);
+        // sticker.set('x', parseInt(stickerElement.style.left));
+        // sticker.set('y', parseInt(stickerElement.style.top));
+        // sticker.save().catch(console.error);
       }
+      */
     }
 
     // 添加新贴纸
@@ -901,9 +918,9 @@
       const colorIndex = currentUser.name.charCodeAt(0) % COLORS.length;
       const userColor = COLORS[colorIndex];
       
-      // 随机位置（但避免重叠）
-      const x = 50 + Math.random() * (window.innerWidth - 300);
-      const y = 100 + Math.random() * (window.innerHeight - 250);
+      // 随机位置（在网格布局中不再重要，但为避免旧数据错误仍需设置默认值）
+      const x = 50 + Math.random() * 50; 
+      const y = 100 + Math.random() * 50;
       
       const Sticker = AV.Object.extend('Sticker');
       const newSticker = new Sticker();
@@ -912,7 +929,7 @@
       newSticker.set('userId', currentUser.id);
       newSticker.set('userName', currentUser.name);
       newSticker.set('color', userColor);
-      newSticker.set('x', x);
+      newSticker.set('x', x); 
       newSticker.set('y', y);
       
       newSticker.save().then(() => {
