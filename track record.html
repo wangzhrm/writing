@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Benchmarking Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .main-container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .chart-area {
+            flex: 3; /* Graph takes up more space */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .controls-area {
+            flex: 1; /* Buttons area */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 80vh; /* Limit height for scrolling */
+            overflow-y: auto;
+        }
+        .filter-button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #ecf0f1;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: left;
+        }
+        .filter-button.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📈 IELTS Writing Benchmarking Graph</h1>
+    
+    <div class="main-container">
+        
+        <div class="chart-area">
+            <canvas id="masterChart"></canvas>
+        </div>
+        
+        <div class="controls-area">
+            <h2>Filter Students</h2>
+            <div id="student-buttons">
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        // *** PASTE THE GENERATED JSON DATA FROM WEBPAGE 2 HERE ***
+        // NOTE: The data structure from Webpage 2 remains exactly the same.
+        const initialData = {
+    "dates": [
+        "2025-10-01",
+        "2025-11-14"
+    ],
+    "students": [
+        {
+            "name": "陈泓孚",
+            "task1_scores": [
+                4,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "杜鑫",
+            "task1_scores": [
+                3,
+                3
+            ],
+            "task2_scores": [
+                null,
+                2
+            ]
+        },
+        {
+            "name": "郭庆灿",
+            "task1_scores": [
+                4,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "韩泽隆",
+            "task1_scores": [
+                3,
+                2
+            ],
+            "task2_scores": [
+                null,
+                0
+            ]
+        },
+        {
+            "name": "李一维",
+            "task1_scores": [
+                4.5,
+                5
+            ],
+            "task2_scores": [
+                null,
+                5
+            ]
+        },
+        {
+            "name": "刘佳欣",
+            "task1_scores": [
+                4,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "苏伟烨",
+            "task1_scores": [
+                3,
+                3
+            ],
+            "task2_scores": [
+                null,
+                2
+            ]
+        },
+        {
+            "name": "孙睿韬",
+            "task1_scores": [
+                null,
+                3
+            ],
+            "task2_scores": [
+                null,
+                0
+            ]
+        },
+        {
+            "name": "王安铄",
+            "task1_scores": [
+                4.5,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "王丁卓琪",
+            "task1_scores": [
+                4,
+                4
+            ],
+            "task2_scores": [
+                null,
+                0.5
+            ]
+        },
+        {
+            "name": "王世杰",
+            "task1_scores": [
+                3,
+                3.5
+            ],
+            "task2_scores": [
+                null,
+                3
+            ]
+        },
+        {
+            "name": "王艺霖",
+            "task1_scores": [
+                null,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "文晨羽",
+            "task1_scores": [
+                3,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "杨晨浩",
+            "task1_scores": [
+                3.5,
+                4
+            ],
+            "task2_scores": [
+                null,
+                3.5
+            ]
+        },
+        {
+            "name": "杨皓然",
+            "task1_scores": [
+                5.5,
+                5.5
+            ],
+            "task2_scores": [
+                null,
+                5
+            ]
+        },
+        {
+            "name": "杨锦",
+            "task1_scores": [
+                3,
+                3.5
+            ],
+            "task2_scores": [
+                null,
+                2.5
+            ]
+        },
+        {
+            "name": "杨曾燕",
+            "task1_scores": [
+                5,
+                4
+            ],
+            "task2_scores": [
+                null,
+                4.5
+            ]
+        },
+        {
+            "name": "张盟",
+            "task1_scores": [
+                3,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "张子杰",
+            "task1_scores": [
+                4.5,
+                4.5
+            ],
+            "task2_scores": [
+                null,
+                0
+            ]
+        },
+        {
+            "name": "周凌珂",
+            "task1_scores": [
+                5,
+                null
+            ],
+            "task2_scores": [
+                null,
+                null
+            ]
+        },
+        {
+            "name": "邹博",
+            "task1_scores": [
+                4.5,
+                4.5
+            ],
+            "task2_scores": [
+                null,
+                4
+            ]
+        }
+    ]
+};
+        // End of JSON data to be updated
+
+        const data = initialData; // Use the pasted data
+        let masterChart; // Variable to hold the Chart.js instance
+
+        // A function to generate distinct colors for each student
+        function generateColors(num) {
+            const colors = [
+                '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6',
+                '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3',
+                '#808000', '#ffd8b1', '#000075', '#808080', '#a9a9a9'
+            ];
+            return colors.slice(0, num);
+        }
+
+        function createChartDatasets(data) {
+            const datasets = [];
+            const colors = generateColors(data.students.length);
+
+            data.students.forEach((student, index) => {
+                const color = colors[index];
+                
+                // Task 1 Dataset (Normal Line)
+                datasets.push({
+                    label: `${student.name} - T1`,
+                    data: student.task1_scores,
+                    borderColor: color,
+                    backgroundColor: color,
+                    borderWidth: 2,
+                    borderDash: [], // Solid line for Task 1
+                    tension: 0.1,
+                    hidden: true, // Start hidden
+                    studentIndex: index, // Custom property to link to the student
+                    taskType: 'T1',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    spanGaps: true
+                });
+
+                // Task 2 Dataset (Dotted Line)
+                datasets.push({
+                    label: `${student.name} - T2`,
+                    data: student.task2_scores,
+                    borderColor: color,
+                    backgroundColor: color,
+                    borderWidth: 2,
+                    borderDash: [5, 5], // Dotted line for Task 2
+                    tension: 0.1,
+                    hidden: true, // Start hidden
+                    studentIndex: index, // Custom property to link to the student
+                    taskType: 'T2',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    spanGaps: true
+                });
+            });
+
+            return datasets;
+        }
+
+        function toggleStudentDatasets(studentIndex) {
+            const button = document.getElementById(`btn-${studentIndex}`);
+            const isActive = button.classList.toggle('active');
+
+            masterChart.data.datasets.forEach(dataset => {
+                if (dataset.studentIndex === studentIndex) {
+                    // Set the hidden state based on whether the button is active
+                    dataset.hidden = !isActive;
+                }
+            });
+            masterChart.update();
+        }
+
+        function createFilterButtons(data) {
+            const container = document.getElementById('student-buttons');
+            data.students.forEach((student, index) => {
+                const button = document.createElement('button');
+                button.id = `btn-${index}`;
+                button.className = 'filter-button';
+                button.textContent = student.name;
+                button.onclick = () => toggleStudentDatasets(index);
+                
+                // Add a small color indicator
+                const colorIndicator = document.createElement('span');
+                colorIndicator.style.cssText = `
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background-color: ${generateColors(data.students.length)[index]};
+                    border-radius: 50%;
+                    margin-right: 8px;
+                `;
+                button.prepend(colorIndicator);
+
+                container.appendChild(button);
+            });
+        }
+
+        // Initialize the graph and buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const datasets = createChartDatasets(data);
+            createFilterButtons(data);
+
+            const ctx = document.getElementById('masterChart').getContext('2d');
+            masterChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.dates,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Allows flexible sizing
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 9,
+                            min: 0, // Changed from 4 to 0 to set the vertical axis range from 0 to 9
+                            ticks: {
+                                stepSize: 0.5
+                            },
+                            title: {
+                                display: true,
+                                text: 'IELTS Writing Score'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Test Date'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // Hide the standard legend since we use custom buttons
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    return `Date: ${tooltipItems[0].label}`;
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    } else {
+                                        label += 'N/A';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            // Set the chart height after initialization
+            document.getElementById('masterChart').style.height = '700px'; 
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Advanced Data Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f9;
+        }
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .controls-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .controls-group input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .controls-group button {
+            padding: 10px 15px;
+            white-space: nowrap;
+        }
+        .editor-container {
+            max-height: 60vh;
+            overflow-x: auto;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .data-table th {
+            background-color: #ecf0f1;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .data-table td:first-child {
+            text-align: left;
+            font-weight: bold;
+            position: sticky;
+            left: 0;
+            background-color: #f9f9f9;
+            z-index: 5;
+        }
+        .score-input {
+            width: 45px;
+            padding: 5px 2px;
+            text-align: center;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            margin: 0 1px;
+            box-sizing: border-box;
+            font-size: 13px;
+        }
+        .date-cell input[type="date"] {
+            width: 90%;
+            text-align: center;
+            border: none;
+            padding: 0;
+            font-size: 14px;
+        }
+        .date-cell {
+            padding: 0;
+            min-width: 150px;
+        }
+        .remove-date-btn {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #editor-controls button:nth-child(3) {
+            background-color: #e74c3c;
+            width: auto;
+        }
+        #editor-controls button:nth-child(3):hover {
+            background-color: #c0392b;
+        }
+        #editor-controls button:nth-child(2) {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📊 IELTS Advanced Data Editor</h1>
+        
+        <h2>Step 1: Load Current Graph Code</h2>
+        <p>Copy the **entire content** of the **`webpage1_display.html`** file and paste it below.</p>
+        <textarea id="input-json" rows="10" placeholder="Paste all HTML, CSS, and JavaScript from Webpage 1 here..."></textarea>
+        
+        <button onclick="loadData()">Load Data for Editing</button>
+        
+        <hr>
+
+        <h2 id="step2-header" style="display:none;">Step 2: Edit, Add, or Remove Scores/Dates</h2>
+        
+        <div id="editor-controls" class="controls-group" style="display:none;">
+            <input type="date" id="new-date-input" placeholder="YYYY-MM-DD">
+            <button onclick="addNewDateColumn()">Add New Date Column</button>
+            <button onclick="removeSelectedDates()" style="background-color: #e74c3c;">Remove Checked Dates</button>
+        </div>
+
+        <div id="data-editor" class="editor-container" style="display:none;">
+            </div>
+
+        <hr>
+
+        <h2 id="step3-header" style="display:none;">Step 3: Generate and Copy Updated Codes</h2>
+        <button onclick="generateNewData()">Generate Updated Codes</button>
+        
+        <p id="copy-instruction" style="display:none;">Copy the text below and paste it back into the **`webpage1_display.html`** file, replacing the **entire** old content.</p>
+        <textarea id="output-json" rows="10" readonly style="display:none;"></textarea>
+
+    </div>
+
+    <script>
+        let currentData = null; // Stores the object {dates: [], students: []}
+        let originalWebpage1Code = ''; // Stores the full Webpage 1 content for final output generation
+
+        function loadData() {
+            const fullCode = document.getElementById('input-json').value;
+            if (!fullCode.trim()) {
+                alert("Please paste the entire code from Webpage 1 first.");
+                return;
+            }
+            
+            // Store the original code to update the data part later
+            originalWebpage1Code = fullCode;
+
+            // Define the delimiters for the data object
+            const dataStartMarker = "// *** PASTE THE GENERATED JSON DATA FROM WEBPAGE 2 HERE ***";
+            const dataEndMarker = "// End of JSON data to be updated";
+            const objectStart = "const initialData = ";
+            const objectEnd = "};";
+
+            try {
+                // Find the data block within the entire HTML code
+                const startIndex = fullCode.indexOf(dataStartMarker);
+                const endIndex = fullCode.indexOf(dataEndMarker);
+
+                if (startIndex === -1 || endIndex === -1) {
+                    throw new Error("Could not find the data markers in Webpage 1 code. Ensure the markers are intact.");
+                }
+
+                // Extract the data block content
+                let dataBlock = fullCode.substring(startIndex, endIndex);
+
+                // Find the JSON object part within the data block
+                const jsonStartIndex = dataBlock.indexOf(objectStart);
+                const jsonEndIndex = dataBlock.lastIndexOf(objectEnd);
+
+                if (jsonStartIndex === -1 || jsonEndIndex === -1) {
+                    throw new Error("Could not find the 'const initialData = {...}' structure.");
+                }
+
+                // Extract and clean the JSON string
+                let jsonStr = dataBlock.substring(jsonStartIndex + objectStart.length, jsonEndIndex + 1);
+                jsonStr = jsonStr.replace(/\/\/.*/g, '').trim(); // Remove single-line comments
+
+                currentData = JSON.parse(jsonStr); 
+
+                // Sanity check
+                if (!currentData.students || !Array.isArray(currentData.students) || !currentData.dates || !Array.isArray(currentData.dates)) {
+                    throw new Error("Invalid data structure. Missing 'students' or 'dates' array.");
+                }
+
+                renderDataTable(currentData);
+                document.getElementById('step2-header').style.display = 'block';
+                document.getElementById('editor-controls').style.display = 'flex';
+                document.getElementById('data-editor').style.display = 'block';
+                document.getElementById('step3-header').style.display = 'block';
+                document.getElementById('output-json').style.display = 'none';
+                document.getElementById('copy-instruction').style.display = 'none';
+                alert("Data extracted successfully! Proceed to Step 2 to edit.");
+
+            } catch (e) {
+                console.error("Parsing Error:", e);
+                alert("Error loading data. Please ensure you copied ALL of the code from Webpage 1, and that the data structure is correct. Error: " + e.message);
+            }
+        }
+
+        function renderDataTable(data) {
+            const editorDiv = document.getElementById('data-editor');
+            editorDiv.innerHTML = '';
+            
+            const table = document.createElement('table');
+            table.className = 'data-table';
+            table.id = 'score-table';
+            
+            const thead = table.createTHead();
+            let dateRow = thead.insertRow();
+            let controlRow = thead.insertRow();
+            
+            dateRow.insertCell().outerHTML = '<th>Student Name</th>';
+            controlRow.insertCell();
+
+            data.dates.forEach((date, dateIndex) => {
+                let dateCell = dateRow.insertCell();
+                dateCell.className = 'date-cell';
+                dateCell.innerHTML = `<input type="date" value="${date}" data-date-index="${dateIndex}">`;
+
+                let controlCell = controlRow.insertCell();
+                controlCell.innerHTML = `<input type="checkbox" class="date-check" data-date-index="${dateIndex}"> Remove`;
+            });
+
+            const tbody = table.createTBody();
+            data.students.forEach((student, studentIndex) => {
+                let row = tbody.insertRow();
+                
+                row.insertCell().textContent = student.name;
+                
+                data.dates.forEach((date, dateIndex) => {
+                    let cell = row.insertCell();
+                    
+                    const t1_value = student.task1_scores[dateIndex] !== null ? student.task1_scores[dateIndex] : '';
+                    cell.innerHTML += `<input type="number" step="0.5" min="0" max="9" value="${t1_value}" class="score-input" data-task="t1" data-student-index="${studentIndex}" data-date-index="${dateIndex}" placeholder="T1">`;
+
+                    const t2_value = student.task2_scores[dateIndex] !== null ? student.task2_scores[dateIndex] : '';
+                    cell.innerHTML += `<input type="number" step="0.5" min="0" max="9" value="${t2_value}" class="score-input" data-task="t2" data-student-index="${studentIndex}" data-date-index="${dateIndex}" placeholder="T2">`;
+                });
+            });
+
+            editorDiv.appendChild(table);
+        }
+
+        function addNewDateColumn() {
+            const newDate = document.getElementById('new-date-input').value;
+            if (!newDate) {
+                alert("Please select a date in the input field first.");
+                return;
+            }
+            if (currentData.dates.includes(newDate)) {
+                 alert("This date already exists. Please choose a unique date.");
+                 return;
+            }
+
+            currentData.dates.push(newDate);
+            currentData.students.forEach(student => {
+                student.task1_scores.push(null);
+                student.task2_scores.push(null);
+            });
+
+            renderDataTable(currentData);
+        }
+
+        function removeSelectedDates() {
+            const checkedBoxes = Array.from(document.querySelectorAll('.date-check:checked'));
+            if (checkedBoxes.length === 0) {
+                alert("Please check the 'Remove' box above the date(s) you wish to delete.");
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to remove ${checkedBoxes.length} date column(s)? This action cannot be undone.`)) {
+                return;
+            }
+
+            // Get indices and sort descending so splice doesn't affect subsequent indices
+            const indicesToRemove = checkedBoxes.map(cb => parseInt(cb.dataset.dateIndex)).sort((a, b) => b - a);
+            
+            indicesToRemove.forEach(index => {
+                currentData.dates.splice(index, 1);
+                currentData.students.forEach(student => {
+                    student.task1_scores.splice(index, 1);
+                    student.task2_scores.splice(index, 1);
+                });
+            });
+
+            renderDataTable(currentData);
+            alert("Date(s) removed successfully. Generate the new code to finalize the changes.");
+        }
+
+        function generateNewData() {
+            if (!currentData || currentData.students.length === 0 || !originalWebpage1Code) {
+                alert("Data is not loaded or the original code is missing. Please complete Step 1.");
+                return;
+            }
+
+            // 1. Rebuild the data object by reading the table
+            const table = document.getElementById('score-table');
+            if (!table) return;
+
+            // Read the final dates from the header inputs
+            const newDates = Array.from(table.querySelectorAll('thead input[type="date"]')).map(input => input.value);
+            
+            if (newDates.some(date => !date || date.length < 10)) {
+                alert("One or more date headers are missing a valid YYYY-MM-DD date. Please correct them.");
+                return;
+            }
+            if (new Set(newDates).size !== newDates.length) {
+                alert("Duplicate dates found in the header row. Please ensure all dates are unique.");
+                return;
+            }
+            
+            const updatedData = {
+                dates: newDates,
+                // Deep copy the students array to keep the original names, etc.
+                students: JSON.parse(JSON.stringify(currentData.students))
+            };
+
+            // Initialize score arrays to be rebuilt
+            updatedData.students.forEach(student => {
+                student.task1_scores = new Array(newDates.length).fill(null);
+                student.task2_scores = new Array(newDates.length).fill(null);
+            });
+            
+            let valid = true;
+            
+            const scoreInputs = table.querySelectorAll('.score-input');
+
+            scoreInputs.forEach((input) => {
+                const studentIndex = parseInt(input.dataset.studentIndex);
+                const dateIndex = parseInt(input.dataset.dateIndex);
+                const task = input.dataset.task;
+                
+                let score = input.value.trim() ? parseFloat(input.value.trim()) : null;
+                
+                // Validation check for IELTS score format (0.0, 0.5, 1.0, ..., 9.0)
+                const isValidScore = (s) => s === null || (s >= 0 && s <= 9 && s * 2 % 1 === 0);
+
+                if (input.value.trim() && !isValidScore(score)) {
+                    alert(`Invalid score (${input.value.trim()}) for ${updatedData.students[studentIndex].name} on date index ${dateIndex}. Must be between 0 and 9 in 0.5 increments.`);
+                    valid = false;
+                    return;
+                }
+
+                const arrayToUpdate = task === 't1' ? updatedData.students[studentIndex].task1_scores : updatedData.students[studentIndex].task2_scores;
+                
+                // This handles cases where a column was added (array size check might be redundant after initialization, but safe)
+                if (dateIndex < arrayToUpdate.length) {
+                    arrayToUpdate[dateIndex] = score;
+                }
+            });
+
+            if (!valid) {
+                return;
+            }
+            
+            // 2. Generate the NEW code block string
+            const jsonString = JSON.stringify(updatedData, null, 4);
+            const newDataBlock = 
+`// *** PASTE THE GENERATED JSON DATA FROM WEBPAGE 2 HERE ***
+        // NOTE: The data structure from Webpage 2 remains exactly the same.
+        const initialData = ${jsonString};
+        // End of JSON data to be updated`;
+
+            // 3. Find the old data block in the original Webpage 1 code and replace it
+            const dataStartMarker = "// *** PASTE THE GENERATED JSON DATA FROM WEBPAGE 2 HERE ***";
+            const dataEndMarker = "// End of JSON data to be updated";
+            
+            const startIndex = originalWebpage1Code.indexOf(dataStartMarker);
+            const endIndex = originalWebpage1Code.indexOf(dataEndMarker) + dataEndMarker.length;
+            
+            // This is a crucial step: replace the old data block with the new one
+            const finalCode = originalWebpage1Code.substring(0, startIndex) + newDataBlock + originalWebpage1Code.substring(endIndex);
+            
+            document.getElementById('output-json').value = finalCode;
+            document.getElementById('output-json').style.display = 'block';
+            document.getElementById('copy-instruction').style.display = 'block';
+
+            alert("SUCCESS! New codes generated. Copy the output (Step 3) and use it to completely replace the content of your Webpage 1 file.");
+        }
+    </script>
+</body>
+</html>
