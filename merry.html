@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Gift Surprise</title>
+    <style>
+        body {
+            background-color: #0a2d1d;
+            color: white;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Snow Effect */
+        .snow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: transparent url('https://www.transparenttextures.com/patterns/snow.png') repeat;
+            animation: fall 15s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 1000px; }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 { 
+            font-size: clamp(2rem, 8vw, 3.5rem); 
+            margin-bottom: 10px; 
+            text-shadow: 3px 3px #d42426; 
+        }
+
+        .instruction { 
+            font-size: clamp(1rem, 4vw, 1.3rem); 
+            color: #f1c40f; 
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        /* The Gift Box */
+        .gift-container {
+            position: relative;
+            cursor: pointer;
+            width: 150px;
+            height: 120px;
+            margin: 120px auto 0;
+            transition: transform 0.3s;
+        }
+
+        .box-body {
+            width: 100%;
+            height: 100%;
+            background: #d42426;
+            position: relative;
+            z-index: 5;
+            border: 2px solid #a11b1d;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .box-lid {
+            width: 110%;
+            height: 35px;
+            background: #d42426;
+            position: absolute;
+            top: -30px;
+            left: -5%;
+            border-radius: 5px;
+            z-index: 6;
+            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #a11b1d;
+        }
+
+        .ribbon {
+            width: 30px;
+            height: 100%;
+            background: #f1c40f;
+            margin: 0 auto;
+        }
+
+        /* Enlarged Slip - Mobile Optimized */
+        .slip {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 85vw; /* Takes up most of the screen width */
+            max-width: 500px; /* Limits size on desktop */
+            background: #ffffff;
+            color: #2c3e50;
+            padding: 25px;
+            border-radius: 8px;
+            font-size: clamp(1.1rem, 4vw, 1.4rem); /* Large readable text */
+            line-height: 1.6;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 0) scale(0.5);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: left;
+            border-left: 8px solid #f1c40f;
+            box-sizing: border-box;
+        }
+
+        /* Open State */
+        .open .box-lid {
+            transform: translateY(-150px) rotate(-15deg);
+        }
+
+        .open .slip {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -320px) scale(1);
+        }
+
+        .chinese-note { 
+            color: #e74c3c; 
+            font-weight: bold; 
+            margin-top: 15px; 
+            display: block; 
+            border-top: 1px dashed #ccc; 
+            padding-top: 15px;
+            font-size: 0.95em;
+        }
+
+        /* Adjustments for very small screens */
+        @media (max-height: 600px) {
+            .open .slip {
+                transform: translate(-50%, -280px) scale(0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="snow"></div>
+
+    <div class="container">
+        <h1>Merry Christmas! 🎄</h1>
+        <p class="instruction">click the box to see the Christmas gift for you</p>
+
+        <div class="gift-container" onclick="openGift(this)">
+            <div class="box-lid">
+                <div class="ribbon" style="height: 35px;"></div>
+            </div>
+            <div class="box-body">
+                <div class="ribbon"></div>
+            </div>
+            
+            <div class="slip">
+                Some people argue that schools should spend more time teaching students how to use technology effectively, while others believe traditional subjects such as history and literature are more important. <br><br>
+                Discuss both views and give your own opinion.
+                <span class="chinese-note">
+                    (只用写introduction部分，放假回来上课前交到校宝家校本）
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openGift(element) {
+            element.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
